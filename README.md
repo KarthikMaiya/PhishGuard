@@ -1,4 +1,4 @@
-# **PhishGuard v2 – Real-Time Browser-Level Phishing Protection**
+# **PhishGuard – Real-Time Browser-Level Phishing Protection**
 
 PhishGuard v2 is a lightweight, real-time phishing protection system that intercepts Google Chrome traffic, analyzes domains, and warns users before they access potentially harmful websites. It functions like a miniature firewall + antivirus popup system, detecting suspicious URLs and blocking them with a custom warning page.
 
@@ -44,12 +44,19 @@ PhishGuard v2 is a lightweight, real-time phishing protection system that interc
 PhishGuard_v2/
 │
 ├── launcher.py # Starts mitmproxy + Chrome with isolated proxy
+
 ├── proxy_simple.py # mitmproxy addon for request interception + decisions
+
 ├── popup_simple.py # Security popup (Block/Allow)
+
 ├── blocked_page.html # Custom block page shown on BLOCK
+
 ├── suspicious_urls.txt # List of suspicious domains
+
 ├── start_phishguard.bat # One-click launcher
+
 └── assets/
+
 └── security_icon.png # Optional icon for popup
 
 
