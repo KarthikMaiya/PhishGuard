@@ -1,8 +1,3 @@
-ChatGPT said:
-
-Here is a complete, polished, evaluator-ready README.md for your PhishGuard project.
-You can copy–paste this directly into your GitHub repository.
-
 PhishGuard v2 – Real-Time Browser-Level Phishing Protection
 
 PhishGuard v2 is a lightweight, real-time phishing protection system designed to safeguard users from malicious and suspicious websites. It works at the browser level, intercepting outgoing web requests made by Google Chrome and alerting the user before they access potentially harmful domains.
