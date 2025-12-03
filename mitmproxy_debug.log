@@ -1,0 +1,130 @@
+=== PhishGuard mitmproxy Debug Log ===
+Timestamp: Thu Dec  4 02:16:09 2025
+Command: mitmdump -s C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\proxy_simple.py --listen-host 127.0.0.1 --listen-port 8080
+Working dir: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard
+Proxy script: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\proxy_simple.py
+=====================================
+
+[02:16:10.409] Loading script C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\proxy_simple.py
+[02:16:10.411] [PhishGuard] Loading suspicious domains from: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\suspicious_urls.txt
+[02:16:10.412] [PhishGuard] Loaded 4 domains
+[02:16:10.414] HTTP(S) proxy listening at 127.0.0.1:8080.
+[02:16:10.796][127.0.0.1:65434] client connect
+[02:16:10.797][127.0.0.1:65434] client disconnect
+[02:16:11.877][127.0.0.1:64593] client connect
+[02:16:12.827][127.0.0.1:64607] client connect
+[02:16:13.906][127.0.0.1:64593] client disconnect
+[02:16:13.907][127.0.0.1:64593] error establishing server connection: client disconnected
+127.0.0.1:64593: GET http://127.0.0.1:8000/docs
+ << client disconnected
+[02:16:14.846][127.0.0.1:64607] client disconnect
+[02:16:14.847][127.0.0.1:64607] error establishing server connection: client disconnected
+127.0.0.1:64607: GET http://127.0.0.1:8000/docs
+ << client disconnected
+[02:16:14.909][127.0.0.1:64637] client connect
+[02:16:15.848][127.0.0.1:64651] client connect
+[02:16:16.608][127.0.0.1:62040] client connect
+[02:16:16.611][127.0.0.1:62040] client disconnect
+[02:16:16.612][127.0.0.1:52427] client connect
+[02:16:16.616][127.0.0.1:53738] client connect
+[02:16:16.617][127.0.0.1:64061] client connect
+[02:16:16.621][127.0.0.1:57215] client connect
+[02:16:16.623][127.0.0.1:52427] client disconnect
+[02:16:16.624][127.0.0.1:53738] client disconnect
+[02:16:16.624][127.0.0.1:49287] client connect
+[02:16:16.626][127.0.0.1:52427] error establishing server connection: client disconnected
+[02:16:16.630][127.0.0.1:64061] client disconnect
+[02:16:16.630][127.0.0.1:49848] client connect
+127.0.0.1:52427: CONNECT clientservices.googleapis.com:443
+              << 502 Bad Gateway 208b
+[02:16:16.634][127.0.0.1:58566] client connect
+[02:16:16.636][127.0.0.1:57215] client disconnect
+[02:16:16.637][127.0.0.1:50683] client connect
+[02:16:16.639][127.0.0.1:49287] client disconnect
+[02:16:16.639][127.0.0.1:62938] client connect
+[02:16:16.641][127.0.0.1:49848] client disconnect
+[02:16:16.642][127.0.0.1:49515] client connect
+[02:16:16.645][127.0.0.1:51703] client connect
+[02:16:16.647][127.0.0.1:50683] client disconnect
+[02:16:16.648][127.0.0.1:54971] client connect
+[02:16:16.650][127.0.0.1:49561] client connect
+[02:16:16.874][127.0.0.1:51703] server connect www.googleapis.com:443 ([2404:6800:4007:83b::200a]:443)
+[02:16:16.875][127.0.0.1:58566] server connect mtalk.google.com:5228 ([2404:6800:4003:c02::bc]:5228)
+[02:16:16.875][127.0.0.1:54971] server connect clientservices.googleapis.com:443 ([2404:6800:4007:808::2003]:443)
+[02:16:16.876][127.0.0.1:49561] server connect accounts.google.com:443 ([2404:6800:4003:c05::54]:443)
+[02:16:17.377][127.0.0.1:64637] error establishing server connection: [WinError 1225] The remote computer refused the network connection
+127.0.0.1:64637: GET http://127.0.0.1:8000/docs
+ << [WinError 1225] The remote computer refused the network connection
+[02:16:17.379][127.0.0.1:61293] client connect
+[02:16:17.379][127.0.0.1:62938] server connect android.clients.google.com:443 (172.217.24.174:443)
+[02:16:17.380][127.0.0.1:64637] client disconnect
+[02:16:17.460][127.0.0.1:61293] server connect www.googleapis.com:443 ([2404:6800:4007:83b::200a]:443)
+127.0.0.1:58566 -> tcp -> mtalk.google.com:5228
+[02:16:17.615][127.0.0.1:52151] client connect
+[02:16:17.616][127.0.0.1:57965] client connect
+[02:16:17.619] [PhishGuard] Suspicious domain: example.com
+[02:16:17.620] [PhishGuard] Calling popup: example.com
+[02:16:20.605] [PhishGuard] ALLOWED: example.com
+[02:16:20.608][127.0.0.1:64651] error establishing server connection: [WinError 1225] The remote computer refused the network connection
+127.0.0.1:64651: GET http://127.0.0.1:8000/docs
+ << [WinError 1225] The remote computer refused the network connection
+127.0.0.1:58566 <- tcp <- mtalk.google.com:5228
+[02:16:20.625][127.0.0.1:49515] server connect update.googleapis.com:443 ([2404:6800:4007:835::2003]:443)
+127.0.0.1:51703: POST https://www.googleapis.com/oauth2/v4/token HTTP/2.0
+     << HTTP/2.0 200 OK 427b
+127.0.0.1:51703: POST https://www.googleapis.com/oauth2/v4/token HTTP/2.0
+     << HTTP/2.0 200 OK 424b
+127.0.0.1:62938: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
+     << HTTP/2.0 301 Moved Permanently 45b
+127.0.0.1:54971: GET https://clientservices.googleapis.com/chrome-variations… HTTP/2.0
+     << HTTP/2.0 304 Not Modified 0b
+127.0.0.1:49561: POST https://accounts.google.com/ListAccounts?gpsia=1&source… HTTP/2.0
+     << HTTP/2.0 200 OK 232b
+[02:16:20.635][127.0.0.1:64651] client disconnect
+[02:16:20.637][127.0.0.1:61293] client disconnect
+[02:16:20.639][127.0.0.1:61293] server disconnect www.googleapis.com:443 ([2404:6800:4007:83b::200a]:443)
+[02:16:20.643][127.0.0.1:57965] client disconnect
+[02:16:20.645][127.0.0.1:60146] client connect
+[02:16:20.646][127.0.0.1:62938] client disconnect
+[02:16:20.647][127.0.0.1:49561] client disconnect
+[02:16:20.651][127.0.0.1:51703] client disconnect
+[02:16:20.651][127.0.0.1:54971] client disconnect
+[02:16:20.655][127.0.0.1:59241] client connect
+[02:16:20.656][127.0.0.1:62938] server disconnect android.clients.google.com:443 (172.217.24.174:443)
+[02:16:20.657][127.0.0.1:49561] server disconnect accounts.google.com:443 ([2404:6800:4003:c05::54]:443)
+[02:16:20.658][127.0.0.1:64181] client connect
+[02:16:20.659][127.0.0.1:51703] server disconnect www.googleapis.com:443 ([2404:6800:4007:83b::200a]:443)
+[02:16:20.660][127.0.0.1:54971] server disconnect clientservices.googleapis.com:443 ([2404:6800:4007:808::2003]:443)
+[02:16:20.838][127.0.0.1:49515] client disconnect
+[02:16:20.840][127.0.0.1:49515] server disconnect update.googleapis.com:443 ([2404:6800:4007:835::2003]:443)
+[02:16:20.947][127.0.0.1:52151] server connect example.com:80 ([2600:1406:5e00:6::17ce:bc12]:80)
+[02:16:21.130][127.0.0.1:54298] client connect
+[02:16:21.189][127.0.0.1:60146] server connect update.googleapis.com:443 ([2404:6800:4007:835::2003]:443)
+[02:16:21.190][127.0.0.1:64181] server connect clients4.google.com:443 ([2404:6800:4007:830::200e]:443)
+[02:16:21.190][127.0.0.1:59241] server connect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4009:807::200a]:443)
+[02:16:21.195][127.0.0.1:54298] server connect optimizationguide-pa.googleapis.com:443 ([2404:6800:4009:800::200a]:443)
+127.0.0.1:52151: GET http://example.com/
+              << 200 OK 363b
+[02:16:21.223][127.0.0.1:52151] server disconnect example.com:80 ([2600:1406:5e00:6::17ce:bc12]:80)
+[02:16:21.223][127.0.0.1:52151] client disconnect
+[02:16:21.267][127.0.0.1:62751] client connect
+[02:16:21.270] [PhishGuard] Suspicious domain: example.com
+[02:16:21.273] [PhishGuard] Calling popup: example.com
+[02:16:23.372] [PhishGuard] ALLOWED: example.com
+127.0.0.1:54298: POST https://optimizationguide-pa.googleapis.com/v1:GetModel… HTTP/2.0
+     << HTTP/2.0 200 OK 2.1k
+127.0.0.1:64181: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 395b
+[02:16:23.640][127.0.0.1:62751] server connect example.com:80 ([2600:1406:5e00:6::17ce:bc12]:80)
+127.0.0.1:62751: GET http://example.com/favicon.ico
+              << 404 Not Found 513b
+[02:16:23.904][127.0.0.1:62751] server disconnect example.com:80 ([2600:1406:5e00:6::17ce:bc12]:80)
+[02:16:23.905][127.0.0.1:62751] client disconnect
+127.0.0.1:60146: POST https://update.googleapis.com/service/update2/json?cup2… HTTP/2.0
+     << HTTP/2.0 200 OK 288b
+127.0.0.1:59241: GET https://kidsmanagement-pa.googleapis.com/kidsmanagement… HTTP/2.0
+     << HTTP/2.0 200 OK 342b
+127.0.0.1:64181: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 1.5k
+127.0.0.1:64181: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+ << stream reset by client (CANCEL)

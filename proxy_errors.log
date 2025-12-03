@@ -1,0 +1,29 @@
+[PhishGuard] Addon initialized - OPTIMIZED MODE
+[Loading] Script directory: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard
+[Loading] Suspicious list file: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\suspicious_urls.txt
+[Loading] SUCCESS: Loaded 4 suspicious domains
+[AllowPass] Domain not suspicious: 127.0.0.1
+[AllowPass] Domain not suspicious: 127.0.0.1
+[AllowPass] Domain not suspicious: 127.0.0.1
+[AllowPass] Domain not suspicious: 127.0.0.1
+[FastPath] SAFE domain (whitelist), allowing: www.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: www.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: clientservices.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: accounts.google.com
+[FastPath] SAFE domain (whitelist), allowing: android.clients.google.com
+[Detection] SUSPICIOUS domain detected: example.com
+[Popup] Calling: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\popup_simple.py with domain: example.com
+[Popup] stdout result: 'ALLOW'
+[Popup] Result for example.com: ALLOW
+[Decision] User ALLOWED: example.com
+[Detection] SUSPICIOUS domain detected: example.com
+[Popup] Calling: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\popup_simple.py with domain: example.com
+[Popup] stdout result: 'ALLOW'
+[Popup] Result for example.com: ALLOW
+[Decision] User ALLOWED: example.com
+[FastPath] SAFE domain (whitelist), allowing: optimizationguide-pa.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: clients4.google.com
+[FastPath] SAFE domain (whitelist), allowing: kidsmanagement-pa.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: update.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: clients4.google.com
+[FastPath] SAFE domain (whitelist), allowing: clients4.google.com

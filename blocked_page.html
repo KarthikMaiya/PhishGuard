@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Blocked by PhishGuard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: #ffffff;
+            border-bottom: 4px solid #8b0000;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        
+        .warning-box p {
+            color: #856404;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .domain-section {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .domain-label {
+            color: #666666;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        
+        .domain-name {
+            color: #d32f2f;
+            font-size: 18px;
+            font-weight: 700;
+            word-break: break-all;
+            font-family: monospace;
+        }
+        
+        .reasons {
+            margin-bottom: 30px;
+        }
+        
+        .reasons h3 {
+            color: #333333;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .reasons ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .reasons li {
+            color: #555555;
+            font-size: 13px;
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.5;
+        }
+        
+        .reasons li:before {
+            content: "[!]";
+            position: absolute;
+            left: 0;
+            color: #d32f2f;
+            font-weight: 700;
+            font-size: 12px;
+        }
+        
+        .footer {
+            background: #f9f9f9;
+            padding: 20px 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .footer p {
+            color: #888888;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        
+        .footer strong {
+            color: #333333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Website Blocked by PhishGuard</h1>
+            <p>Access to this website has been denied for your security</p>
+        </div>
+        
+        <div class="content">
+            <div class="warning-box">
+                <p>PhishGuard has blocked this website because it appears to be suspicious and potentially dangerous. This protection helps prevent phishing attacks and malware infections.</p>
+            </div>
+            
+            <div class="domain-section">
+                <div class="domain-label">Detected Domain</div>
+                <div class="domain-name">{domain}</div>
+            </div>
+            
+            <div class="reasons">
+                <h3>Why was this blocked?</h3>
+                <ul>
+                    <li>The domain matches known phishing or malicious website patterns</li>
+                    <li>Suspicious characteristics detected in the domain or website behavior</li>
+                    <li>PhishGuard security policies identified potential threats</li>
+                </ul>
+            </div>
+            
+            <div class="reasons">
+                <h3>What should you do?</h3>
+                <ul>
+                    <li>Do not proceed to this website if unsure of its legitimacy</li>
+                    <li>If this website should be trusted, contact your administrator</li>
+                    <li>Report suspicious sites to security@phishguard.local</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>PhishGuard</strong> - Enterprise Security Protection</p>
+            <p>This is a security block page. If you believe this is an error, please contact your network administrator.</p>
+        </div>
+    </div>
+</body>
+</html>

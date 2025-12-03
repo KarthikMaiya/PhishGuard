@@ -1,0 +1,4 @@
+example.com
+paypal-verify-account.co
+login-alert-security-check.com
+update-paypal.info
