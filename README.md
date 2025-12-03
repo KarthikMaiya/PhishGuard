@@ -2,6 +2,13 @@
 
 PhishGuard is a lightweight, real-time phishing protection system that intercepts Google Chrome traffic, analyzes domains, and warns users before they access potentially harmful websites. It functions like a miniature firewall + antivirus popup system, detecting suspicious URLs and blocking them with a custom warning page.
 
+## **🎥 Demo Video**
+
+<video src="" controls width="700">
+Your browser does not support the video tag.
+</video>
+
+
 ---
 
 ## **🚀 Features**
