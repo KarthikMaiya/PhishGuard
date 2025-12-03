@@ -1,0 +1,377 @@
+=== PhishGuard mitmproxy Debug Log ===
+Timestamp: Thu Dec  4 00:22:45 2025
+Command: mitmdump -s C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\proxy_simple.py --listen-host 127.0.0.1 --listen-port 8080
+Working dir: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard
+Proxy script: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\proxy_simple.py
+=====================================
+
+[00:22:46.156] Loading script C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\proxy_simple.py
+[00:22:46.158] [PhishGuard] Loading suspicious domains from: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\suspicious_urls.txt
+[00:22:46.159] [PhishGuard]  Loaded 4 domains
+[00:22:46.160] HTTP(S) proxy listening at 127.0.0.1:8080.
+[00:22:46.205][127.0.0.1:62880] client connect
+[00:22:46.206][127.0.0.1:62880] client disconnect
+[00:22:49.955][127.0.0.1:62923] client connect
+[00:22:50.617][127.0.0.1:62935] client connect
+[00:22:51.969][127.0.0.1:62923] client disconnect
+[00:22:51.971][127.0.0.1:62923] error establishing server connection: client disconnected
+127.0.0.1:62923: GET http://127.0.0.1:8000/docs
+ << client disconnected
+[00:22:52.640][127.0.0.1:62935] client disconnect
+[00:22:52.641][127.0.0.1:62935] error establishing server connection: client disconnected
+127.0.0.1:62935: GET http://127.0.0.1:8000/docs
+ << client disconnected
+[00:22:52.972][127.0.0.1:62969] client connect
+[00:22:53.643][127.0.0.1:62979] client connect
+[00:22:54.462][127.0.0.1:63748] client connect
+[00:22:54.474][127.0.0.1:63149] client connect
+[00:22:54.474][127.0.0.1:63748] client disconnect
+[00:22:54.476][127.0.0.1:63748] error establishing server connection: client disconnected
+127.0.0.1:63748: CONNECT clientservices.googleapis.com:443
+              << 502 Bad Gateway 208b
+[00:22:54.480][127.0.0.1:49505] client connect
+[00:22:54.482][127.0.0.1:52645] client connect
+[00:22:54.484][127.0.0.1:63149] client disconnect
+[00:22:54.485][127.0.0.1:63061] client connect
+[00:22:54.487][127.0.0.1:63149] error establishing server connection: client disconnected
+[00:22:54.488][127.0.0.1:64220] client connect
+127.0.0.1:63149: CONNECT clientservices.googleapis.com:443
+              << 502 Bad Gateway 208b
+[00:22:54.489][127.0.0.1:52645] client disconnect
+[00:22:54.491][127.0.0.1:49505] client disconnect
+[00:22:54.491][127.0.0.1:56579] client connect
+[00:22:54.495][127.0.0.1:57340] client connect
+[00:22:54.497][127.0.0.1:63061] client disconnect
+[00:22:54.498][127.0.0.1:59341] client connect
+[00:22:54.500][127.0.0.1:64220] client disconnect
+[00:22:54.501][127.0.0.1:51442] client connect
+[00:22:54.503][127.0.0.1:56579] client disconnect
+[00:22:54.504][127.0.0.1:57524] client connect
+[00:22:54.507][127.0.0.1:59270] client connect
+[00:22:54.509][127.0.0.1:59341] client disconnect
+[00:22:54.510][127.0.0.1:50648] client connect
+[00:22:54.512][127.0.0.1:49299] client connect
+[00:22:54.598][127.0.0.1:50648] server connect clientservices.googleapis.com:443 ([2404:6800:4009:819::2003]:443)
+[00:22:55.101][127.0.0.1:62969] error establishing server connection: [WinError 1225] The remote computer refused the network connection
+127.0.0.1:62969: GET http://127.0.0.1:8000/docs
+ << [WinError 1225] The remote computer refused the network connection
+[00:22:55.103][127.0.0.1:57340] server connect mtalk.google.com:5228 ([2404:6800:4003:c0f::bc]:5228)
+[00:22:55.104][127.0.0.1:59270] server connect www.googleapis.com:443 ([2404:6800:4007:839::200a]:443)
+[00:22:55.105][127.0.0.1:49299] server connect accounts.google.com:443 ([2404:6800:4003:c05::54]:443)
+[00:22:55.106][127.0.0.1:59620] client connect
+[00:22:55.106][127.0.0.1:51442] server connect android.clients.google.com:443 (142.250.70.46:443)
+[00:22:55.108][127.0.0.1:62969] client disconnect
+[00:22:55.108][127.0.0.1:60584] client connect
+[00:22:55.276][127.0.0.1:59620] client disconnect
+[00:22:55.276][127.0.0.1:60584] client disconnect
+[00:22:55.280][127.0.0.1:59620] error establishing server connection: client disconnected
+[00:22:55.281][127.0.0.1:60584] error establishing server connection: client disconnected
+127.0.0.1:59620: CONNECT www.googleapis.com:443
+              << 502 Bad Gateway 197b
+127.0.0.1:60584: CONNECT www.googleapis.com:443
+              << 502 Bad Gateway 197b
+127.0.0.1:57340 -> tcp -> mtalk.google.com:5228
+127.0.0.1:57340 <- tcp <- mtalk.google.com:5228
+127.0.0.1:59270: POST https://www.googleapis.com/oauth2/v4/token HTTP/2.0
+     << HTTP/2.0 200 OK 417b
+127.0.0.1:59270: POST https://www.googleapis.com/oauth2/v4/token HTTP/2.0
+     << HTTP/2.0 200 OK 422b
+[00:22:55.395][127.0.0.1:59014] client connect
+[00:22:55.397][127.0.0.1:61492] client connect
+127.0.0.1:59270: POST https://www.googleapis.com/oauth2/v4/token HTTP/2.0
+     << HTTP/2.0 200 OK 426b
+127.0.0.1:49299: POST https://accounts.google.com/ListAccounts?gpsia=1&source… HTTP/2.0
+     << HTTP/2.0 200 OK 232b
+[00:22:55.416][127.0.0.1:55493] client connect
+127.0.0.1:51442: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
+     << HTTP/2.0 301 Moved Permanently 45b
+[00:22:55.497][127.0.0.1:59014] server connect memex-pa.googleapis.com:443 ([2404:6800:4009:80c::200a]:443)
+[00:22:55.612][127.0.0.1:57524] server connect update.googleapis.com:443 ([2404:6800:4007:836::2003]:443)
+127.0.0.1:50648: GET https://clientservices.googleapis.com/chrome-variations… HTTP/2.0
+     << HTTP/2.0 200 OK 4.7k
+[00:22:55.633][127.0.0.1:61492] client disconnect
+[00:22:55.635][127.0.0.1:61492] error establishing server connection: client disconnected
+127.0.0.1:61492: CONNECT clients4.google.com:443
+              << 502 Bad Gateway 198b
+[00:22:55.637][127.0.0.1:55493] client disconnect
+[00:22:55.638][127.0.0.1:55493] error establishing server connection: client disconnected
+[00:22:55.638][127.0.0.1:57126] client connect
+127.0.0.1:55493: CONNECT kidsmanagement-pa.googleapis.com:443
+              << 502 Bad Gateway 211b
+[00:22:55.641][127.0.0.1:56275] client connect
+[00:22:55.642][127.0.0.1:59270] client disconnect
+[00:22:55.643][127.0.0.1:51442] client disconnect
+[00:22:55.644][127.0.0.1:49299] client disconnect
+[00:22:55.644][127.0.0.1:50648] client disconnect
+[00:22:55.645][127.0.0.1:61667] client connect
+[00:22:55.650][127.0.0.1:59270] server disconnect www.googleapis.com:443 ([2404:6800:4007:839::200a]:443)
+[00:22:55.651][127.0.0.1:51442] server disconnect android.clients.google.com:443 (142.250.70.46:443)
+[00:22:55.651][127.0.0.1:49299] server disconnect accounts.google.com:443 ([2404:6800:4003:c05::54]:443)
+[00:22:55.652][127.0.0.1:50648] server disconnect clientservices.googleapis.com:443 ([2404:6800:4009:819::2003]:443)
+[00:22:55.655][127.0.0.1:62979] client disconnect
+[00:22:55.656][127.0.0.1:62979] error establishing server connection: client disconnected
+127.0.0.1:62979: GET http://127.0.0.1:8000/docs
+ << client disconnected
+127.0.0.1:59014: GET https://memex-pa.googleapis.com/v1/shopping/subscriptio… HTTP/2.0
+     << HTTP/2.0 200 OK 23b
+[00:22:55.788][127.0.0.1:57524] client disconnect
+[00:22:55.789][127.0.0.1:59014] client disconnect
+[00:22:55.790][127.0.0.1:57524] server disconnect update.googleapis.com:443 ([2404:6800:4007:836::2003]:443)
+[00:22:55.793][127.0.0.1:59014] server disconnect memex-pa.googleapis.com:443 ([2404:6800:4009:80c::200a]:443)
+[00:22:55.882][127.0.0.1:61667] server connect update.googleapis.com:443 ([2404:6800:4007:836::2003]:443)
+[00:22:55.883][127.0.0.1:56275] server connect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4009:812::200a]:443)
+[00:22:55.883][127.0.0.1:57126] server connect clients4.google.com:443 ([2404:6800:4009:802::200e]:443)
+127.0.0.1:57126: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 397b
+127.0.0.1:56275: GET https://kidsmanagement-pa.googleapis.com/kidsmanagement… HTTP/2.0
+     << HTTP/2.0 200 OK 342b
+127.0.0.1:61667: POST https://update.googleapis.com/service/update2/json?cup2… HTTP/2.0
+     << HTTP/2.0 200 OK 288b
+[00:22:56.589][127.0.0.1:56437] client connect
+[00:22:56.648][127.0.0.1:63556] client connect
+[00:22:56.753][127.0.0.1:63556] server connect ssl.gstatic.com:443 ([2404:6800:4009:800::2003]:443)
+127.0.0.1:63556: GET https://ssl.gstatic.com/docs/common/netcheck.gif?zx=9mu… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:57126: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 372b
+[00:22:57.184][127.0.0.1:56437] server connect optimizationguide-pa.googleapis.com:443 ([2404:6800:4009:823::200a]:443)
+[00:22:57.411][127.0.0.1:60753] client connect
+[00:22:57.804][127.0.0.1:60753] server connect drive.google.com:443 ([2404:6800:4007:83b::200e]:443)
+127.0.0.1:60753: GET https://drive.google.com/drive/serviceworker/update?oui… HTTP/2.0
+     << HTTP/2.0 200 OK 395b
+[00:22:58.390][127.0.0.1:61375] client connect
+127.0.0.1:57126: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 1.5k
+[00:22:58.692][127.0.0.1:52770] client connect
+[00:22:58.742][127.0.0.1:61375] server connect drive.google.com:443 ([2404:6800:4007:83b::200e]:443)
+127.0.0.1:57126: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 357b
+[00:22:58.843][127.0.0.1:52770] client disconnect
+[00:22:58.846][127.0.0.1:52770] error establishing server connection: client disconnected
+127.0.0.1:52770: CONNECT drive.google.com:443
+              << 502 Bad Gateway 195b
+127.0.0.1:61375: GET https://drive.google.com/drive/serviceworker_root.js?ou… HTTP/2.0
+     << HTTP/2.0 200 OK 583b
+127.0.0.1:61375: GET https://drive.google.com/drive/serviceworker.js?ouid=u1… HTTP/2.0
+     << HTTP/2.0 200 OK 5.3k
+[00:22:59.843][127.0.0.1:62365] client connect
+[00:22:59.914][127.0.0.1:62365] server connect ssl.gstatic.com:443 ([2404:6800:4009:800::2003]:443)
+127.0.0.1:62365: GET https://ssl.gstatic.com/cloudsearch/static/o/d/0016-a3c… HTTP/2.0
+     << HTTP/2.0 200 OK 18.2k
+127.0.0.1:62365: GET https://ssl.gstatic.com/cloudsearch/static/o/d/0016-a3c… HTTP/2.0
+     << HTTP/2.0 200 OK 7.3k
+127.0.0.1:61375: GET https://drive.google.com/drive/_/dataservice/cacheproxy… HTTP/2.0
+     << HTTP/2.0 200 OK 408b
+127.0.0.1:56437: POST https://optimizationguide-pa.googleapis.com/v1:GetModel… HTTP/2.0
+     << HTTP/2.0 200 OK 2.1k
+127.0.0.1:61375: GET https://drive.google.com/drive/offline/coldstart?ouid=u… HTTP/2.0
+     << HTTP/2.0 200 OK 68.3k
+[00:23:09.668][127.0.0.1:62478] client connect
+[00:23:09.946][127.0.0.1:62478] server connect update.googleapis.com:443 ([2404:6800:4007:836::2003]:443)
+[00:23:10.137][127.0.0.1:62478] client disconnect
+[00:23:10.138][127.0.0.1:62478] server disconnect update.googleapis.com:443 ([2404:6800:4007:836::2003]:443)
+[00:23:21.860][127.0.0.1:62382] client connect
+127.0.0.1:63556: GET https://ssl.gstatic.com/docs/common/netcheck.gif?zx=ijx… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+[00:23:22.938][127.0.0.1:62382] server connect android.clients.google.com:443 (142.250.70.46:443)
+127.0.0.1:62382: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
+     << HTTP/2.0 301 Moved Permanently 45b
+[00:23:44.501][127.0.0.1:62709] client connect
+[00:23:46.564][127.0.0.1:61117] client connect
+[00:23:46.623][127.0.0.1:61117] server connect clientservices.googleapis.com:443 ([2404:6800:4009:819::2003]:443)
+[00:23:46.634][127.0.0.1:55420] client connect
+[00:23:46.818][127.0.0.1:55420] server connect clients4.google.com:443 ([2404:6800:4009:802::200e]:443)
+[00:23:46.876][127.0.0.1:52028] client connect
+127.0.0.1:61117: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
+     << HTTP/2.0 200 OK 22b
+127.0.0.1:55420: POST https://clients4.google.com/ukm HTTP/2.0
+     << HTTP/2.0 200 OK 22b
+[00:23:47.723][127.0.0.1:62709] server connect login.live.com:443 (20.190.145.143:443)
+[00:23:47.724][127.0.0.1:52028] server connect update.googleapis.com:443 ([2404:6800:4007:836::2003]:443)
+[00:23:49.059][127.0.0.1:62709] Client TLS handshake failed. The client disconnected during the handshake. If this happens consistently for login.live.com, this may indicate that the client does not trust the proxy's certificate.
+[00:23:49.060][127.0.0.1:62709] client disconnect
+[00:23:49.061][127.0.0.1:62709] server disconnect login.live.com:443 (20.190.145.143:443)
+[00:23:49.551][127.0.0.1:52062] client connect
+127.0.0.1:61117: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
+     << HTTP/2.0 200 OK 22b
+127.0.0.1:55420: POST https://clients4.google.com/ukm HTTP/2.0
+     << HTTP/2.0 200 OK 22b
+127.0.0.1:52028: POST https://update.googleapis.com/service/update2/json?cup2… HTTP/2.0
+     << HTTP/2.0 200 OK 1017b
+[00:23:52.625][127.0.0.1:52062] server connect login.live.com:443 (20.190.145.143:443)
+127.0.0.1:61117: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
+     << HTTP/2.0 200 OK 22b
+127.0.0.1:55420: POST https://clients4.google.com/ukm HTTP/2.0
+     << HTTP/2.0 200 OK 22b
+127.0.0.1:63556: GET https://ssl.gstatic.com/docs/common/netcheck.gif?zx=dik… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:61117: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
+     << HTTP/2.0 200 OK 22b
+[00:23:58.407][127.0.0.1:52062] Client TLS handshake failed. The client disconnected during the handshake. If this happens consistently for login.live.com, this may indicate that the client does not trust the proxy's certificate.
+[00:23:58.408][127.0.0.1:52062] client disconnect
+[00:23:58.410][127.0.0.1:52062] server disconnect login.live.com:443 (20.190.145.143:443)
+127.0.0.1:61117: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
+     << HTTP/2.0 200 OK 22b
+127.0.0.1:61117: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
+     << HTTP/2.0 200 OK 22b
+127.0.0.1:61117: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
+     << HTTP/2.0 200 OK 22b
+[00:24:08.534][127.0.0.1:52282] client connect
+[00:24:08.861][127.0.0.1:52282] server connect browser.events.data.msn.cn:443 (13.89.178.26:443)
+[00:24:09.550][127.0.0.1:52282] Client TLS handshake failed. The client disconnected during the handshake. If this happens consistently for browser.events.data.msn.cn, this may indicate that the client does not trust the proxy's certificate.
+[00:24:09.551][127.0.0.1:52282] client disconnect
+[00:24:09.551][127.0.0.1:52282] server disconnect browser.events.data.msn.cn:443 (13.89.178.26:443)
+127.0.0.1:61117: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
+     << HTTP/2.0 200 OK 22b
+127.0.0.1:61117: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
+     << HTTP/2.0 200 OK 22b
+127.0.0.1:61117: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
+     << HTTP/2.0 200 OK 22b
+127.0.0.1:62382: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
+     << HTTP/2.0 301 Moved Permanently 45b
+[00:24:19.496][127.0.0.1:61958] client connect
+[00:24:20.661][127.0.0.1:61958] server connect beacons.gcp.gvt2.com:443 ([2404:6800:4007:834::2003]:443)
+[00:24:38.129][127.0.0.1:62168] client connect
+[00:24:40.227][127.0.0.1:62168] server connect main.vscode-cdn.net:443 ([2620:1ec:bdf::58]:443)
+[00:24:50.724][127.0.0.1:62168] Server TLS handshake failed. connection closed
+[00:24:50.726][127.0.0.1:62168] Unable to establish TLS connection with server (connection closed). Trying to establish TLS with client anyway. If you plan to redirect requests away from this server, consider setting `connection_strategy` to `lazy` to suppress early connections.
+[00:24:50.743][127.0.0.1:61958] client disconnect
+[00:24:50.745][127.0.0.1:62168] server disconnect main.vscode-cdn.net:443 ([2620:1ec:bdf::58]:443)
+[00:24:50.746][127.0.0.1:61958] server disconnect beacons.gcp.gvt2.com:443 ([2404:6800:4007:834::2003]:443)
+127.0.0.1:62168: GET https://main.vscode-cdn.net/extensions/chat.json HTTP/2.0
+ << connection closed
+127.0.0.1:63556: GET https://ssl.gstatic.com/docs/common/netcheck.gif?zx=a61… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+[00:25:01.093][127.0.0.1:57402] client connect
+[00:25:02.897][127.0.0.1:57402] server connect beacons.gvt2.com:443 ([2404:6800:4007:838::2003]:443)
+[00:25:10.146][127.0.0.1:52090] client connect
+[00:25:10.518][127.0.0.1:52090] server connect api.honeycomb.io:443 (3.92.140.140:443)
+127.0.0.1:52090: POST https://api.honeycomb.io/v1/traces HTTP/2.0
+     << HTTP/2.0 200 OK 2b
+[00:25:25.436][127.0.0.1:57402] server disconnect beacons.gvt2.com:443 ([2404:6800:4007:838::2003]:443)
+127.0.0.1:63556: GET https://ssl.gstatic.com/docs/common/netcheck.gif?zx=iv8… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+[00:25:30.681][127.0.0.1:57402] server connect beacons.gvt2.com:443 ([2404:6800:4007:838::2003]:443)
+127.0.0.1:57402: POST https://beacons.gvt2.com/domainreliability/upload HTTP/2.0
+ << peer closed connection
+[00:25:40.951][127.0.0.1:57402] server disconnect beacons.gvt2.com:443 ([2404:6800:4007:838::2003]:443)
+127.0.0.1:63556: GET https://ssl.gstatic.com/docs/common/netcheck.gif?zx=55f… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+[00:25:57.774][127.0.0.1:61971] client connect
+[00:25:58.088][127.0.0.1:56546] client connect
+[00:25:58.119][127.0.0.1:56546] server connect beacons.gcp.gvt2.com:443 ([2404:6800:4007:81b::2003]:443)
+[00:25:58.227][127.0.0.1:61971] client disconnect
+[00:25:58.229][127.0.0.1:61971] error establishing server connection: client disconnected
+127.0.0.1:61971: CONNECT beacons.gcp.gvt2.com:443
+              << 502 Bad Gateway 199b
+127.0.0.1:56546: POST https://beacons.gcp.gvt2.com/domainreliability/upload HTTP/2.0
+     << HTTP/2.0 200 OK 0b
+127.0.0.1:56546: POST https://beacons.gcp.gvt2.com/domainreliability/upload HTTP/2.0
+     << HTTP/2.0 200 OK 0b
+127.0.0.1:62382: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
+     << HTTP/2.0 301 Moved Permanently 45b
+[00:26:13.143][127.0.0.1:56718] client connect
+[00:26:16.364][127.0.0.1:56718] server connect main.vscode-cdn.net:443 ([2620:1ec:bdf::72]:443)
+[00:26:41.049][127.0.0.1:56718] Server TLS handshake failed. connection closed
+[00:26:41.049][127.0.0.1:56718] Unable to establish TLS connection with server (connection closed). Trying to establish TLS with client anyway. If you plan to redirect requests away from this server, consider setting `connection_strategy` to `lazy` to suppress early connections.
+[00:26:41.058][127.0.0.1:56718] server disconnect main.vscode-cdn.net:443 ([2620:1ec:bdf::72]:443)
+127.0.0.1:56718: GET https://main.vscode-cdn.net/extensions/marketplace.json HTTP/2.0
+ << connection closed
+[00:26:56.455][127.0.0.1:56275] [2404:6800:4009:812::200a]:443: HTTP/2 protocol error: Invalid input ConnectionInputs.RECV_PING in state ConnectionState.CLOSED
+[00:26:56.456][127.0.0.1:56275] server disconnect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4009:812::200a]:443)
+[00:26:56.526][127.0.0.1:61667] [2404:6800:4007:836::2003]:443: HTTP/2 protocol error: Invalid input ConnectionInputs.RECV_PING in state ConnectionState.CLOSED
+[00:26:56.527][127.0.0.1:61667] server disconnect update.googleapis.com:443 ([2404:6800:4007:836::2003]:443)
+[00:26:58.549][127.0.0.1:60753] [2404:6800:4007:83b::200e]:443: HTTP/2 protocol error: Invalid input ConnectionInputs.RECV_PING in state ConnectionState.CLOSED
+[00:26:58.550][127.0.0.1:60753] server disconnect drive.google.com:443 ([2404:6800:4007:83b::200e]:443)
+[00:26:58.755][127.0.0.1:57126] [2404:6800:4009:802::200e]:443: HTTP/2 protocol error: Invalid input ConnectionInputs.RECV_PING in state ConnectionState.CLOSED
+[00:26:58.756][127.0.0.1:57126] server disconnect clients4.google.com:443 ([2404:6800:4009:802::200e]:443)
+[00:26:59.249][127.0.0.1:56437] [2404:6800:4009:823::200a]:443: HTTP/2 protocol error: Invalid input ConnectionInputs.RECV_PING in state ConnectionState.CLOSED
+[00:26:59.250][127.0.0.1:56437] server disconnect optimizationguide-pa.googleapis.com:443 ([2404:6800:4009:823::200a]:443)
+[00:27:00.263][127.0.0.1:62365] [2404:6800:4009:800::2003]:443: HTTP/2 protocol error: Invalid input ConnectionInputs.RECV_PING in state ConnectionState.CLOSED
+[00:27:00.264][127.0.0.1:62365] server disconnect ssl.gstatic.com:443 ([2404:6800:4009:800::2003]:443)
+[00:27:00.715][127.0.0.1:61375] [2404:6800:4007:83b::200e]:443: HTTP/2 protocol error: Invalid input ConnectionInputs.RECV_PING in state ConnectionState.CLOSED
+[00:27:00.716][127.0.0.1:61375] server disconnect drive.google.com:443 ([2404:6800:4007:83b::200e]:443)
+[00:27:09.004][127.0.0.1:57349] client connect
+[00:27:09.563][127.0.0.1:57349] server connect v20.events.data.microsoft.com:443 (13.69.109.130:443)
+127.0.0.1:52090: POST https://api.honeycomb.io/v1/traces HTTP/2.0
+     << HTTP/2.0 200 OK 2b
+[00:27:10.584][127.0.0.1:62806] client connect
+[00:27:10.931][127.0.0.1:62806] server connect alive.github.com:443 (140.82.113.26:443)
+127.0.0.1:62806: GET https://alive.github.com/_sockets/u/247401414/ws?sessio…
+              << 101 Switching Protocols 0b
+Error in WebSocket connection to alive.github.com:443: WebSocket Error: POLICY_VIOLATION (reason: authentication failed)
+[00:27:11.820][127.0.0.1:62806] server disconnect alive.github.com:443 (140.82.113.26:443)
+[00:27:11.821][127.0.0.1:62806] client disconnect
+[00:27:11.827][127.0.0.1:63642] client connect
+[00:27:17.280][127.0.0.1:63705] client connect
+[00:27:18.110][127.0.0.1:63705] server connect vscode-sync.trafficmanager.net:443 (13.67.9.5:443)
+127.0.0.1:63705: GET https://vscode-sync.trafficmanager.net/v1/manifest
+              << 304 Not Modified 0b
+[00:27:18.948][127.0.0.1:63642] server connect github.com:443 (20.207.73.82:443)
+[00:27:20.735][127.0.0.1:63746] client connect
+[00:27:21.085][127.0.0.1:63746] server connect mobile.events.data.microsoft.com:443 (104.208.16.95:443)
+127.0.0.1:63746: POST https://mobile.events.data.microsoft.com/OneCollector/1… HTTP/2.0
+     << HTTP/2.0 200 OK 9b
+[00:27:43.993][127.0.0.1:64009] client connect
+[00:27:44.323][127.0.0.1:64009] server connect v20.events.data.microsoft.com:443 (52.168.117.170:443)
+[00:27:44.861][127.0.0.1:64009] Server TLS handshake failed. Certificate verify failed: unable to get local issuer certificate
+[00:27:44.862][127.0.0.1:64009] Unable to establish TLS connection with server (Certificate verify failed: unable to get local issuer certificate). Trying to establish TLS with client anyway. If you plan to redirect requests away from this server, consider setting `connection_strategy` to `lazy` to suppress early connections.
+[00:27:44.876][127.0.0.1:64009] server disconnect v20.events.data.microsoft.com:443 (52.168.117.170:443)
+[00:27:44.925][127.0.0.1:64009] client disconnect
+[00:27:50.619][127.0.0.1:56538] client connect
+[00:27:50.694][127.0.0.1:56538] server connect github.com:443 (20.207.73.82:443)
+127.0.0.1:56538: GET https://github.com/_alive HTTP/2.0
+     << HTTP/2.0 200 OK 150b
+127.0.0.1:56538: POST https://github.com/_alive HTTP/2.0
+     << HTTP/2.0 200 OK 199b
+[00:27:51.419][127.0.0.1:50341] client connect
+[00:27:51.696][127.0.0.1:50341] server connect alive.github.com:443 (140.82.113.26:443)
+127.0.0.1:50341: GET https://alive.github.com/_sockets/u/247401414/ws?sessio…
+              << 101 Switching Protocols 0b
+127.0.0.1:50341 -> WebSocket text message -> alive.github.com:443/_sockets/u/247401414/ws?session=eyJ2IjoiVjMiLCJ1IjoyNDc0MDE0MTQsInMiOjE4ODY5NDc3MzYsImMiOjE4MTUxNTc0MjksInQiOjE3NjQ3ODgyNzF9--7652cf2991c2a15fe2d00d2dc64c0ff012f0532a9393fd8ab7ef8987628c9459&shared=true&p=1287858807_1764737396.56
+127.0.0.1:50341 <- WebSocket text message <- alive.github.com:443/_sockets/u/247401414/ws?session=eyJ2IjoiVjMiLCJ1IjoyNDc0MDE0MTQsInMiOjE4ODY5NDc3MzYsImMiOjE4MTUxNTc0MjksInQiOjE3NjQ3ODgyNzF9--7652cf2991c2a15fe2d00d2dc64c0ff012f0532a9393fd8ab7ef8987628c9459&shared=true&p=1287858807_1764737396.56
+[00:27:53.934][127.0.0.1:55420] [2404:6800:4009:802::200e]:443: HTTP/2 protocol error: Invalid input ConnectionInputs.RECV_PING in state ConnectionState.CLOSED
+[00:27:53.935][127.0.0.1:55420] server disconnect clients4.google.com:443 ([2404:6800:4009:802::200e]:443)
+[00:27:53.944][127.0.0.1:50371] client connect
+[00:27:58.087][127.0.0.1:52028] [2404:6800:4007:836::2003]:443: HTTP/2 protocol error: Invalid input ConnectionInputs.RECV_PING in state ConnectionState.CLOSED
+[00:27:58.090][127.0.0.1:50371] server connect v20.events.data.microsoft.com:443 (52.168.117.170:443)
+[00:27:58.091][127.0.0.1:52028] server disconnect update.googleapis.com:443 ([2404:6800:4007:836::2003]:443)
+[00:27:58.093][127.0.0.1:63642] client disconnect
+[00:27:58.095][127.0.0.1:63642] server disconnect github.com:443 (20.207.73.82:443)
+[00:27:58.587][127.0.0.1:57349] client disconnect
+[00:27:58.588][127.0.0.1:57349] Server TLS handshake failed. connection closed
+[00:27:58.589][127.0.0.1:57349] Unable to establish TLS connection with server (connection closed). Trying to establish TLS with client anyway. If you plan to redirect requests away from this server, consider setting `connection_strategy` to `lazy` to suppress early connections.
+[00:27:58.590][127.0.0.1:57349] server disconnect v20.events.data.microsoft.com:443 (13.69.109.130:443)
+[00:28:17.806][127.0.0.1:61117] [2404:6800:4009:819::2003]:443: HTTP/2 protocol error: Invalid input ConnectionInputs.RECV_PING in state ConnectionState.CLOSED
+[00:28:17.807][127.0.0.1:61117] server disconnect clientservices.googleapis.com:443 ([2404:6800:4009:819::2003]:443)
+[00:28:19.618][127.0.0.1:53944] client connect
+[00:28:19.649][127.0.0.1:52945] client connect
+[00:28:19.653] [PhishGuard]  Suspicious domain: example.com
+[00:28:19.655] [PhishGuard] Calling popup: example.com
+[00:28:28.492] [PhishGuard]  BLOCKED: example.com
+127.0.0.1:52945: GET http://example.com/
+              << 403 Forbidden 5.4k
+[00:28:28.502][127.0.0.1:54737] client connect
+[00:28:28.505][127.0.0.1:54222] client connect
+[00:28:28.506][127.0.0.1:56538] server disconnect github.com:443 (20.207.73.82:443)
+[00:28:28.510][127.0.0.1:52945] client disconnect
+[00:28:28.512][127.0.0.1:60426] client connect
+[00:28:28.518][127.0.0.1:55807] client connect
+[00:28:28.527][127.0.0.1:54338] client connect
+[00:28:28.534] [PhishGuard]  Suspicious domain: example.com
+[00:28:28.535] [PhishGuard] Calling popup: example.com
+[00:28:37.234] [PhishGuard]  BLOCKED: example.com
+127.0.0.1:55807: GET http://example.com/
+              << 403 Forbidden 5.4k
+[00:28:37.242][127.0.0.1:53944] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
+[00:28:37.243][127.0.0.1:54737] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
+[00:28:37.243][127.0.0.1:54222] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
+127.0.0.1:56546: POST https://beacons.gcp.gvt2.com/domainreliability/upload HTTP/2.0
+     << HTTP/2.0 200 OK 0b
+127.0.0.1:56546: POST https://beacons.gcp.gvt2.com/domainreliability/upload HTTP/2.0
+     << HTTP/2.0 200 OK 0b
+[00:28:37.308] [PhishGuard]  Suspicious domain: example.com
+[00:28:37.309] [PhishGuard] Calling popup: example.com
+[00:28:46.023] [PhishGuard]  BLOCKED: example.com
+127.0.0.1:55807: GET http://example.com/favicon.ico
+              << 403 Forbidden 5.4k

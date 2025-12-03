@@ -1,0 +1,88 @@
+[PhishGuard] Addon initialized
+[Loading] Script directory: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard
+[Loading] Suspicious list file: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\suspicious_urls.txt
+[Loading] SUCCESS: Loaded 4 suspicious domains
+[Request] Processing: 127.0.0.1
+[Request] Processing: 127.0.0.1
+[Request] Processing: 127.0.0.1
+[Request] Processing: 127.0.0.1
+[Request] Processing: www.googleapis.com
+[Request] Processing: www.googleapis.com
+[Request] Processing: www.googleapis.com
+[Request] Processing: clientservices.googleapis.com
+[Request] Processing: android.clients.google.com
+[Request] Processing: accounts.google.com
+[Request] Processing: memex-pa.googleapis.com
+[Request] Processing: kidsmanagement-pa.googleapis.com
+[Request] Processing: clients4.google.com
+[Request] Processing: update.googleapis.com
+[Request] Processing: clients4.google.com
+[Request] Processing: ssl.gstatic.com
+[Request] Processing: clients4.google.com
+[Request] Processing: drive.google.com
+[Request] Processing: clients4.google.com
+[Request] Processing: drive.google.com
+[Request] Processing: drive.google.com
+[Request] Processing: optimizationguide-pa.googleapis.com
+[Request] Processing: drive.google.com
+[Request] Processing: drive.google.com
+[Request] Processing: ssl.gstatic.com
+[Request] Processing: ssl.gstatic.com
+[Request] Processing: ssl.gstatic.com
+[Request] Processing: android.clients.google.com
+[Request] Processing: clientservices.googleapis.com
+[Request] Processing: clients4.google.com
+[Request] Processing: update.googleapis.com
+[Request] Processing: clientservices.googleapis.com
+[Request] Processing: clients4.google.com
+[Request] Processing: clientservices.googleapis.com
+[Request] Processing: clients4.google.com
+[Request] Processing: ssl.gstatic.com
+[Request] Processing: clientservices.googleapis.com
+[Request] Processing: clientservices.googleapis.com
+[Request] Processing: clientservices.googleapis.com
+[Request] Processing: clientservices.googleapis.com
+[Request] Processing: clientservices.googleapis.com
+[Request] Processing: clientservices.googleapis.com
+[Request] Processing: android.clients.google.com
+[Request] Processing: clientservices.googleapis.com
+[Request] Processing: main.vscode-cdn.net
+[Request] Processing: ssl.gstatic.com
+[Request] Processing: api.honeycomb.io
+[Request] Processing: beacons.gvt2.com
+[Request] Processing: ssl.gstatic.com
+[Request] Processing: ssl.gstatic.com
+[Request] Processing: beacons.gcp.gvt2.com
+[Request] Processing: beacons.gcp.gvt2.com
+[Request] Processing: android.clients.google.com
+[Request] Processing: main.vscode-cdn.net
+[Request] Processing: api.honeycomb.io
+[Request] Processing: alive.github.com
+[Request] Processing: vscode-sync.trafficmanager.net
+[Request] Processing: mobile.events.data.microsoft.com
+[Request] Processing: github.com
+[Request] Processing: github.com
+[Request] Processing: alive.github.com
+[Request] Processing: example.com
+[Detection] SUSPICIOUS domain detected: example.com
+[Popup] Calling: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\popup_simple.py with domain: example.com
+[Popup] stdout result: 'BLOCK'
+[Popup] Result for example.com: BLOCK
+[Decision] User BLOCKED: example.com
+[BlockPage] Loaded custom blocked page for: example.com
+[Request] Processing: beacons.gcp.gvt2.com
+[Request] Processing: beacons.gcp.gvt2.com
+[Request] Processing: example.com
+[Detection] SUSPICIOUS domain detected: example.com
+[Popup] Calling: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\popup_simple.py with domain: example.com
+[Popup] stdout result: 'BLOCK'
+[Popup] Result for example.com: BLOCK
+[Decision] User BLOCKED: example.com
+[BlockPage] Loaded custom blocked page for: example.com
+[Request] Processing: example.com
+[Detection] SUSPICIOUS domain detected: example.com
+[Popup] Calling: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\popup_simple.py with domain: example.com
+[Popup] stdout result: 'BLOCK'
+[Popup] Result for example.com: BLOCK
+[Decision] User BLOCKED: example.com
+[BlockPage] Loaded custom blocked page for: example.com
