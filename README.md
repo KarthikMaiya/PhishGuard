@@ -4,7 +4,7 @@ PhishGuard is a lightweight, real-time phishing protection system that intercept
 
 ## **🎥 Demo Video**
 
-<video src="" controls width="700">
+<video src="https://github.com/KarthikMaiya/PhishGuard/blob/main/Demo%20Video.mp4" controls width="700">
 Your browser does not support the video tag.
 </video>
 
