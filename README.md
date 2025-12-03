@@ -1,6 +1,6 @@
 # **PhishGuard – Real-Time Browser-Level Phishing Protection**
 
-PhishGuard v2 is a lightweight, real-time phishing protection system that intercepts Google Chrome traffic, analyzes domains, and warns users before they access potentially harmful websites. It functions like a miniature firewall + antivirus popup system, detecting suspicious URLs and blocking them with a custom warning page.
+PhishGuard is a lightweight, real-time phishing protection system that intercepts Google Chrome traffic, analyzes domains, and warns users before they access potentially harmful websites. It functions like a miniature firewall + antivirus popup system, detecting suspicious URLs and blocking them with a custom warning page.
 
 ---
 
