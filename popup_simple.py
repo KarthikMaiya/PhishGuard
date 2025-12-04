@@ -422,6 +422,72 @@ def show_popup_gui(domain: str, timeout_sec: int = 8) -> str:
     return popup.run()
 
 
+def show_popup(url: str, score, reasons) -> str:
+    """
+    Synchronous popup API for ML integration.
+
+    Args:
+        url: full URL to display
+        score: float or None
+        reasons: list of strings
+
+    Returns:
+        'allow' or 'block' (lowercase)
+    """
+    try:
+        # Create a minimal modal window showing the URL, score and reasons
+        root = tk.Tk()
+        root.title("PhishGuard - Security Decision")
+        root.attributes('-topmost', True)
+
+        # Simple layout
+        frm = tk.Frame(root, padx=16, pady=12)
+        frm.pack(fill=tk.BOTH, expand=True)
+
+        tk.Label(frm, text="URL:", font=("Arial", 9, "bold")).pack(anchor=tk.W)
+        tk.Label(frm, text=str(url), font=("Arial", 9), wraplength=700, justify=tk.LEFT).pack(anchor=tk.W, pady=(0,8))
+
+        if score is not None:
+            perc = float(score) * 100.0
+            tk.Label(frm, text=f"Risk Score: {perc:.1f}%", font=("Arial", 10, "bold"), fg="#b22222").pack(anchor=tk.W, pady=(0,8))
+
+        if reasons:
+            tk.Label(frm, text="Reasons:", font=("Arial", 9, "bold")).pack(anchor=tk.W)
+            reasons_frame = tk.Frame(frm)
+            reasons_frame.pack(fill=tk.BOTH, expand=True, pady=(0,8))
+            for r in reasons:
+                tk.Label(reasons_frame, text=f"- {r}", font=("Arial", 9), anchor=tk.W, justify=tk.LEFT, wraplength=700).pack(anchor=tk.W)
+
+        choice = {'value': 'block'}
+
+        def allow():
+            choice['value'] = 'allow'
+            root.destroy()
+
+        def block():
+            choice['value'] = 'block'
+            root.destroy()
+
+        btn_frame = tk.Frame(frm)
+        btn_frame.pack(fill=tk.X, pady=(8,0))
+
+        allow_btn = tk.Button(btn_frame, text="ALLOW", width=12, command=allow)
+        allow_btn.pack(side=tk.LEFT, padx=(0,8))
+        block_btn = tk.Button(btn_frame, text="BLOCK", width=12, command=block)
+        block_btn.pack(side=tk.LEFT)
+
+        # Center and run
+        root.update_idletasks()
+        x = (root.winfo_screenwidth() // 2) - (root.winfo_width() // 2)
+        y = (root.winfo_screenheight() // 2) - (root.winfo_height() // 2)
+        root.geometry(f"+{x}+{y}")
+
+        root.mainloop()
+        return choice['value']
+    except Exception:
+        return 'block'
+
+
 def main():
     """
     Main entry point - called from proxy_simple.py subprocess.

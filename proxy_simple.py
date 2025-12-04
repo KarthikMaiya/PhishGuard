@@ -13,7 +13,16 @@ import os
 import sys
 import subprocess
 import traceback
+import json
+import urllib.request
+import urllib.error
 from mitmproxy import http, ctx
+
+# Import popup_simple.show_popup (will be implemented in popup_simple.py)
+try:
+    import popup_simple
+except Exception:
+    popup_simple = None
 
 
 # WHITELIST: Trusted domains that bypass all checks (HIGH PERFORMANCE)
@@ -258,53 +267,91 @@ class Addon:
                 self.log_error(f"[FastPath] SAFE domain (whitelist), allowing: {domain}")
                 return  # Allow request - no popup, no inspection needed
             
-            # OPTIMIZATION 2: SUSPICIOUS CHECK with normalized domain
-            # Only check exact match (after www. removal and lowercase)
-            if self.is_suspicious_domain(domain):
-                self.log_error(f"[Detection] SUSPICIOUS domain detected: {domain}")
-                ctx.log.warn(f"[PhishGuard] Suspicious domain: {domain}")
-                
-                # Call popup and get user decision
+            # OPTIMIZATION 2: Use ML analyzer for real-time scoring
+            try:
+                # Build full URL from flow
                 try:
-                    result = self.show_popup_subprocess(domain)
-                    self.log_error(f"[Popup] Result for {domain}: {result}")
-                    
-                    if result == "BLOCK":
-                        self.log_error(f"[Decision] User BLOCKED: {domain}")
-                        ctx.log.warn(f"[PhishGuard] BLOCKED: {domain}")
-                        # Block the request with custom HTML page
-                        html_content = self.get_blocked_page_html(domain)
-                        flow.response = http.Response.make(
-                            403,
-                            html_content.encode('utf-8'),
-                            {"Content-Type": "text/html; charset=utf-8"}
-                        )
-                    elif result == "ALLOW":
-                        self.log_error(f"[Decision] User ALLOWED: {domain}")
-                        ctx.log.info(f"[PhishGuard] ALLOWED: {domain}")
-                        # Allow request to proceed (no response set)
-                        pass
+                    full_url = flow.request.pretty_url
+                except Exception:
+                    full_url = None
+
+                analyzer_hit = False
+                score = None
+                reasons = []
+
+                if full_url:
+                    analyzer_url = "http://127.0.0.1:8000/score"
+                    payload = json.dumps({"url": full_url}).encode('utf-8')
+                    req = urllib.request.Request(analyzer_url, data=payload, headers={"Content-Type": "application/json"}, method='POST')
+                    try:
+                        with urllib.request.urlopen(req, timeout=0.8) as resp:
+                            body = resp.read()
+                            try:
+                                resp_json = json.loads(body.decode('utf-8', errors='ignore'))
+                                score = float(resp_json.get('score', 0.0))
+                                reasons = resp_json.get('reasons', []) or []
+                                analyzer_hit = True
+                                self.log_error(f"[Analyzer] Score for {full_url}: {score}")
+                            except Exception as e:
+                                self.log_error(f"[Analyzer] Invalid JSON response: {e}")
+                    except Exception as e:
+                        # Analyzer unreachable or timed out - fallback to rule-based detection
+                        self.log_error(f"[Analyzer] Unreachable or timeout: {e}")
+
+                # Decision logic: if analyzer indicates high risk, show popup
+                show_popup_decision = None
+                if analyzer_hit and score is not None:
+                    if score >= 0.75:
+                        # Ensure popup API exists
+                        try:
+                            if popup_simple and hasattr(popup_simple, 'show_popup'):
+                                res = popup_simple.show_popup(full_url, score, reasons)
+                                show_popup_decision = str(res).lower()
+                            else:
+                                # Fallback: use subprocess popup for compatibility
+                                show_popup_decision = self.show_popup_subprocess(domain).lower()
+                        except Exception as e:
+                            self.log_error(f"[Popup Error] Exception when calling show_popup: {e}")
+                            show_popup_decision = 'block'
                     else:
-                        # Timeout or error - default to BLOCK
-                        self.log_error(f"[Decision] Invalid result '{result}', blocking by default: {domain}")
-                        ctx.log.warn(f"[PhishGuard] Invalid popup result, blocking: {domain}")
-                        html_content = self.get_blocked_page_html(domain)
-                        flow.response = http.Response.make(
-                            403,
-                            html_content.encode('utf-8'),
-                            {"Content-Type": "text/html; charset=utf-8"}
-                        )
-                
-                except Exception as popup_error:
-                    self.log_error(f"[Popup Error] Failed to call popup for {domain}: {popup_error}\n{traceback.format_exc()}")
-                    ctx.log.error(f"[PhishGuard] Popup error: {popup_error}")
-                    # Default to block on error
+                        # Low/medium risk -> allow
+                        show_popup_decision = 'allow'
+                else:
+                    # Analyzer not available: fallback to rule-based (suspicious list)
+                    if self.is_suspicious_domain(domain):
+                        try:
+                            if popup_simple and hasattr(popup_simple, 'show_popup'):
+                                res = popup_simple.show_popup(full_url or domain, None, ["Matched suspicious list"]) 
+                                show_popup_decision = str(res).lower()
+                            else:
+                                show_popup_decision = self.show_popup_subprocess(domain).lower()
+                        except Exception as e:
+                            self.log_error(f"[Popup Error] Exception when calling fallback popup: {e}")
+                            show_popup_decision = 'block'
+                    else:
+                        show_popup_decision = 'allow'
+
+                # Apply decision
+                if show_popup_decision == 'block' or show_popup_decision == 'BLOCK':
                     html_content = self.get_blocked_page_html(domain)
                     flow.response = http.Response.make(
                         403,
                         html_content.encode('utf-8'),
                         {"Content-Type": "text/html; charset=utf-8"}
                     )
+                else:
+                    # allow - do nothing
+                    pass
+
+            except Exception as e:
+                self.log_error(f"[Critical] ML decision path failed: {e}\n{traceback.format_exc()}")
+                # Safe default: block
+                html_content = self.get_blocked_page_html(domain)
+                flow.response = http.Response.make(
+                    403,
+                    html_content.encode('utf-8'),
+                    {"Content-Type": "text/html; charset=utf-8"}
+                )
             else:
                 # Domain is not suspicious, allow it to pass through
                 self.log_error(f"[AllowPass] Domain not suspicious: {domain}")

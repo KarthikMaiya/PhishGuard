@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+
+# Environments
+env/
+venv/
+*.env
+
+# Jupyter cache
+.ipynb_checkpoints/
+
+# Large or sensitive datasets
+*.csv
+*.xlsx
+*.dat
+*.pickle
+*.pkl
+
+# OS junk
+Thumbs.db
+.DS_Store
+
+# Anaconda junk
+*.conda
+*.log
+!analyzer/model/XGBoost_RealTime.dat
+

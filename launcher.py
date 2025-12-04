@@ -9,6 +9,8 @@ import os
 import time
 import socket
 from pathlib import Path
+import urllib.request
+import urllib.error
 
 
 def log_to_console_and_file(message, log_file="phishguard_launcher.log"):
@@ -154,6 +156,8 @@ def start_proxy():
                 f"[PhishGuard] Check {debug_log} for error details"
             )
             return None
+
+
         
         log_to_console_and_file(
             f"[PhishGuard] ✅ Subprocess is running (still alive)"
@@ -246,6 +250,52 @@ def start_chrome(proxy_url="127.0.0.1:8080"):
         return None
 
 
+def start_analyzer(timeout=10):
+    """
+    Start the ML analyzer (analyzer/serve_ml.py) and wait for /health.
+    Returns subprocess.Popen object or None on failure.
+    """
+    script_dir = Path(__file__).parent
+    analyzer_script = script_dir / "analyzer" / "serve_ml.py"
+
+    if not analyzer_script.exists():
+        log_to_console_and_file(f"[PhishGuard] ❌ Analyzer script not found: {analyzer_script}")
+        return None
+
+    log_to_console_and_file(f"[PhishGuard] Starting analyzer: {analyzer_script}")
+    try:
+        proc = subprocess.Popen(
+            [sys.executable, str(analyzer_script)],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            cwd=str(script_dir),
+            creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == 'win32' else 0
+        )
+    except Exception as e:
+        log_to_console_and_file(f"[PhishGuard] ❌ Failed to start analyzer: {e}")
+        return None
+
+    # Wait for health endpoint
+    start_time = time.time()
+    health_url = 'http://127.0.0.1:8000/health'
+    while time.time() - start_time < timeout:
+        try:
+            with urllib.request.urlopen(health_url, timeout=1) as r:
+                if r.status == 200:
+                    log_to_console_and_file(f"[PhishGuard] ✅ Analyzer is READY (health OK)")
+                    return proc
+        except Exception:
+            time.sleep(0.3)
+
+    # Timed out
+    log_to_console_and_file(f"[PhishGuard] ❌ Analyzer did not become ready within {timeout}s")
+    try:
+        proc.terminate()
+    except Exception:
+        pass
+    return None
+
+
 def main():
     """
     Main launcher: Start mitmdump, verify it's ready, then start Chrome.
@@ -269,9 +319,26 @@ def main():
         "=" * 60
     )
     
-    # Step 1: Start mitmproxy
+    # Step 1: Start analyzer then mitmproxy
     log_to_console_and_file(
-        "\n[STEP 1] Starting mitmproxy (mitmdump)..."
+        "\n[STEP 1] Starting ML analyzer and mitmproxy..."
+    )
+
+    analyzer_proc = start_analyzer(timeout=10)
+    if not analyzer_proc:
+        log_to_console_and_file(
+            "\n[PhishGuard] ❌ CRITICAL FAILURE: Analyzer did not start or health check failed"
+        )
+        log_to_console_and_file(
+            "[PhishGuard] Ensure analyzer/serve_ml.py is present and healthy"
+        )
+        log_to_console_and_file(
+            "[PhishGuard] Exiting launcher"
+        )
+        return 1
+
+    log_to_console_and_file(
+        "\n[STEP 2] Starting mitmproxy (mitmdump)..."
     )
     proxy_proc = start_proxy()
     
@@ -283,8 +350,14 @@ def main():
             "[PhishGuard] Check mitmproxy_debug.log for details"
         )
         log_to_console_and_file(
-            "[PhishGuard] Exiting launcher without starting Chrome"
+            "[PhishGuard] Exiting launcher"
         )
+        # Ensure analyzer terminated
+        try:
+            if analyzer_proc and analyzer_proc.poll() is None:
+                analyzer_proc.terminate()
+        except Exception:
+            pass
         return 1
     
     # Step 2: Verify proxy is ready
@@ -395,6 +468,20 @@ def main():
                 proxy_proc.wait(timeout=5)
             except subprocess.TimeoutExpired:
                 proxy_proc.kill()
+        
+        # Terminate analyzer if it was started
+        try:
+            if 'analyzer_proc' in locals() and analyzer_proc and analyzer_proc.poll() is None:
+                log_to_console_and_file(
+                    "[PhishGuard] Terminating ML analyzer..."
+                )
+                analyzer_proc.terminate()
+                try:
+                    analyzer_proc.wait(timeout=5)
+                except subprocess.TimeoutExpired:
+                    analyzer_proc.kill()
+        except Exception:
+            pass
         
         log_to_console_and_file(
             "[PhishGuard] Protection stopped"
