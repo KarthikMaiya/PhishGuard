@@ -1,21 +1,21 @@
 ============================================================
 PhishGuard Stage-1 MVP - Launcher Starting
-Timestamp: Thu Dec  4 02:16:09 2025
+Timestamp: Thu Dec  4 18:10:42 2025
 ============================================================
 
 [STEP 1] Starting mitmproxy (mitmdump)...
 
 [PhishGuard] STARTING MITMPROXY
-[PhishGuard] Exact command: mitmdump -s C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\proxy_simple.py --listen-host 127.0.0.1 --listen-port 8080
-[PhishGuard] Proxy script: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\proxy_simple.py
-[PhishGuard] Debug log: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\mitmproxy_debug.log
-[PhishGuard] Working directory: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard
-[PhishGuard] ✅ Subprocess launched (PID: 30744)
-[PhishGuard] Debug output written to: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\phishguard\mitmproxy_debug.log
+[PhishGuard] Exact command: mitmdump -s C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\proxy_simple.py --listen-host 127.0.0.1 --listen-port 8080
+[PhishGuard] Proxy script: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\proxy_simple.py
+[PhishGuard] Debug log: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\mitmproxy_debug.log
+[PhishGuard] Working directory: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2
+[PhishGuard] ✅ Subprocess launched (PID: 33312)
+[PhishGuard] Debug output written to: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\mitmproxy_debug.log
 [PhishGuard] ✅ Subprocess is running (still alive)
 
 [STEP 2] Verifying proxy is listening on 127.0.0.1:8080...
-[PhishGuard] ✅ Proxy is READY on 127.0.0.1:8080 (detected after 0.5s, attempt 1)
+[PhishGuard] ✅ Proxy is READY on 127.0.0.1:8080 (detected after 1.0s, attempt 1)
 
 [STEP 3] Launching Chrome with proxy configuration...
 
@@ -23,13 +23,13 @@ Timestamp: Thu Dec  4 02:16:09 2025
 [PhishGuard] Chrome path: C:\Program Files\Google\Chrome\Application\chrome.exe
 [PhishGuard] Proxy URL: 127.0.0.1:8080
 [PhishGuard] Chrome command: C:\Program Files\Google\Chrome\Application\chrome.exe --proxy-server=127.0.0.1:8080 --ignore-certificate-errors --allow-insecure-localhost
-[PhishGuard] ✅ Chrome launched (PID: 21256)
+[PhishGuard] ✅ Chrome launched (PID: 28080)
 [PhishGuard] Using default user profile (no new profile created)
 [PhishGuard] System proxy settings: UNCHANGED
 
 [STEP 4] PhishGuard is ACTIVE and monitoring...
-[PhishGuard] mitmproxy PID: 30744
-[PhishGuard] Chrome PID: 21256
+[PhishGuard] mitmproxy PID: 33312
+[PhishGuard] Chrome PID: 28080
 [PhishGuard] Listening on: 127.0.0.1:8080
 [PhishGuard] (Close Chrome to exit, Ctrl+C to force stop)
 ============================================================
