@@ -32,7 +32,8 @@ SAFE_DOMAINS = {
     'github.com',
     'facebook.com',
     'whatsapp.com',
-    'instagram.com'
+    'instagram.com',
+    'reddit.com'
 }
 
 
