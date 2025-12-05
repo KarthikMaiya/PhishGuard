@@ -5,6 +5,9 @@ import uvicorn
 import pickle
 import numpy as np
 from feature_extractor import extract_domain_features_from_url
+from urllib.parse import urlparse
+from feature_extractor import brand_impersonation_score
+
 
 app = FastAPI(title="PhishGuard ML Analyzer")
 
@@ -22,21 +25,24 @@ class URLRequest(BaseModel):
 def health():
     return {"status": "ok"}
 
+
 @app.post("/score")
 def score_url(data: URLRequest):
     url = data.url
+
+    # 1. Extract ML features (8 features only)
     features = extract_domain_features_from_url(url)
     X = np.array(features).reshape(1, -1)
+    reasons = []
 
-    # Use predict_proba if available
+    # 2. ML prediction
     try:
         score = float(model.predict_proba(X)[0][1])
     except Exception:
-        # fallback to predict (0 or 1)
         pred = int(model.predict(X)[0])
         score = 0.99 if pred == 1 else 0.01
 
-    # Risk levels (tunable)
+    # 3. Base ML risk
     if score >= 0.75:
         risk = "high"
     elif score >= 0.4:
@@ -44,7 +50,7 @@ def score_url(data: URLRequest):
     else:
         risk = "low"
 
-    # Explainability: map features to names
+    # 4. Explainability from ML features
     names = [
         "IP in domain",
         "Hyphen in domain",
@@ -55,22 +61,37 @@ def score_url(data: URLRequest):
         "Domain entropy",
         "Known shortener domain"
     ]
-    reasons = []
+
     for i, v in enumerate(features):
-        # entropy is float; give reason if entropy > 3.5 (tunable)
-        if i == 6:
+        if i == 6:  # entropy
             if float(v) > 3.5:
                 reasons.append(names[i])
         else:
             if v and v != 0:
                 reasons.append(names[i])
 
+    # 5. BRAND IMPERSONATION OVERRIDE (FINAL AUTHORITY)
+    parsed = urlparse(url)
+    domain = parsed.netloc.lower().split(":")[0]
+
+    similarity, brand = brand_impersonation_score(domain)
+
+    if similarity >= 0.75:
+        score = max(score, 0.95)
+        risk = "high"
+
+        tag = f"brand_impersonation:{brand}"
+        if tag not in reasons:
+            reasons.append(tag)
+
+    # 6. Final response
     return {
         "url": url,
         "score": round(score, 6),
         "risk": risk,
         "reasons": reasons
     }
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)

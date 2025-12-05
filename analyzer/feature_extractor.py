@@ -6,6 +6,43 @@ import math
 import re
 from collections import Counter
 from publicsuffix2 import get_tld
+import Levenshtein
+
+
+KNOWN_BRANDS = [
+    "google", "microsoft", "paypal", "apple",
+    "amazon", "facebook", "instagram",
+    "netflix", "github", "openai"
+]
+
+def normalize_homoglyphs(s: str) -> str:
+    return (
+        s.replace("0", "o")
+         .replace("1", "l")
+         .replace("3", "e")
+         .replace("5", "s")
+         .replace("7", "t")
+         .replace("rn", "m")
+         .lower()
+    )
+
+def brand_impersonation_score(domain: str):
+    base = domain.split('.')[0].lower()
+    base = normalize_homoglyphs(base)
+
+    best_score = 0.0
+    best_brand = None
+
+    for brand in KNOWN_BRANDS:
+        score = Levenshtein.ratio(base, brand)
+
+        if score > best_score:
+            best_score = score
+            best_brand = brand
+
+    return best_score, best_brand
+
+
 
 SUSPICIOUS_TLDS = {
     "ru","tk","ml","ga","cf","biz","info","top","work","pw","xyz","win","click","gq"
@@ -104,6 +141,17 @@ def uses_shortener(domain_or_netloc: str) -> int:
     return 1 if shortening_domains.search(netloc) else 0
 
 def extract_domain_features_from_url(url: str):
+    
+    # Ensure URL has scheme
+    if not url.startswith(("http://", "https://")):
+        url = "http://" + url
+
+    parsed = urlparse(url)
+    domain = parsed.netloc.lower()
+
+    # Remove port if present
+    domain = domain.split(":")[0]
+    
     """
     Input: full URL string (the proxy will send full URL).
     Internal: extract domain/netloc and compute domain-level features.
@@ -129,5 +177,10 @@ def extract_domain_features_from_url(url: str):
         domain_entropy(netloc),
         uses_shortener(netloc)
     ]
+    
+    similarity, spoofed_brand = brand_impersonation_score(domain)
+
+
+    
     # return list (ints/floats)
     return features

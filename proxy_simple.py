@@ -17,6 +17,9 @@ import json
 import urllib.request
 import urllib.error
 from mitmproxy import http, ctx
+import requests
+import json
+
 
 # Import popup_simple.show_popup (will be implemented in popup_simple.py)
 try:

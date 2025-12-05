@@ -26,3 +26,7 @@ Thumbs.db
 *.log
 !analyzer/model/XGBoost_RealTime.dat
 
+# Ignore Jupyter notebooks
+*.ipynb
+.ipynb_checkpoints/
+
