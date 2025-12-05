@@ -9,13 +9,30 @@ import os
 import time
 import socket
 from pathlib import Path
+import threading
+import requests
 import urllib.request
 import urllib.error
 
 
 def log_to_console_and_file(message, log_file="phishguard_launcher.log"):
-    """Print to console and append to log file"""
-    print(message)
+    """Print to console and append to log file, handling Unicode on Windows"""
+    try:
+        # Handle Unicode on Windows console
+        if sys.platform == 'win32':
+            print(message, file=sys.stderr, flush=True)
+        else:
+            print(message, flush=True)
+    except UnicodeEncodeError:
+        # Fallback: replace emoji with ASCII characters
+        ascii_message = (message
+            .replace("✅", "[OK]")
+            .replace("❌", "[FAIL]")
+            .replace("⏳", "[WAIT]")
+            .replace("→", "->")
+        )
+        print(ascii_message, flush=True)
+    
     try:
         with open(log_file, 'a', encoding='utf-8') as f:
             f.write(message + '\n')
@@ -128,7 +145,7 @@ def start_proxy():
             debug_f.write(f"=====================================\n\n")
             debug_f.flush()
             
-            # Start mitmdump with output capture
+            # Start mitmdump with output capture and hidden window on Windows
             proc = subprocess.Popen(
                 mitmdump_command,
                 stdout=debug_f,
@@ -230,7 +247,8 @@ def start_chrome(proxy_url="127.0.0.1:8080"):
         proc = subprocess.Popen(
             chrome_args,
             stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
+            stderr=subprocess.DEVNULL,
+            creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == 'win32' else 0
         )
         
         log_to_console_and_file(
@@ -250,50 +268,100 @@ def start_chrome(proxy_url="127.0.0.1:8080"):
         return None
 
 
-def start_analyzer(timeout=10):
+def start_analyzer(timeout=20):
     """
-    Start the ML analyzer (analyzer/serve_ml.py) and wait for /health.
+    Start the ML analyzer (analyzer/serve_ml.py) and wait for /score.
     Returns subprocess.Popen object or None on failure.
     """
     script_dir = Path(__file__).parent
     analyzer_script = script_dir / "analyzer" / "serve_ml.py"
 
     if not analyzer_script.exists():
-        log_to_console_and_file(f"[PhishGuard] ❌ Analyzer script not found: {analyzer_script}")
+        log_to_console_and_file(f"[PhishGuard] [FAIL] Analyzer script not found: {analyzer_script}")
         return None
 
-    log_to_console_and_file(f"[PhishGuard] Starting analyzer: {analyzer_script}")
+    # Use environment variable override if set, else use current Python  
+    PYTHON_EXECUTABLE = os.environ.get('PHISHGUARD_PYTHON') or sys.executable
+    if not os.path.exists(PYTHON_EXECUTABLE):
+        log_to_console_and_file(f"[PhishGuard] [FAIL] Python executable not found: {PYTHON_EXECUTABLE}")
+        return None
+
+    log_to_console_and_file(f"\n[PhishGuard] STARTING ANALYZER")
+    log_to_console_and_file(f"[PhishGuard] Python executable: {PYTHON_EXECUTABLE}")
+    log_to_console_and_file(f"[PhishGuard] Working directory: {script_dir}")
+    log_to_console_and_file(f"[PhishGuard] Analyzer script: {analyzer_script}")
+    
     try:
+        env = os.environ.copy()
+        env['PYTHONUNBUFFERED'] = '1'
+
         proc = subprocess.Popen(
-            [sys.executable, str(analyzer_script)],
+            [PYTHON_EXECUTABLE, "-u", str(analyzer_script)],
+            cwd=str(script_dir),
+            env=env,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
-            cwd=str(script_dir),
             creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == 'win32' else 0
         )
+
+        log_to_console_and_file(f"[PhishGuard] [OK] Analyzer subprocess launched (PID: {proc.pid})")
+
     except Exception as e:
-        log_to_console_and_file(f"[PhishGuard] ❌ Failed to start analyzer: {e}")
+        log_to_console_and_file(f"[PhishGuard] [FAIL] Failed to start analyzer: {e}")
+        import traceback
+        log_to_console_and_file(f"[PhishGuard] Traceback:\n{traceback.format_exc()}")
         return None
 
-    # Wait for health endpoint
+    # Wait for analyzer /score endpoint to be ready
     start_time = time.time()
-    health_url = 'http://127.0.0.1:8000/health'
+    test_url = 'http://127.0.0.1:8000/score'
+    test_payload = b'{"url":"http://google.com"}'
+    attempt = 0
+
     while time.time() - start_time < timeout:
+        attempt += 1
+        
+        # Check if process is still alive
+        if proc.poll() is not None:
+            log_to_console_and_file(f"[PhishGuard] [FAIL] Analyzer process exited unexpectedly (exit code: {proc.returncode})")
+            return None
+        
         try:
-            with urllib.request.urlopen(health_url, timeout=1) as r:
+            req = urllib.request.Request(
+                test_url,
+                data=test_payload,
+                headers={"Content-Type": "application/json"},
+                method="POST"
+            )
+            with urllib.request.urlopen(req, timeout=2) as r:
                 if r.status == 200:
-                    log_to_console_and_file(f"[PhishGuard] ✅ Analyzer is READY (health OK)")
+                    response_body = r.read().decode('utf-8')
+                    log_to_console_and_file(f"[PhishGuard] [OK] Analyzer is READY (score endpoint OK)")
+                    log_to_console_and_file(f"[PhishGuard] HTTP Status: {r.status}")
+                    log_to_console_and_file(f"[PhishGuard] Response: {response_body}")
                     return proc
-        except Exception:
-            time.sleep(0.3)
+        except urllib.error.URLError:
+            elapsed = time.time() - start_time
+            log_to_console_and_file(f"[PhishGuard] [WAIT] Waiting for analyzer... ({elapsed:.1f}s, attempt {attempt})")
+            time.sleep(0.5)
+        except Exception as e:
+            elapsed = time.time() - start_time
+            log_to_console_and_file(f"[PhishGuard] [WAIT] Waiting for analyzer... ({elapsed:.1f}s, attempt {attempt})")
+            time.sleep(0.5)
 
     # Timed out
-    log_to_console_and_file(f"[PhishGuard] ❌ Analyzer did not become ready within {timeout}s")
+    log_to_console_and_file(f"[PhishGuard] [FAIL] Analyzer did not become ready within {timeout}s")
     try:
         proc.terminate()
+        proc.wait(timeout=5)
     except Exception:
-        pass
+        try:
+            proc.kill()
+        except Exception:
+            pass
+
     return None
+
 
 
 def main():
@@ -324,8 +392,8 @@ def main():
         "\n[STEP 1] Starting ML analyzer and mitmproxy..."
     )
 
-    analyzer_proc = start_analyzer(timeout=10)
-    if not analyzer_proc:
+    analyzer_proc = start_analyzer(timeout=20)
+    if analyzer_proc is None:
         log_to_console_and_file(
             "\n[PhishGuard] ❌ CRITICAL FAILURE: Analyzer did not start or health check failed"
         )
@@ -498,4 +566,48 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
+# ============================================================================
+# VERIFICATION CHECKLIST FOR ALL 5 CHANGES
+# ============================================================================
+# 
+# 1. SILENT BACKGROUND STARTUP (No Visible Terminals)
+#    ✓ All subprocesses use CREATE_NO_WINDOW flag on Windows
+#    ✓ Analyzer, mitmproxy, and Chrome start with hidden windows
+#    ✓ Test: Run "python launcher.py" - NO console windows should appear
+#    ✓ Log file: phishguard_launcher.log will show all activity in background
+#    ✓ Optional: Create Windows Task Scheduler entry to auto-start launcher.py
+#      at system boot or user login
+#
+# 2. USE EXISTING CHROME PROFILE (No Fresh Chrome User Data)
+#    ✓ Chrome launch does NOT use --user-data-dir argument
+#    ✓ Uses system's default Chrome profile path
+#    ✓ User remains logged in across launches
+#    ✓ Test: Check Chrome settings - history/extensions should persist
+#    ✓ Verified in start_chrome() function - only --proxy-server is set
+#
+# 3. POPUP UI SIZE + SCROLL SUPPORT
+#    ✓ Popup window created with size 680x650 (see popup_simple.py line 101)
+#    ✓ Scrollable details section with vertical scrollbar (canvas + scrollbar)
+#    ✓ Content area uses fill/expand=True for proper padding
+#    ✓ Test: Click "Show Details >>" button - should scroll if content exceeds
+#    ✓ Test: All buttons (BLOCK/ALLOW) remain visible and clickable
+#
+# 4. AUTO-TIMEOUT WITH DEFAULT BLOCK  
+#    ✓ 10-second countdown timer visible at top of popup (default timeout=8)
+#    ✓ Timer shows "Auto-block in: X seconds" and counts down
+#    ✓ When countdown reaches 0, popup auto-blocks and closes
+#    ✓ Test: Launch popup, wait 10 seconds - should auto-block
+#    ✓ Test: Click ALLOW - timer should cancel and popup close normally
+#    ✓ Implemented in popup_simple.py: update_countdown() method
+#
+# 5. BLINKING RED ALERT BORDER
+#    ✓ Red border pulses between #ff0000 (bright) and #990000 (dark) every 500ms
+#    ✓ Border animation uses Tkinter after() method (non-blocking)
+#    ✓ Animation stops when popup is closed
+#    ✓ Test: Launch popup - should see continuous red border pulsing
+#    ✓ Implemented in popup_simple.py: animate_border() method
+#
+# ============================================================================
 

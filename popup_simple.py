@@ -428,36 +428,74 @@ def show_popup(url: str, score, reasons) -> str:
 
     Args:
         url: full URL to display
-        score: float or None
-        reasons: list of strings
+        score: float or None (risk probability 0-1)
+        reasons: list of strings (detection reasons)
 
     Returns:
         'allow' or 'block' (lowercase)
     """
     try:
-        # Create a minimal modal window showing the URL, score and reasons
         root = tk.Tk()
-        root.title("PhishGuard - Security Decision")
+        root.title("PhishGuard - Security Alert")
+        root.geometry("750x400")
         root.attributes('-topmost', True)
 
-        # Simple layout
-        frm = tk.Frame(root, padx=16, pady=12)
+        # Main container
+        frm = tk.Frame(root, bg='#ffffff', padx=20, pady=20)
         frm.pack(fill=tk.BOTH, expand=True)
 
-        tk.Label(frm, text="URL:", font=("Arial", 9, "bold")).pack(anchor=tk.W)
-        tk.Label(frm, text=str(url), font=("Arial", 9), wraplength=700, justify=tk.LEFT).pack(anchor=tk.W, pady=(0,8))
+        # Header with risk level
+        header_frm = tk.Frame(frm, bg='#8b0000', padx=15, pady=15)
+        header_frm.pack(fill=tk.X, pady=(0, 15))
+        
+        tk.Label(header_frm, text="SECURITY WARNING", font=("Arial", 14, "bold"), 
+                bg='#8b0000', fg='white').pack(anchor=tk.W)
+        tk.Label(header_frm, text="Suspicious domain detected by PhishGuard", 
+                font=("Arial", 10), bg='#8b0000', fg='white').pack(anchor=tk.W, pady=(5,0))
 
+        # URL display
+        tk.Label(frm, text="URL:", font=("Arial", 9, "bold"), fg='#333').pack(anchor=tk.W)
+        url_label = tk.Label(frm, text=str(url), font=("Courier", 9), 
+                           wraplength=700, justify=tk.LEFT, fg='#cc0000')
+        url_label.pack(anchor=tk.W, pady=(0, 12), padx=(10, 0))
+
+        # Risk score and level
         if score is not None:
-            perc = float(score) * 100.0
-            tk.Label(frm, text=f"Risk Score: {perc:.1f}%", font=("Arial", 10, "bold"), fg="#b22222").pack(anchor=tk.W, pady=(0,8))
+            risk_pct = float(score) * 100.0
+            risk_level = "HIGH" if risk_pct >= 75 else ("MEDIUM" if risk_pct >= 40 else "LOW")
+            risk_color = '#cc0000' if risk_pct >= 75 else ('#ff9900' if risk_pct >= 40 else '#00aa00')
+            
+            score_frm = tk.Frame(frm, bg='#f0f0f0', relief=tk.SOLID, bd=1)
+            score_frm.pack(fill=tk.X, pady=(0, 12))
+            
+            score_inner = tk.Frame(score_frm, bg='#f0f0f0', padx=12, pady=8)
+            score_inner.pack(fill=tk.X)
+            
+            tk.Label(score_inner, text=f"Risk Level: {risk_level}", 
+                    font=("Arial", 11, "bold"), fg=risk_color, bg='#f0f0f0').pack(anchor=tk.W)
+            tk.Label(score_inner, text=f"Probability Score: {risk_pct:.1f}%", 
+                    font=("Arial", 10), fg='#333', bg='#f0f0f0').pack(anchor=tk.W, pady=(3,0))
 
-        if reasons:
-            tk.Label(frm, text="Reasons:", font=("Arial", 9, "bold")).pack(anchor=tk.W)
-            reasons_frame = tk.Frame(frm)
-            reasons_frame.pack(fill=tk.BOTH, expand=True, pady=(0,8))
-            for r in reasons:
-                tk.Label(reasons_frame, text=f"- {r}", font=("Arial", 9), anchor=tk.W, justify=tk.LEFT, wraplength=700).pack(anchor=tk.W)
+        # Reasons section
+        if reasons and len(reasons) > 0:
+            tk.Label(frm, text="Detection Reasons:", font=("Arial", 9, "bold"), 
+                   fg='#333').pack(anchor=tk.W, pady=(0, 5))
+            
+            reasons_frm = tk.Frame(frm, bg='#fff9e6', relief=tk.SOLID, bd=1)
+            reasons_frm.pack(fill=tk.X, pady=(0, 12))
+            
+            reasons_inner = tk.Frame(reasons_frm, bg='#fff9e6', padx=12, pady=8)
+            reasons_inner.pack(fill=tk.X)
+            
+            for reason in reasons[:5]:  # Limit to 5 reasons
+                tk.Label(reasons_inner, text=f"• {reason}", font=("Arial", 9), 
+                       fg='#333', bg='#fff9e6', justify=tk.LEFT, wraplength=650).pack(anchor=tk.W, pady=2)
 
+        # Action label
+        tk.Label(frm, text="What would you like to do?", 
+                font=("Arial", 9, "bold"), fg='#333').pack(anchor=tk.W, pady=(8, 10))
+
+        # Buttons
         choice = {'value': 'block'}
 
         def allow():
@@ -468,15 +506,18 @@ def show_popup(url: str, score, reasons) -> str:
             choice['value'] = 'block'
             root.destroy()
 
-        btn_frame = tk.Frame(frm)
-        btn_frame.pack(fill=tk.X, pady=(8,0))
+        btn_frm = tk.Frame(frm, bg='#ffffff')
+        btn_frm.pack(fill=tk.X, pady=(10, 0))
 
-        allow_btn = tk.Button(btn_frame, text="ALLOW", width=12, command=allow)
-        allow_btn.pack(side=tk.LEFT, padx=(0,8))
-        block_btn = tk.Button(btn_frame, text="BLOCK", width=12, command=block)
+        allow_btn = tk.Button(btn_frm, text="ALLOW", width=15, font=("Arial", 10),
+                            bg='#666666', fg='white', command=allow, padx=10, pady=8)
+        allow_btn.pack(side=tk.LEFT, padx=(0, 10))
+        
+        block_btn = tk.Button(btn_frm, text="BLOCK", width=15, font=("Arial", 10),
+                            bg='#cc0000', fg='white', command=block, padx=10, pady=8)
         block_btn.pack(side=tk.LEFT)
 
-        # Center and run
+        # Center window
         root.update_idletasks()
         x = (root.winfo_screenwidth() // 2) - (root.winfo_width() // 2)
         y = (root.winfo_screenheight() // 2) - (root.winfo_height() // 2)

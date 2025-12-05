@@ -1,141 +1,58 @@
-[PhishGuard] Addon initialized - OPTIMIZED MODE
-[Loading] Script directory: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2
-[Loading] Suspicious list file: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\suspicious_urls.txt
-[Loading] SUCCESS: Loaded 4 suspicious domains
-[AllowPass] Domain not suspicious: 127.0.0.1
-[AllowPass] Domain not suspicious: 127.0.0.1
-[AllowPass] Domain not suspicious: 127.0.0.1
-[AllowPass] Domain not suspicious: 127.0.0.1
-[AllowPass] Domain not suspicious: ctldl.windowsupdate.com
-[AllowPass] Domain not suspicious: c.pki.goog
-[AllowPass] Domain not suspicious: c.pki.goog
-[AllowPass] Domain not suspicious: crl3.digicert.com
-[AllowPass] Domain not suspicious: main.vscode-cdn.net
-[AllowPass] Domain not suspicious: main.vscode-cdn.net
-[AllowPass] Domain not suspicious: default.exp-tas.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: default.exp-tas.com
-[AllowPass] Domain not suspicious: crl3.digicert.com
-[AllowPass] Domain not suspicious: ctldl.windowsupdate.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: vscode-sync.trafficmanager.net
-[FastPath] SAFE domain (whitelist), allowing: oneocsp.microsoft.com
+[PhishGuard] Addon initialized - ML ANALYZER MODE
+[Analyzer] https://beacons.gcp.gvt2.com/domainreliability/upload: score=0.145, risk=low
+[Decision] LOW RISK, allowing: beacons.gcp.gvt2.com
+[FastPath] SAFE domain (whitelist), allowing: clientservices.googleapis.com
 [FastPath] SAFE domain (whitelist), allowing: www.googleapis.com
 [FastPath] SAFE domain (whitelist), allowing: www.googleapis.com
 [FastPath] SAFE domain (whitelist), allowing: accounts.google.com
-[AllowPass] Domain not suspicious: ctldl.windowsupdate.com
+[Analyzer] https://e2c44.gcp.gvt2.com/nel/: score=0.051, risk=low
+[Decision] LOW RISK, allowing: e2c44.gcp.gvt2.com
 [FastPath] SAFE domain (whitelist), allowing: clients4.google.com
 [FastPath] SAFE domain (whitelist), allowing: kidsmanagement-pa.googleapis.com
 [FastPath] SAFE domain (whitelist), allowing: clients4.google.com
-[AllowPass] Domain not suspicious: ms-python.gallerycdn.vsassets.io
-[AllowPass] Domain not suspicious: ms-vscode.gallerycdn.vsassets.io
 [FastPath] SAFE domain (whitelist), allowing: clients4.google.com
-[FastPath] SAFE domain (whitelist), allowing: clients4.google.com
-[AllowPass] Domain not suspicious: marketplace.visualstudio.com
-[AllowPass] Domain not suspicious: ms-python.gallerycdn.vsassets.io
-[AllowPass] Domain not suspicious: ms-vscode.gallery.vsassets.io
-[AllowPass] Domain not suspicious: ms-vscode.gallerycdn.vsassets.io
-[AllowPass] Domain not suspicious: in.search.yahoo.com
-[Detection] SUSPICIOUS domain detected: example.com
-[Popup] Calling: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\popup_simple.py with domain: example.com
-[Popup] stdout result: 'ALLOW'
-[Popup] Result for example.com: ALLOW
-[Decision] User ALLOWED: example.com
-[AllowPass] Domain not suspicious: vscode-sync.trafficmanager.net
-[Detection] SUSPICIOUS domain detected: example.com
-[Popup] Calling: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\popup_simple.py with domain: example.com
-[Popup] stdout result: 'ALLOW'
-[Popup] Result for example.com: ALLOW
-[Decision] User ALLOWED: example.com
-[FastPath] SAFE domain (whitelist), allowing: clients4.google.com
+[Analyzer] https://beacons.gvt2.com/domainreliability/upload: score=0.145, risk=low
+[Decision] LOW RISK, allowing: beacons.gvt2.com
+[FastPath] SAFE domain (whitelist), allowing: update.googleapis.com
 [FastPath] SAFE domain (whitelist), allowing: android.clients.google.com
-[AllowPass] Domain not suspicious: api.githubcopilot.com
-[AllowPass] Domain not suspicious: unleash.codeium.com
+[Analyzer] https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=pa: score=0.125, risk=low
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[Analyzer] https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=pay: score=0.125, risk=low
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[FastPath] SAFE domain (whitelist), allowing: optimizationguide-pa.googleapis.com
+[Analyzer] https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=payp: score=0.125, risk=low
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[Analyzer] https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=paypa: score=0.125, risk=low
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[Analyzer] https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=paypaI: score=0.125, risk=low
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[Analyzer] https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=paypaI.: score=0.125, risk=low
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[Analyzer] https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=paypaI.c: score=0.125, risk=low
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[Analyzer] https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=paypaI.co: score=0.125, risk=low
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[Analyzer] https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=paypaI.com: score=0.125, risk=low
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[Analyzer] http://paypai.com/: score=0.950, risk=high
+[Decision] HIGH RISK detected, showing popup: paypai.com
+[BlockPage] Loaded custom blocked page for: paypai.com
+[Analyzer] http://paypai.com/favicon.ico: score=0.950, risk=high
+[Decision] HIGH RISK detected, showing popup: paypai.com
+[BlockPage] Loaded custom blocked page for: paypai.com
+[FastPath] SAFE domain (whitelist), allowing: android.clients.google.com
+[FastPath] SAFE domain (whitelist), allowing: clients4.google.com
+[FastPath] SAFE domain (whitelist), allowing: clients4.google.com
+[FastPath] SAFE domain (whitelist), allowing: clientservices.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: update.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: clientservices.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: clientservices.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: clientservices.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: clientservices.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: android.clients.google.com
+[FastPath] SAFE domain (whitelist), allowing: clientservices.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: clientservices.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: clientservices.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: clientservices.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: clientservices.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: android.clients.google.com

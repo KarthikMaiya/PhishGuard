@@ -4,19 +4,30 @@ from pydantic import BaseModel
 import uvicorn
 import pickle
 import numpy as np
-from feature_extractor import extract_domain_features_from_url
+import os
+import sys
 from urllib.parse import urlparse
-from feature_extractor import brand_impersonation_score
+
+# Handle imports for both subprocess and direct execution
+try:
+    from .feature_extractor import extract_domain_features_from_url, brand_impersonation_score
+except ImportError:
+    # When run directly as a script, use absolute imports
+    sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+    from analyzer.feature_extractor import extract_domain_features_from_url, brand_impersonation_score
 
 
 app = FastAPI(title="PhishGuard ML Analyzer")
 
-MODEL_PATH = "model/XGBoost_RealTime.dat"
+# Use absolute path for model to work from any working directory
+MODEL_DIR = os.path.dirname(__file__)
+MODEL_PATH = os.path.join(MODEL_DIR, "model", "XGBoost_RealTime.dat")
 
-print(f"[Analyzer] Loading model from {MODEL_PATH}...")
+print(f"[Analyzer] Model directory: {MODEL_DIR}", flush=True)
+print(f"[Analyzer] Loading model from {MODEL_PATH}...", flush=True)
 with open(MODEL_PATH, "rb") as f:
     model = pickle.load(f)
-print("[Analyzer] Model loaded successfully.")
+print("[Analyzer] Model loaded successfully.", flush=True)
 
 class URLRequest(BaseModel):
     url: str
@@ -76,13 +87,27 @@ def score_url(data: URLRequest):
 
     similarity, brand = brand_impersonation_score(domain)
 
-    if similarity >= 0.75:
+    OFFICIAL_BRANDS = {
+        "google": ["google.com"],
+        "microsoft": ["microsoft.com"],
+        "paypal": ["paypal.com"],
+        "apple": ["apple.com"],
+        "amazon": ["amazon.com"],
+        "facebook":["facebook.com"]
+    }
+
+    legit_domains = OFFICIAL_BRANDS.get(brand, [])
+
+    is_legit = domain in legit_domains or any(domain.endswith("." + d) for d in legit_domains)
+
+    if similarity >= 0.75 and not is_legit:
         score = max(score, 0.95)
         risk = "high"
 
         tag = f"brand_impersonation:{brand}"
         if tag not in reasons:
             reasons.append(tag)
+
 
     # 6. Final response
     return {
@@ -94,4 +119,19 @@ def score_url(data: URLRequest):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    import sys
+    print(f"[Analyzer] Python executable: {sys.executable}", flush=True)
+    print(f"[Analyzer] Current working directory: {os.getcwd()}", flush=True)
+    print(f"[Analyzer] Starting uvicorn on 127.0.0.1:8000...", flush=True)
+    sys.stdout.flush()
+    sys.stderr.flush()
+    
+    uvicorn.run(
+        app,
+        host="127.0.0.1",
+        port=8000,
+        log_level="info",
+        access_log=True
+    )
+
+

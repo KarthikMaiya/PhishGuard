@@ -17,9 +17,6 @@ import json
 import urllib.request
 import urllib.error
 from mitmproxy import http, ctx
-import requests
-import json
-
 
 # Import popup_simple.show_popup (will be implemented in popup_simple.py)
 try:
@@ -53,14 +50,14 @@ class Addon:
     """mitmproxy addon for phishing detection - optimized performance"""
     
     def __init__(self):
-        """Initialize addon and load suspicious domains list"""
-        self.suspicious_domains = set()
+        """Initialize addon with ML analyzer"""
         self.script_dir = os.path.dirname(__file__)
         self.error_log_file = os.path.join(self.script_dir, "proxy_errors.log")
         
         # Absolute paths for critical files
         self.popup_path = os.path.join(self.script_dir, "popup_simple.py")
         self.blocked_page_path = os.path.join(self.script_dir, "blocked_page.html")
+        self.ml_api_url = "http://127.0.0.1:8000/score"
         
         # Clear old log on startup
         try:
@@ -69,8 +66,7 @@ class Addon:
         except:
             pass
         
-        self.log_error("[PhishGuard] Addon initialized - OPTIMIZED MODE")
-        self.load_suspicious_list()
+        self.log_error("[PhishGuard] Addon initialized - ML ANALYZER MODE")
     
     def log_error(self, message):
         """Log error messages to proxy_errors.log"""
@@ -80,33 +76,31 @@ class Addon:
         except Exception as e:
             ctx.log.error(f"[PhishGuard] Could not write to error log: {e}")
     
-    def load_suspicious_list(self):
-        """Load suspicious domains from suspicious_urls.txt using os.path"""
+    def call_ml_analyzer(self, url: str) -> tuple:
+        """Call ML analyzer API. Returns (score, reasons, risk) or (None, [], None) on failure"""
         try:
-            suspicious_file = os.path.join(self.script_dir, "suspicious_urls.txt")
-            
-            self.log_error(f"[Loading] Script directory: {self.script_dir}")
-            self.log_error(f"[Loading] Suspicious list file: {suspicious_file}")
-            ctx.log.info(f"[PhishGuard] Loading suspicious domains from: {suspicious_file}")
-            
-            if os.path.exists(suspicious_file):
-                with open(suspicious_file, 'r', encoding='utf-8') as f:
-                    for line in f:
-                        domain = line.strip().lower()
-                        if domain and not domain.startswith('#'):
-                            self.suspicious_domains.add(domain)
-                
-                msg = f"[Loading] SUCCESS: Loaded {len(self.suspicious_domains)} suspicious domains"
-                self.log_error(msg)
-                ctx.log.info(f"[PhishGuard] Loaded {len(self.suspicious_domains)} domains")
-            else:
-                msg = f"[Loading] ERROR: Suspicious list not found at {suspicious_file}"
-                self.log_error(msg)
-                ctx.log.warn(f"[PhishGuard] Suspicious list NOT FOUND at {suspicious_file}")
+            payload = json.dumps({"url": url}).encode('utf-8')
+            req = urllib.request.Request(
+                self.ml_api_url,
+                data=payload,
+                headers={"Content-Type": "application/json"},
+                method='POST'
+            )
+            with urllib.request.urlopen(req, timeout=0.8) as resp:
+                body = resp.read()
+                resp_json = json.loads(body.decode('utf-8', errors='ignore'))
+                score = float(resp_json.get('score', 0.0))
+                risk = resp_json.get('risk', 'low').lower()
+                reasons = resp_json.get('reasons', []) or []
+                self.log_error(f"[Analyzer] {url}: score={score:.3f}, risk={risk}")
+                return score, reasons, risk
+        except urllib.error.URLError:
+            self.log_error(f"[Analyzer] Unreachable: {url}")
+        except json.JSONDecodeError as e:
+            self.log_error(f"[Analyzer] Invalid JSON: {e}")
         except Exception as e:
-            msg = f"[Loading] ERROR: {e}\n{traceback.format_exc()}"
-            self.log_error(msg)
-            ctx.log.error(f"[PhishGuard] Error loading suspicious list: {e}")
+            self.log_error(f"[Analyzer] Error: {e}")
+        return None, [], None
     
     def normalize_domain(self, domain: str) -> str:
         """
@@ -141,18 +135,6 @@ class Addon:
                 return True
         
         return False
-    
-    def is_suspicious_domain(self, domain: str) -> bool:
-        """
-        Check if domain is in suspicious list.
-        Subdomains of suspicious domains are NOT treated as suspicious.
-        Only exact match or after www. stripping.
-        """
-        if not domain:
-            return False
-        
-        normalized = self.normalize_domain(domain)
-        return normalized in self.suspicious_domains
     
     def get_blocked_page_html(self, domain: str) -> str:
         """
@@ -272,68 +254,31 @@ class Addon:
             
             # OPTIMIZATION 2: Use ML analyzer for real-time scoring
             try:
-                # Build full URL from flow
-                try:
-                    full_url = flow.request.pretty_url
-                except Exception:
-                    full_url = None
-
-                analyzer_hit = False
-                score = None
-                reasons = []
-
-                if full_url:
-                    analyzer_url = "http://127.0.0.1:8000/score"
-                    payload = json.dumps({"url": full_url}).encode('utf-8')
-                    req = urllib.request.Request(analyzer_url, data=payload, headers={"Content-Type": "application/json"}, method='POST')
+                full_url = flow.request.pretty_url
+            except Exception:
+                full_url = None
+            
+            try:
+                # Query ML analyzer
+                score, reasons, risk = self.call_ml_analyzer(full_url or domain)
+                
+                # Decision: show popup only if risk == 'high'
+                if risk == 'high':
+                    self.log_error(f"[Decision] HIGH RISK detected, showing popup: {domain}")
                     try:
-                        with urllib.request.urlopen(req, timeout=0.8) as resp:
-                            body = resp.read()
-                            try:
-                                resp_json = json.loads(body.decode('utf-8', errors='ignore'))
-                                score = float(resp_json.get('score', 0.0))
-                                reasons = resp_json.get('reasons', []) or []
-                                analyzer_hit = True
-                                self.log_error(f"[Analyzer] Score for {full_url}: {score}")
-                            except Exception as e:
-                                self.log_error(f"[Analyzer] Invalid JSON response: {e}")
+                        if popup_simple and hasattr(popup_simple, 'show_popup'):
+                            result = popup_simple.show_popup(full_url or domain, score, reasons)
+                            show_popup_decision = str(result).lower()
+                        else:
+                            show_popup_decision = self.show_popup_subprocess(domain).lower()
                     except Exception as e:
-                        # Analyzer unreachable or timed out - fallback to rule-based detection
-                        self.log_error(f"[Analyzer] Unreachable or timeout: {e}")
-
-                # Decision logic: if analyzer indicates high risk, show popup
-                show_popup_decision = None
-                if analyzer_hit and score is not None:
-                    if score >= 0.75:
-                        # Ensure popup API exists
-                        try:
-                            if popup_simple and hasattr(popup_simple, 'show_popup'):
-                                res = popup_simple.show_popup(full_url, score, reasons)
-                                show_popup_decision = str(res).lower()
-                            else:
-                                # Fallback: use subprocess popup for compatibility
-                                show_popup_decision = self.show_popup_subprocess(domain).lower()
-                        except Exception as e:
-                            self.log_error(f"[Popup Error] Exception when calling show_popup: {e}")
-                            show_popup_decision = 'block'
-                    else:
-                        # Low/medium risk -> allow
-                        show_popup_decision = 'allow'
+                        self.log_error(f"[Popup Error] {e}")
+                        show_popup_decision = 'block'
                 else:
-                    # Analyzer not available: fallback to rule-based (suspicious list)
-                    if self.is_suspicious_domain(domain):
-                        try:
-                            if popup_simple and hasattr(popup_simple, 'show_popup'):
-                                res = popup_simple.show_popup(full_url or domain, None, ["Matched suspicious list"]) 
-                                show_popup_decision = str(res).lower()
-                            else:
-                                show_popup_decision = self.show_popup_subprocess(domain).lower()
-                        except Exception as e:
-                            self.log_error(f"[Popup Error] Exception when calling fallback popup: {e}")
-                            show_popup_decision = 'block'
-                    else:
-                        show_popup_decision = 'allow'
-
+                    # Low or medium risk -> allow
+                    self.log_error(f"[Decision] {risk.upper()} RISK, allowing: {domain}")
+                    show_popup_decision = 'allow'
+                
                 # Apply decision
                 if show_popup_decision == 'block' or show_popup_decision == 'BLOCK':
                     html_content = self.get_blocked_page_html(domain)
@@ -342,12 +287,10 @@ class Addon:
                         html_content.encode('utf-8'),
                         {"Content-Type": "text/html; charset=utf-8"}
                     )
-                else:
-                    # allow - do nothing
-                    pass
-
+                # else: allow - do nothing
+            
             except Exception as e:
-                self.log_error(f"[Critical] ML decision path failed: {e}\n{traceback.format_exc()}")
+                self.log_error(f"[Critical] Decision path failed: {e}")
                 # Safe default: block
                 html_content = self.get_blocked_page_html(domain)
                 flow.response = http.Response.make(
@@ -355,9 +298,6 @@ class Addon:
                     html_content.encode('utf-8'),
                     {"Content-Type": "text/html; charset=utf-8"}
                 )
-            else:
-                # Domain is not suspicious, allow it to pass through
-                self.log_error(f"[AllowPass] Domain not suspicious: {domain}")
         
         except Exception as e:
             self.log_error(f"[Critical Error] request() handler failed: {e}\n{traceback.format_exc()}")
