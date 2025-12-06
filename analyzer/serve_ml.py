@@ -1,12 +1,6 @@
 # serve_ml.py
-from fastapi import FastAPI
-from pydantic import BaseModel
-import uvicorn
-import pickle
-import numpy as np
-import os
 import sys
-from urllib.parse import urlparse
+import os
 
 # Handle imports for both subprocess and direct execution
 try:
@@ -16,6 +10,19 @@ except ImportError:
     sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
     from analyzer.feature_extractor import extract_domain_features_from_url, brand_impersonation_score
 
+print(f"[Analyzer] Starting imports...", flush=True)
+sys.stdout.flush()
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+import uvicorn
+import pickle
+import numpy as np
+from urllib.parse import urlparse
+
+print(f"[Analyzer] FastAPI, uvicorn, pickle imported successfully", flush=True)
+sys.stdout.flush()
+
 
 app = FastAPI(title="PhishGuard ML Analyzer")
 
@@ -24,10 +31,31 @@ MODEL_DIR = os.path.dirname(__file__)
 MODEL_PATH = os.path.join(MODEL_DIR, "model", "XGBoost_RealTime.dat")
 
 print(f"[Analyzer] Model directory: {MODEL_DIR}", flush=True)
-print(f"[Analyzer] Loading model from {MODEL_PATH}...", flush=True)
-with open(MODEL_PATH, "rb") as f:
-    model = pickle.load(f)
-print("[Analyzer] Model loaded successfully.", flush=True)
+print(f"[Analyzer] Model path: {MODEL_PATH}", flush=True)
+print(f"[Analyzer] Model file exists: {os.path.exists(MODEL_PATH)}", flush=True)
+
+# Load model - critical for functionality
+model = None
+try:
+    print(f"[Analyzer] Loading model from {MODEL_PATH}...", flush=True)
+    sys.stdout.flush()
+    with open(MODEL_PATH, "rb") as f:
+        model = pickle.load(f)
+    print(f"[Analyzer] Model loaded successfully.", flush=True)
+    sys.stdout.flush()
+except FileNotFoundError as e:
+    print(f"[Analyzer] CRITICAL: Model file not found: {MODEL_PATH}", flush=True)
+    print(f"[Analyzer] Error: {e}", flush=True)
+    sys.stdout.flush()
+    sys.stderr.flush()
+    # Continue - will handle in /score endpoint
+except Exception as e:
+    print(f"[Analyzer] CRITICAL: Could not load model: {type(e).__name__}: {e}", flush=True)
+    import traceback
+    print(f"[Analyzer] Traceback: {traceback.format_exc()}", flush=True)
+    sys.stdout.flush()
+    sys.stderr.flush()
+    # Continue - will handle in /score endpoint
 
 class URLRequest(BaseModel):
     url: str
@@ -40,6 +68,17 @@ def health():
 @app.post("/score")
 def score_url(data: URLRequest):
     url = data.url
+    
+    # CRITICAL: Check if model loaded successfully
+    if model is None:
+        print(f"[Analyzer] WARNING: Model not loaded, returning safe default (low risk) for {url}", flush=True)
+        sys.stdout.flush()
+        return {
+            "url": url,
+            "score": 0.0,
+            "risk": "low",
+            "reasons": ["analyzer_model_unavailable"]
+        }
 
     # 1. Extract ML features (8 features only)
     features = extract_domain_features_from_url(url)

@@ -1,27 +1,73 @@
 [PhishGuard] Addon initialized - ML ANALYZER MODE
-[FastPath] SAFE domain (whitelist), allowing: www.googleapis.com
-[FastPath] SAFE domain (whitelist), allowing: www.googleapis.com
 [FastPath] SAFE domain (whitelist), allowing: clientservices.googleapis.com
 [FastPath] SAFE domain (whitelist), allowing: accounts.google.com
+[FastPath] SAFE domain (whitelist), allowing: www.googleapis.com
+[FastPath] SAFE domain (whitelist), allowing: www.googleapis.com
 [FastPath] SAFE domain (whitelist), allowing: kidsmanagement-pa.googleapis.com
 [FastPath] SAFE domain (whitelist), allowing: clients4.google.com
 [FastPath] SAFE domain (whitelist), allowing: clients4.google.com
-[FastPath] SAFE domain (whitelist), allowing: clients4.google.com
 [FastPath] SAFE domain (whitelist), allowing: android.clients.google.com
+[Analyzer] Sending request for: https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=rnicrosoft
+[Analyzer] SUCCESS: https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=rnicrosoft → score=0.125, risk=low, reasons=1
+[Decision] Analyzer response - risk=low, reasons=['Multiple subdomains']
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[Decision] Allowing domain: in.search.yahoo.com
 [FastPath] SAFE domain (whitelist), allowing: update.googleapis.com
+[Analyzer] Sending request for: https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=rnicrosoft.
+[Analyzer] SUCCESS: https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=rnicrosoft. → score=0.125, risk=low, reasons=1
+[Decision] Analyzer response - risk=low, reasons=['Multiple subdomains']
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[Decision] Allowing domain: in.search.yahoo.com
+[Analyzer] Sending request for: https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=rnicrosoft.c
+[Analyzer] SUCCESS: https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=rnicrosoft.c → score=0.125, risk=low, reasons=1
+[Decision] Analyzer response - risk=low, reasons=['Multiple subdomains']
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[Decision] Allowing domain: in.search.yahoo.com
+[Analyzer] Sending request for: https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=rnicrosoft.co
+[Analyzer] SUCCESS: https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=rnicrosoft.co → score=0.125, risk=low, reasons=1
+[Decision] Analyzer response - risk=low, reasons=['Multiple subdomains']
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[Decision] Allowing domain: in.search.yahoo.com
+[Analyzer] Sending request for: https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=rnicrosoft.com
+[Analyzer] SUCCESS: https://in.search.yahoo.com/sugg/gossip/gossip-in-partner?output=fxjson&appid=mca&source=yahoo_mcafee_searchassist&command=rnicrosoft.com → score=0.125, risk=low, reasons=1
+[Decision] Analyzer response - risk=low, reasons=['Multiple subdomains']
+[Decision] LOW RISK, allowing: in.search.yahoo.com
+[Decision] Allowing domain: in.search.yahoo.com
+[Analyzer] Sending request for: http://rnicrosoft.com/
+[Analyzer] SUCCESS: http://rnicrosoft.com/ → score=0.950, risk=high, reasons=2
+[Decision] Analyzer response - risk=high, reasons=['Known shortener domain', 'brand_impersonation:microsoft']
+[Decision] HIGH RISK - NEW domain, showing popup: rnicrosoft.com
+[Popup] ========== POPUP SUBPROCESS START ==========
+[Popup] Domain: rnicrosoft.com
+[Popup] Reasons count: 2
+[Popup] File check: popup_simple.py exists
+[Popup] Python executable: C:\Users\Karthik Maiya\AppData\Local\Programs\Python\Python311\python.exe
+[Popup] Added 2 reasons as JSON
+[Popup] Launching subprocess with args: C:\Users\Karthik Maiya\AppData\Local\Programs\Python\Python311\python.exe C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\popup_simple.py rnicrosoft.com
+[Popup] Subprocess launched successfully (PID: 31264)
+[Popup] Waiting for subprocess output (timeout=35s)...
+[Popup] Subprocess completed in 2.22s
+[Popup] Raw stdout: 'BLOCK'
+[Popup] Subprocess exit code: 0
+[Popup] Parsed result: 'BLOCK'
+[Popup] User decision: BLOCK
+[Popup] ========== POPUP SUBPROCESS END (BLOCK) ==========
+[Decision] User decision for rnicrosoft.com: BLOCK
+[BlockPage] Loaded custom blocked page for: rnicrosoft.com
+[Decision] Blocking domain: rnicrosoft.com
+[FastPath] SAFE domain (whitelist), allowing: clients4.google.com
 [FastPath] SAFE domain (whitelist), allowing: optimizationguide-pa.googleapis.com
-[Analyzer] http://paypai.com/: score=0.950, risk=high
-[Decision] HIGH RISK - NEW domain, showing popup: paypai.com
-[Popup] Calling popup subprocess for domain: paypai.com
-[Popup] Passing 1 reasons to popup
-[Popup] Subprocess returned: 'BLOCK'
-[Decision] User decision for paypai.com: BLOCK
-[BlockPage] Loaded custom blocked page for: paypai.com
-[Decision] Blocking domain: paypai.com
-[Analyzer] http://paypai.com/favicon.ico: score=0.950, risk=high
-[Decision] Popup already shown for domain, using cached decision: paypai.com
-[Decision] Cached decision for paypai.com: BLOCK
-[BlockPage] Loaded custom blocked page for: paypai.com
-[Decision] Blocking domain: paypai.com
-[FastPath] SAFE domain (whitelist), allowing: clients4.google.com
-[FastPath] SAFE domain (whitelist), allowing: clients4.google.com
+[Analyzer] Sending request for: http://rnicrosoft.com/
+[Analyzer] SUCCESS: http://rnicrosoft.com/ → score=0.950, risk=high, reasons=2
+[Decision] Analyzer response - risk=high, reasons=['Known shortener domain', 'brand_impersonation:microsoft']
+[Decision] Popup already shown for domain, using cached decision: rnicrosoft.com
+[Decision] Cached decision for rnicrosoft.com: BLOCK
+[BlockPage] Loaded custom blocked page for: rnicrosoft.com
+[Decision] Blocking domain: rnicrosoft.com
+[Analyzer] Sending request for: http://rnicrosoft.com/favicon.ico
+[Analyzer] SUCCESS: http://rnicrosoft.com/favicon.ico → score=0.950, risk=high, reasons=2
+[Decision] Analyzer response - risk=high, reasons=['Known shortener domain', 'brand_impersonation:microsoft']
+[Decision] Popup already shown for domain, using cached decision: rnicrosoft.com
+[Decision] Cached decision for rnicrosoft.com: BLOCK
+[BlockPage] Loaded custom blocked page for: rnicrosoft.com
+[Decision] Blocking domain: rnicrosoft.com

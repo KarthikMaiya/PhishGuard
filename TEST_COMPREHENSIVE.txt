@@ -1,0 +1,300 @@
+PHISHGUARD COMPREHENSIVE SYSTEM TEST
+====================================================================
+This guide tests all 11 goals and 7 mandatory requirements
+
+PART 1: STARTUP & ANALYZER (Goals 1, Mandatory Task E)
+====================================================================
+
+1. Start launcher in terminal 1:
+   cd C:\Users\Karthik Maiya\Desktop\PhishGuard_v2
+   python launcher.py
+
+   Expected output:
+   [PhishGuard] STARTING ANALYZER
+   [PhishGuard] Analyzer is READY (score endpoint OK)
+   [PhishGuard] STARTING MITMPROXY
+   [PhishGuard] Proxy is READY on 127.0.0.1:8080
+   [PhishGuard] STARTING CHROME
+   [PhishGuard] Chrome launched
+   [PhishGuard] PhishGuard is ACTIVE
+
+   ✓ Tests Goal 1: Analyzer must be reachable at /score
+   ✓ Tests Goal 1: No timeouts (2.0s timeout implemented)
+   ✓ Tests Mandatory Task E: Analyzer fallback on timeout
+
+
+PART 2: ANALYZER NONE-SAFETY (Mandatory Task A)
+====================================================================
+
+2. Open terminal 2, test analyzer directly:
+
+   python -c "import urllib.request, json; \
+   payload = json.dumps({'url': 'http://phishing-domain.com'}).encode('utf-8'); \
+   req = urllib.request.Request('http://127.0.0.1:8000/score', data=payload, \
+   headers={'Content-Type': 'application/json'}, method='POST'); \
+   resp = urllib.request.urlopen(req, timeout=2); \
+   result = json.loads(resp.read()); \
+   print(f'Score: {result[\"score\"]}'); \
+   print(f'Risk: {result[\"risk\"]}'); \
+   print(f'Reasons: {result[\"reasons\"]}')"
+
+   Expected output:
+   Score: 0.xxxx
+   Risk: high|medium|low (never None)
+   Reasons: [...] (never None, always list)
+
+   ✓ Tests Mandatory Task A: Analyzer returns no None values
+   ✓ Tests Mandatory Task E: Timeout handling (2.0s)
+
+
+PART 3: SIMULATE HIGH-RISK DOMAIN (Goals 2-6, Mandatory Task C)
+====================================================================
+
+3. In Chrome that should be running:
+   
+   a) Add test domain to suspicious_urls.txt:
+      Add line: http://phishing-test.com
+      (or any domain the ML model returns risk="high" for)
+   
+   b) Visit in Chrome:
+      http://phishing-test.com
+   
+   c) Observe popup:
+      ✓ Red pulsing border appears (500ms pulse)
+      ✓ 8-second countdown timer visible
+      ✓ "SECURITY WARNING" header shown
+      ✓ "Show Details >>" button functional
+      ✓ BLOCK button is prominent (red)
+      ✓ ALLOW button visible (green)
+      
+      ✓ Tests Goal 3: Popup successfully launched
+      ✓ Tests Goal 4: Popup appears visually
+      ✓ Tests Mandatory Task B: Popup subprocess launched successfully
+
+
+PART 4: USER BLOCK DECISION (Goal 6, Mandatory Task D)
+====================================================================
+
+4. In popup, click "BLOCK THIS WEBSITE":
+   
+   Expected:
+   ✓ Popup closes immediately
+   ✓ Page shows PhishGuard block page (403 Forbidden)
+   ✓ Block page displays domain that was blocked
+   
+   Check logs in terminal 2:
+   tail -f proxy_errors.log
+   
+   Should see:
+   [Popup] ========== POPUP SUBPROCESS START ==========
+   [Popup] Domain: phishing-test.com
+   [Popup] Launching subprocess...
+   [Popup] Subprocess completed in X.XXs
+   [Popup] Raw stdout: 'BLOCK'
+   [Popup] User decision: BLOCK
+   [Popup] ========== POPUP SUBPROCESS END (BLOCK) ==========
+   [Decision] Blocking domain: phishing-test.com
+   
+   ✓ Tests Goal 5: Popup returns "BLOCK" via stdout
+   ✓ Tests Goal 6: Proxy correctly reads decision and blocks
+   ✓ Tests Mandatory Task D: Detailed logging present
+
+
+PART 5: USER ALLOW DECISION (Goal 6)
+====================================================================
+
+5. Visit same domain again - should see popup again (domain-level caching):
+   
+   a) Click "Allow Anyway" button
+   
+   b) Expected:
+   ✓ Popup closes
+   ✓ Request allowed through
+   ✓ Website content loads normally (if available)
+   
+   c) Check logs:
+   [Popup] User decision: ALLOW
+   [Decision] Allowing domain: phishing-test.com
+   
+   ✓ Tests Goal 6: Proxy correctly reads ALLOW decision
+
+
+PART 6: DOMAIN-LEVEL CACHING (Goal 2)
+====================================================================
+
+6. Visit same domain THIRD time:
+   
+   Expected:
+   ✓ NO popup appears (cached decision)
+   ✓ Page is blocked (cached BLOCK decision from Part 4)
+   
+   Check logs:
+   [Decision] Popup already shown for domain, using cached decision
+   [Decision] Cached decision for phishing-test.com: BLOCK
+   
+   ✓ Tests Goal 2: mitmproxy uses domain-level caching
+   ✓ Tests Mandatory Task C: Domain caching prevents duplicate popups
+
+
+PART 7: BLOCK PAGE HTML (Goal 7)
+====================================================================
+
+7. Verify block page (from Part 4):
+   
+   Expected visible on page:
+   ✓ "Website Blocked by PhishGuard" header
+   ✓ "Detected Domain: phishing-test.com"
+   ✓ Red warning box
+   ✓ List of reasons (from ML analyzer)
+   ✓ Buttons or close icon
+   
+   ✓ Tests Goal 7: Block HTML unchanged and working
+
+
+PART 8: ANALYZER TIMEOUT FALLBACK (Mandatory Task E)
+====================================================================
+
+8. To test analyzer timeout fallback:
+   
+   a) In launcher terminal, kill the analyzer (Ctrl+C)
+   
+   b) Wait a few seconds, visit a new domain in Chrome:
+      http://another-phishing-domain.com
+   
+   c) Expected:
+   ✓ No popup appears (analyzer unreachable → allowed by default)
+   ✓ Website loads normally
+   
+   d) Check proxy logs:
+   [Analyzer] Timeout
+   [Analyzer] FALLBACK: Allowing http://another-phishing-domain.com
+   [Decision] LOW RISK, allowing: another-phishing-domain.com
+   
+   ✓ Tests Mandatory Task E: Analyzer unreachable → allow + log
+
+
+PART 9: POPUP FAILURE FALLBACK (Mandatory Task G)
+====================================================================
+
+9. To test popup failure fallback:
+   
+   a) Temporarily rename popup_simple.py:
+      mv popup_simple.py popup_simple.py.bak
+   
+   b) Visit a high-risk domain:
+      Expected:
+      ✓ Domain is blocked (popup unavailable → default BLOCK)
+      ✓ No popup appears
+      ✓ Block page shown instead
+   
+   c) Check logs:
+   [Popup] CRITICAL: popup_simple.py NOT FOUND at ...
+   [Popup] CRITICAL ERROR in show_popup_subprocess
+   [Decision] Blocking domain (popup failed)
+   
+   d) Restore file:
+      mv popup_simple.py.bak popup_simple.py
+   
+   ✓ Tests Mandatory Task G: Popup failure → fallback to BLOCK
+
+
+PART 10: ABSOLUTE PATHS & BACKGROUND MODE (Goals 8, 10)
+====================================================================
+
+10. Test launching from different directory:
+    
+    a) Close Chrome and launcher
+    
+    b) In PowerShell:
+       cd C:\Users\Karthik Maiya\Desktop
+       python PhishGuard_v2\launcher.py
+    
+    c) Expected:
+    ✓ Launcher starts successfully (uses absolute paths)
+    ✓ Analyzer starts
+    ✓ Proxy starts
+    ✓ Chrome launches
+    
+    ✓ Tests Goal 8: Absolute paths work from any directory
+    ✓ Tests Goal 10: Works with silent launches
+
+
+PART 11: BATCH/VBS LAUNCH (Goal 10)
+====================================================================
+
+11. Test launching via batch script:
+    
+    a) Run from cmd or batch file:
+       python C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\launcher.py
+    
+    b) Or via PowerShell:
+       & python C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\launcher.py
+    
+    Expected:
+    ✓ All components start
+    ✓ No pythonw.exe errors
+    ✓ System functions normally
+    
+    ✓ Tests Goal 9: No pythonw.exe dependency
+    ✓ Tests Goal 10: Works from batch/script launch
+
+
+PART 12: COMPREHENSIVE LOG REVIEW (Mandatory Task D)
+====================================================================
+
+12. Review all logs for completeness:
+    
+    a) Launcher log (phishguard_launcher.log):
+       - Analyzer startup
+       - Proxy startup  
+       - Chrome launch
+       - Shutdown sequence
+    
+    b) Proxy errors log (proxy_errors.log):
+       - [Analyzer] sections showing requests/responses
+       - [Popup] sections showing subprocess launch
+       - [Decision] sections showing block/allow decisions
+    
+    c) Mitmproxy debug log (mitmproxy_debug.log):
+       - Request processing
+       - Proxy startup
+       - Addon initialization
+    
+    Expected:
+    ✓ All three logs present
+    ✓ Each has detailed entries
+    ✓ Timestamps logged
+    ✓ Errors logged with full traceback
+    
+    ✓ Tests Mandatory Task D: Detailed logging throughout
+
+
+FINAL VERIFICATION CHECKLIST
+====================================================================
+
+All 11 Goals:
+ [ ] 1. FastAPI analyzer reachable at /score with no timeouts
+ [ ] 2. mitmproxy calls analyzer reliably
+ [ ] 3. High-risk triggers popup launch
+ [ ] 4. Popup appears visually on screen
+ [ ] 5. Popup returns "BLOCK" or "ALLOW" via stdout
+ [ ] 6. mitmproxy reads popup result and enforces decision
+ [ ] 7. Block HTML behavior unchanged
+ [ ] 8. All paths absolute, work from any directory
+ [ ] 9. No pythonw.exe dependency
+ [ ] 10. Works with silent Chrome launch
+ [ ] 11. No silent failures - all errors logged
+
+All 7 Mandatory Tasks:
+ [ ] A. None handling in proxy for score/risk/reasons
+ [ ] B. Popup subprocess has working stdout pipe
+ [ ] C. Analyzer fallback logging when unreachable
+ [ ] D. Detailed file logging at each stage
+ [ ] E. Analyzer timeout handled (not crash/block storm)
+ [ ] F. Unreachable analyzer → allow + log
+ [ ] G. Popup failure → fallback BLOCK + log
+
+
+Once all are checked, system is production-ready!
+
+====================================================================

@@ -16,6 +16,8 @@ import traceback
 import json
 import urllib.request
 import urllib.error
+import socket
+import time
 from mitmproxy import http, ctx
 
 # Import popup_simple - CRITICAL for popup functionality
@@ -82,7 +84,10 @@ class Addon:
             ctx.log.error(f"[PhishGuard] Could not write to error log: {e}")
     
     def call_ml_analyzer(self, url: str) -> tuple:
-        """Call ML analyzer API. Returns (score, reasons, risk) or (None, [], None) on failure"""
+        """Call ML analyzer API. Returns (score, reasons, risk) tuple.
+        On failure: returns (0.0, [], 'low') - safe defaults for allow behavior.
+        CRITICAL: Never returns None values that could break downstream logic.
+        """
         try:
             payload = json.dumps({"url": url}).encode('utf-8')
             req = urllib.request.Request(
@@ -91,21 +96,37 @@ class Addon:
                 headers={"Content-Type": "application/json"},
                 method='POST'
             )
-            with urllib.request.urlopen(req, timeout=0.8) as resp:
+            self.log_error(f"[Analyzer] Sending request for: {url}")
+            with urllib.request.urlopen(req, timeout=2.0) as resp:
                 body = resp.read()
                 resp_json = json.loads(body.decode('utf-8', errors='ignore'))
                 score = float(resp_json.get('score', 0.0))
-                risk = resp_json.get('risk', 'low').lower()
-                reasons = resp_json.get('reasons', []) or []
-                self.log_error(f"[Analyzer] {url}: score={score:.3f}, risk={risk}")
+                risk = resp_json.get('risk', 'low')
+                if risk is None:
+                    risk = 'low'
+                risk = str(risk).lower().strip()
+                if risk not in ('high', 'medium', 'low'):
+                    self.log_error(f"[Analyzer] Invalid risk '{risk}', defaulting to 'low'")
+                    risk = 'low'
+                reasons = resp_json.get('reasons', [])
+                if reasons is None:
+                    reasons = []
+                if not isinstance(reasons, list):
+                    reasons = [str(reasons)]
+                self.log_error(f"[Analyzer] SUCCESS: {url} → score={score:.3f}, risk={risk}, reasons={len(reasons)}")
                 return score, reasons, risk
-        except urllib.error.URLError:
-            self.log_error(f"[Analyzer] Unreachable: {url}")
+        except urllib.error.URLError as e:
+            self.log_error(f"[Analyzer] URLError: {e}")
+        except socket.timeout:
+            self.log_error(f"[Analyzer] Socket timeout")
+        except TimeoutError:
+            self.log_error(f"[Analyzer] Timeout")
         except json.JSONDecodeError as e:
-            self.log_error(f"[Analyzer] Invalid JSON: {e}")
+            self.log_error(f"[Analyzer] JSON error: {e}")
         except Exception as e:
-            self.log_error(f"[Analyzer] Error: {e}")
-        return None, [], None
+            self.log_error(f"[Analyzer] Error: {type(e).__name__}: {e}")
+        self.log_error(f"[Analyzer] FALLBACK: Allowing {url}")
+        return 0.0, [], 'low'
     
     def normalize_domain(self, domain: str) -> str:
         """
@@ -283,7 +304,16 @@ class Addon:
                 # Query ML analyzer
                 score, reasons, risk = self.call_ml_analyzer(full_url or domain)
                 
+                # CRITICAL: Validate analyzer response (should never be None now, but defensive coding)
+                if risk is None:
+                    self.log_error(f"[Decision] Analyzer returned None for risk, defaulting to 'low'")
+                    risk = 'low'
+                if reasons is None:
+                    self.log_error(f"[Decision] Analyzer returned None for reasons, defaulting to []")
+                    reasons = []
+                
                 # Decision: show popup only if risk == 'high'
+                self.log_error(f"[Decision] Analyzer response - risk={risk}, reasons={reasons}")
                 if risk == 'high':
                     # Normalize domain for caching (lowercase, strip www)
                     normalized = self.normalize_domain(domain)
@@ -350,74 +380,117 @@ class Addon:
     def show_popup_subprocess(self, domain: str, reasons: list = None) -> str:
         """
         Call popup_simple.py as subprocess with domain and reasons.
-        Returns: "block", "allow", or "block" (on error/timeout)
+        Returns: "block" or "allow" string.
+        CRITICAL: All failure modes return "block" with detailed logging.
         """
+        popup_start_time = time.time()
         try:
-            self.log_error(f"[Popup] Calling popup subprocess for domain: {domain}")
+            self.log_error(f"[Popup] ========== POPUP SUBPROCESS START ==========")
+            self.log_error(f"[Popup] Domain: {domain}")
+            self.log_error(f"[Popup] Reasons count: {len(reasons) if reasons else 0}")
             
+            # CRITICAL: Check popup file exists
             if not os.path.exists(self.popup_path):
-                self.log_error(f"[Popup Error] popup_simple.py not found at: {self.popup_path}")
+                self.log_error(f"[Popup] CRITICAL: popup_simple.py NOT FOUND at {self.popup_path}")
+                self.log_error(f"[Popup] Files in script_dir: {os.listdir(self.script_dir)[:5]}...")
                 return "block"
+            self.log_error(f"[Popup] File check: popup_simple.py exists")
             
-            # Build subprocess args: python popup_simple.py <domain> [<json_reasons>]
+            # Build subprocess args
             args = [sys.executable, self.popup_path, domain]
+            self.log_error(f"[Popup] Python executable: {sys.executable}")
             
             # Add reasons as JSON if provided
             if reasons and len(reasons) > 0:
                 try:
                     reasons_json = json.dumps(reasons)
                     args.append(reasons_json)
-                    self.log_error(f"[Popup] Passing {len(reasons)} reasons to popup")
+                    self.log_error(f"[Popup] Added {len(reasons)} reasons as JSON")
                 except Exception as e:
-                    self.log_error(f"[Popup] Warning: Failed to serialize reasons: {e}")
+                    self.log_error(f"[Popup] Warning: Could not serialize reasons: {e}")
             
-            # Call popup_simple.py subprocess with timeout (35 seconds = 8s popup + margin)
+            # Launch subprocess with explicit pipes
+            self.log_error(f"[Popup] Launching subprocess with args: {args[0]} {args[1]} {args[2]}")
             try:
                 proc = subprocess.Popen(
                     args,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
-                    cwd=self.script_dir
+                    stdin=subprocess.DEVNULL,
+                    cwd=self.script_dir,
+                    creationflags=0
                 )
-                
-                # Wait for process output with timeout
-                stdout_raw, stderr_raw = proc.communicate(timeout=35)
-                
-                # Decode output safely
-                stdout_text = stdout_raw.decode('utf-8', errors='ignore').strip() if stdout_raw else ""
-                stderr_text = stderr_raw.decode('utf-8', errors='ignore').strip() if stderr_raw else ""
-                
-                # Log stderr if any
-                if stderr_text:
-                    self.log_error(f"[Popup] Subprocess stderr: {stderr_text}")
-                
-                # Parse result from stdout
-                result = stdout_text.upper().strip() if stdout_text else ""
-                self.log_error(f"[Popup] Subprocess returned: '{result}'")
-                
-                # Validate result
-                if result == "BLOCK":
-                    return "block"
-                elif result == "ALLOW":
-                    return "allow"
-                else:
-                    self.log_error(f"[Popup] Invalid result '{result}' - defaulting to block")
-                    return "block"
-            
-            except subprocess.TimeoutExpired:
-                self.log_error(f"[Popup] Subprocess timeout (35s) - auto-blocking")
-                try:
-                    proc.kill()
-                except:
-                    pass
+                self.log_error(f"[Popup] Subprocess launched successfully (PID: {proc.pid})")
+            except Exception as e:
+                self.log_error(f"[Popup] FAILED to launch subprocess: {type(e).__name__}: {e}")
+                self.log_error(f"[Popup] Traceback: {traceback.format_exc()}")
                 return "block"
             
+            # Wait for process with timeout
+            self.log_error(f"[Popup] Waiting for subprocess output (timeout=35s)...")
+            try:
+                stdout_raw, stderr_raw = proc.communicate(timeout=35)
+                elapsed = time.time() - popup_start_time
+                self.log_error(f"[Popup] Subprocess completed in {elapsed:.2f}s")
+            except subprocess.TimeoutExpired:
+                elapsed = time.time() - popup_start_time
+                self.log_error(f"[Popup] TIMEOUT: Subprocess did not complete within 35s (elapsed: {elapsed:.2f}s)")
+                try:
+                    proc.kill()
+                    self.log_error(f"[Popup] Killed subprocess")
+                except Exception as e:
+                    self.log_error(f"[Popup] Could not kill subprocess: {e}")
+                return "block"
             except Exception as e:
-                self.log_error(f"[Popup] Subprocess error: {e}")
+                self.log_error(f"[Popup] Error during communicate(): {type(e).__name__}: {e}")
+                return "block"
+            
+            # Decode output carefully
+            stdout_text = ""
+            stderr_text = ""
+            try:
+                if stdout_raw:
+                    stdout_text = stdout_raw.decode('utf-8', errors='ignore').strip()
+                if stderr_raw:
+                    stderr_text = stderr_raw.decode('utf-8', errors='ignore').strip()
+            except Exception as e:
+                self.log_error(f"[Popup] Error decoding subprocess output: {e}")
+            
+            self.log_error(f"[Popup] Raw stdout: '{stdout_text}'")
+            if stderr_text:
+                self.log_error(f"[Popup] Raw stderr: '{stderr_text}'")
+            
+            # Check process exit code
+            returncode = proc.returncode
+            self.log_error(f"[Popup] Subprocess exit code: {returncode}")
+            if returncode != 0:
+                self.log_error(f"[Popup] WARNING: Subprocess exited with non-zero code")
+            
+            # Parse result
+            result = stdout_text.upper().strip() if stdout_text else ""
+            self.log_error(f"[Popup] Parsed result: '{result}'")
+            
+            # Validate result
+            if result == "BLOCK":
+                self.log_error(f"[Popup] User decision: BLOCK")
+                self.log_error(f"[Popup] ========== POPUP SUBPROCESS END (BLOCK) ==========")
+                return "block"
+            elif result == "ALLOW":
+                self.log_error(f"[Popup] User decision: ALLOW")
+                self.log_error(f"[Popup] ========== POPUP SUBPROCESS END (ALLOW) ==========")
+                return "allow"
+            else:
+                self.log_error(f"[Popup] ERROR: Invalid result '{result}', expected 'BLOCK' or 'ALLOW'")
+                self.log_error(f"[Popup] Defaulting to BLOCK for safety")
+                self.log_error(f"[Popup] ========== POPUP SUBPROCESS END (DEFAULT BLOCK) ==========")
                 return "block"
         
         except Exception as e:
-            self.log_error(f"[Popup] Critical error: {e}\n{traceback.format_exc()}")
+            elapsed = time.time() - popup_start_time
+            self.log_error(f"[Popup] CRITICAL ERROR in show_popup_subprocess (elapsed: {elapsed:.2f}s)")
+            self.log_error(f"[Popup] Exception: {type(e).__name__}: {e}")
+            self.log_error(f"[Popup] Traceback: {traceback.format_exc()}")
+            self.log_error(f"[Popup] ========== POPUP SUBPROCESS END (EXCEPTION) ==========")
             return "block"
 
 

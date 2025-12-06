@@ -1,103 +1,155 @@
 === PhishGuard mitmproxy Debug Log ===
-Timestamp: Sat Dec  6 15:33:38 2025
+Timestamp: Sat Dec  6 20:47:29 2025
 Command: mitmdump -s C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\proxy_simple.py --listen-host 127.0.0.1 --listen-port 8080
 Working dir: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2
 Proxy script: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\proxy_simple.py
 =====================================
 
-[15:33:39.019] Loading script C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\proxy_simple.py
-[15:33:39.043] HTTP(S) proxy listening at 127.0.0.1:8080.
-[15:33:39.529][127.0.0.1:64084] client connect
-[15:33:39.544][127.0.0.1:64084] client disconnect
-[15:33:40.165][127.0.0.1:50437] client connect
-[15:33:40.171][127.0.0.1:50437] client disconnect
-[15:33:40.171][127.0.0.1:61896] client connect
-[15:33:40.173][127.0.0.1:50716] client connect
-[15:33:40.177][127.0.0.1:60653] client connect
-[15:33:40.240][127.0.0.1:61896] server connect clientservices.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
-[15:33:40.265][127.0.0.1:50716] server connect www.googleapis.com:443 ([2404:6800:4007:83c::200a]:443)
-[15:33:40.284][127.0.0.1:60653] server connect accounts.google.com:443 ([2404:6800:4003:c02::54]:443)
-127.0.0.1:50716: POST https://www.googleapis.com/oauth2/v4/token HTTP/2.0
-     << HTTP/2.0 200 OK 424b
-127.0.0.1:60653: POST https://accounts.google.com/ListAccounts?gpsia=1&source… HTTP/2.0
+[20:47:30.164] Loading script C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\proxy_simple.py
+[20:47:30.201] HTTP(S) proxy listening at 127.0.0.1:8080.
+[20:47:30.244][127.0.0.1:53798] client connect
+[20:47:30.257][127.0.0.1:53798] client disconnect
+[20:47:30.845][127.0.0.1:52955] client connect
+[20:47:30.855][127.0.0.1:57733] client connect
+[20:47:30.856][127.0.0.1:52955] client disconnect
+[20:47:30.857][127.0.0.1:52955] error establishing server connection: client disconnected
+[20:47:30.864][127.0.0.1:65022] client connect
+[20:47:30.876][127.0.0.1:65022] client disconnect
+[20:47:30.877][127.0.0.1:65022] error establishing server connection: client disconnected
+[20:47:30.879][127.0.0.1:64054] client connect
+[20:47:30.883][127.0.0.1:63989] client connect
+[20:47:31.055][127.0.0.1:57733] server connect clientservices.googleapis.com:443 ([2404:6800:4009:810::2003]:443)
+[20:47:31.095][127.0.0.1:63989] server connect accounts.google.com:443 ([2404:6800:4003:c0f::54]:443)
+[20:47:31.166][127.0.0.1:62813] client connect
+[20:47:31.351][127.0.0.1:64054] server connect www.googleapis.com:443 ([2404:6800:4007:80c::200a]:443)
+[20:47:31.593][127.0.0.1:62813] server connect www.googleapis.com:443 ([2404:6800:4007:80c::200a]:443)
+127.0.0.1:63989: POST https://accounts.google.com/ListAccounts?gpsia=1&source… HTTP/2.0
      << HTTP/2.0 200 OK 232b
-[15:33:40.554][127.0.0.1:51948] client connect
-127.0.0.1:50716: POST https://www.googleapis.com/oauth2/v4/token HTTP/2.0
-     << HTTP/2.0 200 OK 421b
-[15:33:40.561][127.0.0.1:62282] client connect
-[15:33:40.605][127.0.0.1:51948] server connect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4007:830::200a]:443)
-[15:33:40.661][127.0.0.1:62282] server connect clients4.google.com:443 ([2404:6800:4007:808::200e]:443)
-127.0.0.1:61896: GET https://clientservices.googleapis.com/chrome-variations… HTTP/2.0
+[20:47:31.843][127.0.0.1:62813] client disconnect
+[20:47:31.843][127.0.0.1:62813] server disconnect www.googleapis.com:443 ([2404:6800:4007:80c::200a]:443)
+127.0.0.1:64054: POST https://www.googleapis.com/oauth2/v4/token HTTP/2.0
+     << HTTP/2.0 200 OK 425b
+[20:47:31.889][127.0.0.1:62420] client connect
+127.0.0.1:64054: POST https://www.googleapis.com/oauth2/v4/token HTTP/2.0
+     << HTTP/2.0 200 OK 423b
+[20:47:31.899][127.0.0.1:50060] client connect
+[20:47:32.431][127.0.0.1:50060] server connect clients4.google.com:443 ([2404:6800:4009:80d::200e]:443)
+[20:47:32.431][127.0.0.1:62420] server connect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4009:822::200a]:443)
+[20:47:32.762][127.0.0.1:64601] client connect
+[20:47:32.863][127.0.0.1:51838] client connect
+[20:47:32.866][127.0.0.1:55966] client connect
+[20:47:32.870][127.0.0.1:55966] client disconnect
+[20:47:32.870][127.0.0.1:55966] error establishing server connection: client disconnected
+[20:47:32.871][127.0.0.1:64601] client disconnect
+[20:47:32.872][127.0.0.1:49342] client connect
+[20:47:32.872][127.0.0.1:64601] error establishing server connection: client disconnected
+[20:47:32.873][127.0.0.1:62212] client connect
+[20:47:32.875][127.0.0.1:63989] client disconnect
+[20:47:32.876][127.0.0.1:59530] client connect
+[20:47:32.877][127.0.0.1:63989] server disconnect accounts.google.com:443 ([2404:6800:4003:c0f::54]:443)
+[20:47:32.877][127.0.0.1:64054] client disconnect
+[20:47:32.878][127.0.0.1:49937] client connect
+[20:47:32.879][127.0.0.1:64054] server disconnect www.googleapis.com:443 ([2404:6800:4007:80c::200a]:443)
+[20:47:32.931][127.0.0.1:50060] client disconnect
+[20:47:32.932][127.0.0.1:50060] server disconnect clients4.google.com:443 ([2404:6800:4009:80d::200e]:443)
+[20:47:32.998][127.0.0.1:49342] client disconnect
+[20:47:32.999][127.0.0.1:62212] client disconnect
+[20:47:33.000][127.0.0.1:49342] error establishing server connection: client disconnected
+[20:47:33.001][127.0.0.1:62212] error establishing server connection: client disconnected
+[20:47:33.001][127.0.0.1:59530] client disconnect
+[20:47:33.003][127.0.0.1:59530] error establishing server connection: client disconnected
+[20:47:33.003][127.0.0.1:49937] client disconnect
+[20:47:33.005][127.0.0.1:49937] error establishing server connection: client disconnected
+[20:47:33.005][127.0.0.1:51799] client connect
+[20:47:33.006][127.0.0.1:50747] client connect
+[20:47:33.008][127.0.0.1:58886] client connect
+[20:47:33.010][127.0.0.1:61084] client connect
+[20:47:33.338][127.0.0.1:56004] client connect
+[20:47:33.445][127.0.0.1:61693] client connect
+[20:47:34.124][127.0.0.1:49240] client connect
+[20:47:34.237][127.0.0.1:58886] server connect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4009:822::200a]:443)
+[20:47:34.238][127.0.0.1:50747] server connect clients4.google.com:443 ([2404:6800:4009:80d::200e]:443)
+[20:47:34.276][127.0.0.1:49721] client connect
+[20:47:34.565][127.0.0.1:54984] client connect
+[20:47:34.678][127.0.0.1:63353] client connect
+127.0.0.1:57733: GET https://clientservices.googleapis.com/chrome-variations… HTTP/2.0
      << HTTP/2.0 304 Not Modified 0b
-[15:33:40.677][127.0.0.1:61896] client disconnect
-[15:33:40.678][127.0.0.1:61896] server disconnect clientservices.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
-[15:33:40.680][127.0.0.1:53233] client connect
-[15:33:40.681][127.0.0.1:57731] client connect
-[15:33:40.682][127.0.0.1:50716] client disconnect
-[15:33:40.682][127.0.0.1:60653] client disconnect
-[15:33:40.684][127.0.0.1:50716] server disconnect www.googleapis.com:443 ([2404:6800:4007:83c::200a]:443)
-[15:33:40.684][127.0.0.1:60653] server disconnect accounts.google.com:443 ([2404:6800:4003:c02::54]:443)
-[15:33:40.693][127.0.0.1:51948] client disconnect
-[15:33:40.694][127.0.0.1:51948] server disconnect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4007:830::200a]:443)
-[15:33:40.756][127.0.0.1:62282] client disconnect
-[15:33:40.756][127.0.0.1:62282] server disconnect clients4.google.com:443 ([2404:6800:4007:808::200e]:443)
-[15:33:40.757][127.0.0.1:53233] server connect clients4.google.com:443 ([2404:6800:4007:808::200e]:443)
-[15:33:40.758][127.0.0.1:57731] server connect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4007:830::200a]:443)
-127.0.0.1:53233: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
-     << HTTP/2.0 200 OK 399b
-127.0.0.1:57731: GET https://kidsmanagement-pa.googleapis.com/kidsmanagement… HTTP/2.0
+[20:47:34.980][127.0.0.1:57733] client disconnect
+[20:47:34.981][127.0.0.1:57733] server disconnect clientservices.googleapis.com:443 ([2404:6800:4009:810::2003]:443)
+[20:47:34.990][127.0.0.1:51799] client disconnect
+[20:47:34.991][127.0.0.1:51799] error establishing server connection: client disconnected
+[20:47:34.993][127.0.0.1:56004] client disconnect
+[20:47:34.993][127.0.0.1:61693] client disconnect
+[20:47:34.993][127.0.0.1:49240] client disconnect
+[20:47:34.994][127.0.0.1:49721] client disconnect
+[20:47:34.995][127.0.0.1:56004] error establishing server connection: client disconnected
+[20:47:34.995][127.0.0.1:61693] error establishing server connection: client disconnected
+[20:47:34.996][127.0.0.1:49240] error establishing server connection: client disconnected
+[20:47:34.996][127.0.0.1:49721] error establishing server connection: client disconnected
+[20:47:34.997][127.0.0.1:54984] client disconnect
+[20:47:34.997][127.0.0.1:63353] client disconnect
+[20:47:34.997][127.0.0.1:61084] client disconnect
+[20:47:34.998][127.0.0.1:51216] client connect
+[20:47:35.000][127.0.0.1:54984] error establishing server connection: client disconnected
+[20:47:35.000][127.0.0.1:63353] error establishing server connection: client disconnected
+[20:47:35.001][127.0.0.1:61084] error establishing server connection: client disconnected
+[20:47:35.002][127.0.0.1:50122] client connect
+[20:47:35.005][127.0.0.1:62575] client connect
+[20:47:35.006][127.0.0.1:50063] client connect
+[20:47:35.072][127.0.0.1:50122] server connect clients4.google.com:443 ([2404:6800:4009:80d::200e]:443)
+[20:47:35.232][127.0.0.1:63381] client connect
+127.0.0.1:58886: GET https://kidsmanagement-pa.googleapis.com/kidsmanagement… HTTP/2.0
      << HTTP/2.0 200 OK 342b
-127.0.0.1:53233: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
-     << HTTP/2.0 200 OK 1.4k
-127.0.0.1:53233: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
-     << HTTP/2.0 200 OK 399b
-[15:33:42.027][127.0.0.1:56505] client connect
-[15:33:42.091][127.0.0.1:56505] server connect update.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
-[15:33:42.115][127.0.0.1:56395] client connect
-[15:33:42.117][127.0.0.1:63876] client connect
-[15:33:42.121][127.0.0.1:55815] client connect
-[15:33:42.123][127.0.0.1:57731] client disconnect
-[15:33:42.124][127.0.0.1:53233] client disconnect
-[15:33:42.125][127.0.0.1:63876] client disconnect
-[15:33:42.125][127.0.0.1:59509] client connect
-[15:33:42.127][127.0.0.1:57731] server disconnect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4007:830::200a]:443)
-[15:33:42.127][127.0.0.1:53233] server disconnect clients4.google.com:443 ([2404:6800:4007:808::200e]:443)
-[15:33:42.187][127.0.0.1:59509] server connect update.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
-[15:33:42.197][127.0.0.1:56395] server connect mtalk.google.com:5228 ([2404:6800:4003:c0f::bc]:5228)
-[15:33:42.198][127.0.0.1:56505] client disconnect
-[15:33:42.199][127.0.0.1:56505] server disconnect update.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
-[15:33:42.241][127.0.0.1:55815] server connect android.clients.google.com:443 (142.251.222.206:443)
-[15:33:42.589][127.0.0.1:59547] client connect
-[15:33:42.590][127.0.0.1:64429] client connect
-[15:33:42.614][127.0.0.1:59509] client disconnect
-[15:33:42.615][127.0.0.1:59509] server disconnect update.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
-127.0.0.1:56395 -> tcp -> mtalk.google.com:5228
-[15:33:42.632][127.0.0.1:55815] client disconnect
-[15:33:42.633][127.0.0.1:55815] server disconnect android.clients.google.com:443 (142.251.222.206:443)
-[15:33:42.699][127.0.0.1:64429] server connect update.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
-[15:33:42.713][127.0.0.1:59547] server connect android.clients.google.com:443 (142.251.222.206:443)
-127.0.0.1:56395 <- tcp <- mtalk.google.com:5228
-127.0.0.1:56395 <- tcp <- mtalk.google.com:5228
-127.0.0.1:56395 <- tcp <- mtalk.google.com:5228
-127.0.0.1:59547: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
+[20:47:35.258][127.0.0.1:58886] client disconnect
+[20:47:35.259][127.0.0.1:58886] server disconnect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4009:822::200a]:443)
+[20:47:35.334][127.0.0.1:63890] client connect
+[20:47:35.358][127.0.0.1:51216] server connect android.clients.google.com:443 (142.251.222.142:443)
+[20:47:35.664][127.0.0.1:63890] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
+[20:47:35.666][127.0.0.1:62575] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
+[20:47:35.668][127.0.0.1:63381] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
+[20:47:35.668][127.0.0.1:62420] client disconnect
+[20:47:35.670][127.0.0.1:62420] server disconnect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4009:822::200a]:443)
+[20:47:35.681][127.0.0.1:50747] client disconnect
+[20:47:35.683][127.0.0.1:50747] server disconnect clients4.google.com:443 ([2404:6800:4009:80d::200e]:443)
+127.0.0.1:50122: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 395b
+[20:47:35.687][127.0.0.1:59605] client connect
+[20:47:35.751][127.0.0.1:50063] server connect update.googleapis.com:443 ([2404:6800:4009:809::2003]:443)
+[20:47:35.901][127.0.0.1:60566] client connect
+[20:47:35.948][127.0.0.1:51838] server connect mtalk.google.com:5228 ([2404:6800:4003:c06::bc]:5228)
+[20:47:35.949][127.0.0.1:59605] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
+127.0.0.1:51216: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
      << HTTP/2.0 301 Moved Permanently 45b
-127.0.0.1:64429: POST https://update.googleapis.com/service/update2/json?cup2… HTTP/2.0
-     << HTTP/2.0 200 OK 287b
-[15:33:47.565][127.0.0.1:62211] client connect
-[15:33:47.673][127.0.0.1:62211] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
-[15:33:49.820][127.0.0.1:56481] client connect
-[15:33:49.895][127.0.0.1:56481] server connect optimizationguide-pa.googleapis.com:443 ([2404:6800:4007:80f::200a]:443)
-127.0.0.1:56481: POST https://optimizationguide-pa.googleapis.com/v1:GetModel… HTTP/2.0
+[20:47:36.091][127.0.0.1:60566] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
+127.0.0.1:51838 -> tcp -> mtalk.google.com:5228
+127.0.0.1:63890: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+127.0.0.1:50063: POST https://update.googleapis.com/service/update2/json?cup2… HTTP/2.0
+     << HTTP/2.0 200 OK 288b
+127.0.0.1:63890: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+127.0.0.1:63890: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+127.0.0.1:63890: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+[20:47:36.765][127.0.0.1:56549] client connect
+127.0.0.1:56549: GET http://rnicrosoft.com/
+              << 403 Forbidden 5.4k
+127.0.0.1:50122: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 1.5k
+127.0.0.1:63890: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+127.0.0.1:51838 <- tcp <- mtalk.google.com:5228
+[20:47:39.031][127.0.0.1:56549] client disconnect
+127.0.0.1:50122: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 457b
+[20:47:40.635][127.0.0.1:54156] client connect
+[20:47:44.128][127.0.0.1:54156] server connect optimizationguide-pa.googleapis.com:443 ([2404:6800:4007:80c::200a]:443)
+127.0.0.1:54156: POST https://optimizationguide-pa.googleapis.com/v1:GetModel… HTTP/2.0
      << HTTP/2.0 200 OK 2.1k
-[15:33:50.286][127.0.0.1:55922] client connect
-[15:33:50.287][127.0.0.1:64566] client connect
-127.0.0.1:55922: GET http://paypai.com/
+[20:47:44.632][127.0.0.1:57753] client connect
+[20:47:44.632][127.0.0.1:53326] client connect
+127.0.0.1:57753: GET http://rnicrosoft.com/
               << 403 Forbidden 5.4k
-127.0.0.1:55922: GET http://paypai.com/favicon.ico
+127.0.0.1:57753: GET http://rnicrosoft.com/favicon.ico
               << 403 Forbidden 5.4k
-[15:33:56.537][127.0.0.1:52036] client connect
-[15:33:56.623][127.0.0.1:52036] server connect clients4.google.com:443 ([2404:6800:4007:808::200e]:443)
-127.0.0.1:52036: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
-     << HTTP/2.0 200 OK 1.2k
-127.0.0.1:52036: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
-     << HTTP/2.0 200 OK 402b
