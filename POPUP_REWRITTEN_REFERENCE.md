@@ -1,3 +1,6 @@
+# popup_simple.py - REWRITTEN (410 lines)
+
+```python
 """
 PhishGuard Popup - Enterprise-grade security alert UI
 Features:
@@ -333,7 +336,6 @@ Last Updated: Ongoing Monitoring"""
         self.animate_border()      # Feature 3: Border pulse
         self.update_countdown()    # Feature 2: Countdown timer
     
-    
     def run(self) -> str:
         """Show popup and return result"""
         try:
@@ -406,4 +408,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
+```

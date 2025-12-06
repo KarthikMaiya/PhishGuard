@@ -1,173 +1,441 @@
 === PhishGuard mitmproxy Debug Log ===
-Timestamp: Fri Dec  5 22:26:36 2025
+Timestamp: Sat Dec  6 14:57:16 2025
 Command: mitmdump -s C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\proxy_simple.py --listen-host 127.0.0.1 --listen-port 8080
 Working dir: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2
 Proxy script: C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\proxy_simple.py
 =====================================
 
-[22:26:37.838] Loading script C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\proxy_simple.py
-[22:26:37.857] HTTP(S) proxy listening at 127.0.0.1:8080.
-[22:26:38.160][127.0.0.1:65218] client connect
-[22:26:38.161][127.0.0.1:65218] client disconnect
-[22:26:38.515][127.0.0.1:62486] client connect
-[22:26:38.625][127.0.0.1:62486] server connect beacons.gcp.gvt2.com:443 ([2404:6800:4007:808::2003]:443)
-[22:26:38.757][127.0.0.1:51628] client connect
-[22:26:38.777][127.0.0.1:64874] client connect
-[22:26:38.789][127.0.0.1:64384] client connect
-[22:26:38.842][127.0.0.1:51628] server connect clientservices.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
-127.0.0.1:62486: POST https://beacons.gcp.gvt2.com/domainreliability/upload HTTP/2.0
-     << HTTP/2.0 307 Temporary Redirect 0b
-[22:26:38.848][127.0.0.1:58644] client connect
-[22:26:38.884][127.0.0.1:64384] server connect www.googleapis.com:443 ([2404:6800:4007:821::200a]:443)
-[22:26:38.888][127.0.0.1:64874] server connect accounts.google.com:443 ([2404:6800:4003:c02::54]:443)
-[22:26:39.091][127.0.0.1:58644] server connect e2c44.gcp.gvt2.com:443 (35.216.230.172:443)
-127.0.0.1:64384: POST https://www.googleapis.com/oauth2/v4/token HTTP/2.0
-     << HTTP/2.0 200 OK 427b
-127.0.0.1:64384: POST https://www.googleapis.com/oauth2/v4/token HTTP/2.0
-     << HTTP/2.0 200 OK 424b
-[22:26:39.157][127.0.0.1:65153] client connect
-[22:26:39.159][127.0.0.1:60603] client connect
-127.0.0.1:64874: POST https://accounts.google.com/ListAccounts?gpsia=1&source… HTTP/2.0
+[14:57:17.435] Loading script C:\Users\Karthik Maiya\Desktop\PhishGuard_v2\proxy_simple.py
+[14:57:17.448] HTTP(S) proxy listening at 127.0.0.1:8080.
+[14:57:17.492][127.0.0.1:64104] client connect
+[14:57:17.493][127.0.0.1:64104] client disconnect
+[14:57:17.940][127.0.0.1:59528] client connect
+[14:57:17.948][127.0.0.1:54780] client connect
+[14:57:17.949][127.0.0.1:59528] client disconnect
+[14:57:17.950][127.0.0.1:59528] error establishing server connection: client disconnected
+[14:57:17.955][127.0.0.1:61533] client connect
+[14:57:17.961][127.0.0.1:61533] client disconnect
+[14:57:17.962][127.0.0.1:61533] error establishing server connection: client disconnected
+[14:57:17.965][127.0.0.1:52180] client connect
+[14:57:17.971][127.0.0.1:55478] client connect
+[14:57:18.109][127.0.0.1:55478] server connect accounts.google.com:443 ([2404:6800:4003:c1a::54]:443)
+[14:57:18.222][127.0.0.1:52180] server connect www.googleapis.com:443 ([2404:6800:4007:83b::200a]:443)
+[14:57:18.223][127.0.0.1:54780] server connect clientservices.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
+[14:57:18.259][127.0.0.1:59042] client connect
+[14:57:18.297][127.0.0.1:59042] server connect www.googleapis.com:443 ([2404:6800:4007:83b::200a]:443)
+127.0.0.1:55478: POST https://accounts.google.com/ListAccounts?gpsia=1&source… HTTP/2.0
      << HTTP/2.0 200 OK 232b
-[22:26:39.231][127.0.0.1:65153] server connect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4007:832::200a]:443)
-[22:26:39.232][127.0.0.1:60603] server connect clients4.google.com:443 ([2404:6800:4007:808::200e]:443)
-127.0.0.1:51628: GET https://clientservices.googleapis.com/chrome-variations… HTTP/2.0
+[14:57:18.375][127.0.0.1:59042] client disconnect
+[14:57:18.375][127.0.0.1:59042] server disconnect www.googleapis.com:443 ([2404:6800:4007:83b::200a]:443)
+127.0.0.1:52180: POST https://www.googleapis.com/oauth2/v4/token HTTP/2.0
+     << HTTP/2.0 200 OK 424b
+[14:57:18.498][127.0.0.1:54065] client connect
+127.0.0.1:52180: POST https://www.googleapis.com/oauth2/v4/token HTTP/2.0
+     << HTTP/2.0 200 OK 421b
+[14:57:18.525][127.0.0.1:60384] client connect
+[14:57:18.554][127.0.0.1:54065] server connect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4007:83e::200a]:443)
+[14:57:18.619][127.0.0.1:60384] server connect clients4.google.com:443 ([2404:6800:4007:836::200e]:443)
+127.0.0.1:54780: GET https://clientservices.googleapis.com/chrome-variations… HTTP/2.0
      << HTTP/2.0 304 Not Modified 0b
-[22:26:39.245][127.0.0.1:51628] client disconnect
-[22:26:39.246][127.0.0.1:51628] server disconnect clientservices.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
-[22:26:39.248][127.0.0.1:64384] client disconnect
-[22:26:39.248][127.0.0.1:64874] client disconnect
-[22:26:39.250][127.0.0.1:64384] server disconnect www.googleapis.com:443 ([2404:6800:4007:821::200a]:443)
-[22:26:39.250][127.0.0.1:64874] server disconnect accounts.google.com:443 ([2404:6800:4003:c02::54]:443)
-[22:26:39.251][127.0.0.1:51875] client connect
-[22:26:39.252][127.0.0.1:56214] client connect
-[22:26:39.277][127.0.0.1:51875] server connect clients4.google.com:443 ([2404:6800:4007:808::200e]:443)
-[22:26:39.283][127.0.0.1:56214] server connect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4007:832::200a]:443)
-[22:26:39.319][127.0.0.1:65153] client disconnect
-[22:26:39.319][127.0.0.1:60603] client disconnect
-[22:26:39.320][127.0.0.1:65153] server disconnect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4007:832::200a]:443)
-[22:26:39.320][127.0.0.1:60603] server disconnect clients4.google.com:443 ([2404:6800:4007:808::200e]:443)
-127.0.0.1:51875: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
-     << HTTP/2.0 200 OK 399b
-127.0.0.1:56214: GET https://kidsmanagement-pa.googleapis.com/kidsmanagement… HTTP/2.0
+[14:57:18.661][127.0.0.1:59128] client connect
+[14:57:18.662][127.0.0.1:55478] client disconnect
+[14:57:18.664][127.0.0.1:55478] server disconnect accounts.google.com:443 ([2404:6800:4003:c1a::54]:443)
+[14:57:18.665][127.0.0.1:52180] client disconnect
+[14:57:18.666][127.0.0.1:52180] server disconnect www.googleapis.com:443 ([2404:6800:4007:83b::200a]:443)
+[14:57:18.666][127.0.0.1:54780] client disconnect
+[14:57:18.668][127.0.0.1:54780] server disconnect clientservices.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
+[14:57:18.700][127.0.0.1:60384] client disconnect
+[14:57:18.701][127.0.0.1:60384] server disconnect clients4.google.com:443 ([2404:6800:4007:836::200e]:443)
+[14:57:18.710][127.0.0.1:59128] server connect clients4.google.com:443 ([2404:6800:4007:836::200e]:443)
+127.0.0.1:54065: GET https://kidsmanagement-pa.googleapis.com/kidsmanagement… HTTP/2.0
      << HTTP/2.0 200 OK 342b
-127.0.0.1:51875: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
-     << HTTP/2.0 200 OK 890b
-127.0.0.1:58644: POST https://e2c44.gcp.gvt2.com/nel/ HTTP/2.0
-     << HTTP/2.0 204 No Content 0b
-[22:26:39.713][127.0.0.1:51117] client connect
-[22:26:39.779][127.0.0.1:51117] server connect beacons.gvt2.com:443 ([2404:6800:4007:836::2003]:443)
-127.0.0.1:51875: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
-     << HTTP/2.0 200 OK 327b
-127.0.0.1:51117: POST https://beacons.gvt2.com/domainreliability/upload HTTP/2.0
-     << HTTP/2.0 200 OK 0b
-[22:26:40.668][127.0.0.1:64770] client connect
-[22:26:40.736][127.0.0.1:64770] server connect update.googleapis.com:443 ([2404:6800:4007:839::2003]:443)
-[22:26:40.838][127.0.0.1:56214] client disconnect
-[22:26:40.838][127.0.0.1:56214] server disconnect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4007:832::200a]:443)
-[22:26:40.839][127.0.0.1:51875] client disconnect
-[22:26:40.839][127.0.0.1:51875] server disconnect clients4.google.com:443 ([2404:6800:4007:808::200e]:443)
-[22:26:40.957][127.0.0.1:60365] client connect
-[22:26:40.957][127.0.0.1:58721] client connect
-127.0.0.1:64770: POST https://update.googleapis.com/service/update2/json?cup2… HTTP/2.0
-     << HTTP/2.0 200 OK 288b
-[22:26:41.093][127.0.0.1:64770] client disconnect
-[22:26:41.094][127.0.0.1:64770] server disconnect update.googleapis.com:443 ([2404:6800:4007:839::2003]:443)
-[22:26:41.166][127.0.0.1:58721] server connect android.clients.google.com:443 (142.251.222.142:443)
-[22:26:41.197][127.0.0.1:60365] server connect mtalk.google.com:5228 ([2404:6800:4003:c02::bc]:5228)
-127.0.0.1:60365 -> tcp -> mtalk.google.com:5228
-127.0.0.1:58721: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
-     << HTTP/2.0 301 Moved Permanently 45b
-127.0.0.1:60365 <- tcp <- mtalk.google.com:5228
-[22:26:41.677][127.0.0.1:58721] client disconnect
-[22:26:41.678][127.0.0.1:58721] server disconnect android.clients.google.com:443 (142.251.222.142:443)
-[22:26:44.728][127.0.0.1:58644] server disconnect e2c44.gcp.gvt2.com:443 (35.216.230.172:443)
-[22:26:48.367][127.0.0.1:60657] client connect
-[22:26:48.464][127.0.0.1:60493] client connect
-[22:26:48.469][127.0.0.1:60657] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
-[22:26:48.521][127.0.0.1:60493] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
-[22:26:48.559][127.0.0.1:55185] client connect
-[22:26:48.641][127.0.0.1:55185] server connect optimizationguide-pa.googleapis.com:443 ([2404:6800:4007:80f::200a]:443)
-127.0.0.1:60657: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
- << stream reset by client (CANCEL)
-127.0.0.1:60657: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
-     << HTTP/2.0 200 OK 154b
-127.0.0.1:55185: POST https://optimizationguide-pa.googleapis.com/v1:GetModel… HTTP/2.0
-     << HTTP/2.0 200 OK 2.1k
-127.0.0.1:60657: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
-     << HTTP/2.0 200 OK 164b
-127.0.0.1:60657: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
-     << HTTP/2.0 200 OK 170b
-127.0.0.1:60657: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
-     << HTTP/2.0 200 OK 189b
-127.0.0.1:60657: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
- << stream reset by client (CANCEL)
-127.0.0.1:60657: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
- << stream reset by client (CANCEL)
-127.0.0.1:60657: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
- << stream reset by client (CANCEL)
-127.0.0.1:60657: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
-     << HTTP/2.0 200 OK 125b
-[22:26:51.037][127.0.0.1:52469] client connect
-[22:26:51.038][127.0.0.1:60130] client connect
-[22:26:51.039][127.0.0.1:59728] client connect
-[22:26:51.241][127.0.0.1:59728] error establishing server connection: [Errno 11001] getaddrinfo failed
-[22:26:51.248] Unhandled error in task.
-Traceback (most recent call last):
-  File "C:\Users\Karthik Maiya\anaconda3\envs\phishguard_env\Lib\asyncio\events.py", line 84, in _run
-    self._context.run(self._callback, *self._args)
-  File "C:\Users\Karthik Maiya\anaconda3\envs\phishguard_env\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
-    self._sock.shutdown(socket.SHUT_RDWR)
-ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
-[22:26:51.252][127.0.0.1:59728] client disconnect
-127.0.0.1:52469: GET http://paypai.com/
-              << 403 Forbidden 5.4k
-[22:27:05.735][127.0.0.1:49328] client connect
-[22:27:05.736][127.0.0.1:52290] client connect
-[22:27:05.805][127.0.0.1:49328] server connect clients4.google.com:443 ([2404:6800:4007:808::200e]:443)
-[22:27:05.806][127.0.0.1:52290] server connect android.clients.google.com:443 (142.251.222.142:443)
-127.0.0.1:52469: GET http://paypai.com/favicon.ico
-              << 403 Forbidden 5.4k
-127.0.0.1:52290: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
-     << HTTP/2.0 301 Moved Permanently 45b
-127.0.0.1:49328: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+[14:57:18.866][127.0.0.1:54065] client disconnect
+[14:57:18.867][127.0.0.1:54065] server disconnect kidsmanagement-pa.googleapis.com:443 ([2404:6800:4007:83e::200a]:443)
+127.0.0.1:59128: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 398b
+127.0.0.1:59128: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
      << HTTP/2.0 200 OK 1.1k
-127.0.0.1:49328: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
-     << HTTP/2.0 200 OK 399b
-[22:27:38.538][127.0.0.1:59281] client connect
-[22:27:38.605][127.0.0.1:59281] server connect clientservices.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
-[22:27:38.710][127.0.0.1:49800] client connect
-[22:27:38.739][127.0.0.1:49800] server connect update.googleapis.com:443 ([2404:6800:4007:839::2003]:443)
-127.0.0.1:59281: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
-     << HTTP/2.0 200 OK 22b
-127.0.0.1:49800: POST https://update.googleapis.com/service/update2/json?cup2… HTTP/2.0
-     << HTTP/2.0 200 OK 1.0k
-127.0.0.1:59281: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
-     << HTTP/2.0 200 OK 22b
-127.0.0.1:59281: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
-     << HTTP/2.0 200 OK 22b
-127.0.0.1:59281: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
-     << HTTP/2.0 200 OK 22b
-127.0.0.1:59281: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
-     << HTTP/2.0 200 OK 22b
-127.0.0.1:52290: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
+127.0.0.1:59128: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 397b
+[14:57:19.934][127.0.0.1:58764] client connect
+[14:57:19.969][127.0.0.1:58764] server connect update.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
+[14:57:19.998][127.0.0.1:49364] client connect
+[14:57:20.001][127.0.0.1:59128] client disconnect
+[14:57:20.002][127.0.0.1:59128] server disconnect clients4.google.com:443 ([2404:6800:4007:836::200e]:443)
+[14:57:20.023][127.0.0.1:49997] client connect
+[14:57:20.025][127.0.0.1:50604] client connect
+[14:57:20.041][127.0.0.1:49364] server connect update.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
+[14:57:20.075][127.0.0.1:58764] client disconnect
+[14:57:20.076][127.0.0.1:58764] server disconnect update.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
+[14:57:20.127][127.0.0.1:49364] Client TLS handshake failed. The client disconnected during the handshake. If this happens consistently for update.googleapis.com, this may indicate that the client does not trust the proxy's certificate.
+[14:57:20.128][127.0.0.1:49517] client connect
+[14:57:20.129][127.0.0.1:50604] client disconnect
+[14:57:20.130][127.0.0.1:52438] client connect
+[14:57:20.131][127.0.0.1:50604] error establishing server connection: client disconnected
+[14:57:20.133][127.0.0.1:49364] client disconnect
+[14:57:20.136][127.0.0.1:49364] server disconnect update.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
+[14:57:20.195][127.0.0.1:49517] server connect android.clients.google.com:443 (142.251.221.110:443)
+[14:57:20.196][127.0.0.1:52438] server connect update.googleapis.com:443 ([2404:6800:4007:838::2003]:443)
+[14:57:20.199][127.0.0.1:49997] server connect mtalk.google.com:5228 ([2404:6800:4003:c01::bc]:5228)
+127.0.0.1:49997 -> tcp -> mtalk.google.com:5228
+127.0.0.1:49517: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
      << HTTP/2.0 301 Moved Permanently 45b
-127.0.0.1:59281: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
-     << HTTP/2.0 200 OK 22b
-127.0.0.1:59281: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
-     << HTTP/2.0 200 OK 22b
-127.0.0.1:59281: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
-     << HTTP/2.0 200 OK 22b
-127.0.0.1:59281: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
-     << HTTP/2.0 200 OK 22b
-[22:28:06.594][127.0.0.1:49656] client connect
-[22:28:06.730][127.0.0.1:49656] server connect mtalk.google.com:443 ([2404:6800:4003:c04::bc]:443)
-127.0.0.1:49656 -> tcp -> mtalk.google.com:443
-127.0.0.1:49656 <- tcp <- mtalk.google.com:443
-127.0.0.1:49656 <- tcp <- mtalk.google.com:443
-127.0.0.1:59281: POST https://clientservices.googleapis.com/uma/v2 HTTP/2.0
-     << HTTP/2.0 200 OK 22b
-[22:29:02.923][127.0.0.1:55185] [2404:6800:4007:80f::200a]:443: HTTP/2 protocol error: Invalid input ConnectionInputs.RECV_PING in state ConnectionState.CLOSED
-[22:29:02.924][127.0.0.1:55185] server disconnect optimizationguide-pa.googleapis.com:443 ([2404:6800:4007:80f::200a]:443)
-127.0.0.1:52290: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
+127.0.0.1:49997 <- tcp <- mtalk.google.com:5228
+127.0.0.1:52438: POST https://update.googleapis.com/service/update2/json?cup2… HTTP/2.0
+     << HTTP/2.0 200 OK 287b
+127.0.0.1:49997 <- tcp <- mtalk.google.com:5228
+127.0.0.1:49997 <- tcp <- mtalk.google.com:5228
+[14:57:20.610][127.0.0.1:61365] client connect
+[14:57:20.713][127.0.0.1:50261] client connect
+[14:57:20.737][127.0.0.1:61365] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
+[14:57:20.783][127.0.0.1:50261] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
+[14:57:20.836][127.0.0.1:55717] client connect
+[14:57:20.927][127.0.0.1:55717] server connect in.search.yahoo.com:443 ([2406:2000:e4:1404::3000]:443)
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 177b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 235b
+[14:57:23.502][127.0.0.1:63627] client connect
+[14:57:23.503][127.0.0.1:63636] client connect
+[14:57:23.513][127.0.0.1:51920] client connect
+[14:57:23.645][127.0.0.1:51920] server connect www.amazon.com:443 ([2600:140f:b:197::3bd4]:443)
+127.0.0.1:51920: GET https://www.amazon.com/ HTTP/2.0
+     << HTTP/2.0 200 OK 165k
+[14:57:24.698][127.0.0.1:64780] client connect
+[14:57:24.702][127.0.0.1:54141] client connect
+[14:57:24.705][127.0.0.1:51554] client connect
+[14:57:24.781][127.0.0.1:54141] server connect m.media-amazon.com:443 ([2600:9000:2179:f600:1d:d7f6:39d5:bd01]:443)
+[14:57:24.785][127.0.0.1:62253] client connect
+[14:57:24.792][127.0.0.1:51554] server connect images-na.ssl-images-amazon.com:443 ([2600:9000:2179:f600:1d:d7f6:39d5:bd01]:443)
+[14:57:24.836][127.0.0.1:62253] server connect m.media-amazon.com:443 ([2600:9000:2179:f600:1d:d7f6:39d5:bd01]:443)
+[14:57:25.224][127.0.0.1:58632] client connect
+[14:57:25.225][127.0.0.1:64780] server connect unagi.amazon.com:443 (44.215.130.62:443)
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/61NwoknrKrL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 7.1k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/61neCjTolQL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 5.4k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/718w-m1ObNL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 6.2k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/615HRY2dnML._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 7.0k
+127.0.0.1:51554: GET https://images-na.ssl-images-amazon.com/images/G/01/Ama… HTTP/2.0
+     << HTTP/2.0 200 OK 5.4k
+127.0.0.1:51554: GET https://images-na.ssl-images-amazon.com/images/G/01/Ama… HTTP/2.0
+     << HTTP/2.0 200 OK 4.9k
+127.0.0.1:51554: GET https://images-na.ssl-images-amazon.com/images/G/01/Ama… HTTP/2.0
+     << HTTP/2.0 200 OK 6.0k
+127.0.0.1:51554: GET https://images-na.ssl-images-amazon.com/images/G/01/Ama… HTTP/2.0
+     << HTTP/2.0 200 OK 5.3k
+[14:57:25.255][127.0.0.1:56702] client connect
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/8180tmc8BuL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 8.0k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/710maBjP2eL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 4.9k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/51oooNByg8L._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 6.1k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/61MHjUD24OL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 4.4k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/51nQJi7RvAL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 4.4k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/31PouzIX-SL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 1.9k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/51b6NxAuLGL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 3.9k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/71WKk-t0rCL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 8.2k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/61H+HnVHvdL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 6.1k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/817Da7pNmfL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 5.4k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/610ca8Mu-vL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 6.8k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/71XyqXjx4yL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 6.1k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/81l5sNABetL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 9.3k
+127.0.0.1:62253: GET https://m.media-amazon.com/images/G/01/csm/showads.v2.j… HTTP/2.0
+     << HTTP/2.0 304 Not Modified 0b
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/711sfQ-cn3L._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 6.0k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/61AQAGAN8DL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 7.0k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/41EnWpKF0AL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 6.5k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/515fYWMR7GL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 5.4k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/71y9oezJ02L._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 9.6k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/71yR--0dZkL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 4.3k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/71wHVhc6JPL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 7.6k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/81dflvRJU3L._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 7.5k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/61URsMpWKAL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 8.3k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/61N5IGe5EAL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 7.1k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/71VbXZUO0tL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 8.2k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/61PRDO7lZ3L._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 8.4k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/81fpXakuOrL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 12.2k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/91i0aq+5I4L._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 13.5k
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/81jW8pnlpXL._AC_SY2… HTTP/2.0
+     << HTTP/2.0 200 OK 11.3k
+127.0.0.1:51920: GET https://www.amazon.com/portal-migration/hz/glow/get-ren… HTTP/2.0
+     << HTTP/2.0 200 OK 799b
+127.0.0.1:51920: GET https://www.amazon.com/tt/i HTTP/2.0
+     << HTTP/2.0 200 OK 2b
+[14:57:25.685][127.0.0.1:56702] server connect unagi-na.amazon.com:443 (44.215.137.64:443)
+127.0.0.1:54141: GET https://m.media-amazon.com/images/I/61ta6pFkNiL._SX1500… HTTP/2.0
+     << HTTP/2.0 200 OK 124k
+127.0.0.1:51920: GET https://www.amazon.com/empty.gif?1765013245089 HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+[14:57:25.764][127.0.0.1:52239] client connect
+[14:57:25.783][127.0.0.1:65449] client connect
+127.0.0.1:51920: POST https://www.amazon.com/cross_border_interstitial_sp/ren… HTTP/2.0
+     << HTTP/2.0 200 OK 25b
+[14:57:26.101][127.0.0.1:63782] client connect
+[14:57:26.199][127.0.0.1:52239] server connect unagi-na.amazon.com:443 (44.215.137.64:443)
+[14:57:26.201][127.0.0.1:65449] server connect unagi.amazon.com:443 (44.215.130.62:443)
+[14:57:26.580][127.0.0.1:63782] server connect s.amazon-adsystem.com:443 (98.82.156.107:443)
+[14:57:26.855][127.0.0.1:58632] server connect completion.amazon.com:443 (44.215.142.139:443)
+127.0.0.1:63782: GET https://s.amazon-adsystem.com/iu3?d=amazon.com&slot=nav…
+              << 403 Forbidden 5.4k
+[14:57:30.580][127.0.0.1:61720] client connect
+127.0.0.1:64780: OPTIONS https://unagi.amazon.com/1/events/com.amazon.csm.csa.pr…
+              << 200 OK 20b
+[14:57:30.616][127.0.0.1:57118] client connect
+[14:57:30.750][127.0.0.1:61720] server connect optimizationguide-pa.googleapis.com:443 ([2404:6800:4007:804::200a]:443)
+127.0.0.1:61720: POST https://optimizationguide-pa.googleapis.com/v1:GetModel… HTTP/2.0
+     << HTTP/2.0 200 OK 2.1k
+127.0.0.1:52239: POST https://unagi-na.amazon.com/1/events/com.amazon.eel.kat…
+              << 200 OK 22b
+[14:57:31.039][127.0.0.1:55393] client connect
+[14:57:31.092][127.0.0.1:57118] server connect unagi.amazon.com:443 (44.215.130.62:443)
+127.0.0.1:58632: HEAD https://completion.amazon.com/api/2017/suggestions
+              << 204 No Content 0b
+[14:57:31.537][127.0.0.1:55393] server connect fls-na.amazon.com:443 (54.196.196.211:443)
+[14:57:31.691][127.0.0.1:61666] client connect
+[14:57:31.693][127.0.0.1:64195] client connect
+[14:57:31.694][127.0.0.1:55276] client connect
+127.0.0.1:56702: POST https://unagi-na.amazon.com/1/events/com.amazon.eel.kat…
+              << 200 OK 22b
+[14:57:32.115][127.0.0.1:64419] client connect
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 179b
+[14:57:32.451][127.0.0.1:61666] server connect fls-na.amazon.com:443 (54.196.196.211:443)
+[14:57:32.459][127.0.0.1:64195] server connect fls-na.amazon.com:443 (54.196.196.211:443)
+[14:57:32.487][127.0.0.1:55276] server connect fls-na.amazon.com:443 (54.196.196.211:443)
+[14:57:32.501][127.0.0.1:64419] server connect fls-na.amazon.com:443 (54.196.196.211:443)
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+[14:57:33.210][127.0.0.1:64195] client disconnect
+[14:57:33.210][127.0.0.1:64419] client disconnect
+[14:57:33.211][127.0.0.1:64195] server disconnect fls-na.amazon.com:443 (54.196.196.211:443)
+[14:57:33.211][127.0.0.1:64419] server disconnect fls-na.amazon.com:443 (54.196.196.211:443)
+[14:57:33.340][127.0.0.1:61666] client disconnect
+[14:57:33.341][127.0.0.1:61666] server disconnect fls-na.amazon.com:443 (54.196.196.211:443)
+[14:57:33.401][127.0.0.1:55276] client disconnect
+[14:57:33.402][127.0.0.1:55276] server disconnect fls-na.amazon.com:443 (54.196.196.211:443)
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 189b
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 202b
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+127.0.0.1:51920: GET https://www.amazon.com/rd/uedata?rid=V3XVBCTMBT82WQ7TJ4… HTTP/2.0
+     << HTTP/2.0 200 OK 67b
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+[14:57:34.480][127.0.0.1:51053] client connect
+[14:57:34.481][127.0.0.1:63305] client connect
+127.0.0.1:51053: GET http://paypai.com/
+              << 403 Forbidden 5.4k
+[14:57:37.260][127.0.0.1:49745] client connect
+[14:57:37.261][127.0.0.1:63782] server disconnect s.amazon-adsystem.com:443 (98.82.156.107:443)
+127.0.0.1:51920: GET https://www.amazon.com/puff/content?data=%7B%22pageType… HTTP/2.0
+     << HTTP/2.0 200 OK 160b
+127.0.0.1:64780: OPTIONS https://unagi.amazon.com/1/events/com.amazon.eel.Search…
+              << 200 OK 20b
+127.0.0.1:57118: POST https://unagi.amazon.com/1/events/com.amazon.csm.csa.pr…
+              << 200 OK 22b
+[14:57:37.274][127.0.0.1:59657] client connect
+127.0.0.1:51053: GET http://paypai.com/favicon.ico
+              << 403 Forbidden 5.4k
+[14:57:37.340][127.0.0.1:49745] server connect clients4.google.com:443 ([2404:6800:4007:836::200e]:443)
+127.0.0.1:51920: GET https://www.amazon.com/rd/uedata?rid=V3XVBCTMBT82WQ7TJ4… HTTP/2.0
+     << HTTP/2.0 200 OK 67b
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:49745: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 1.4k
+127.0.0.1:49745: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 459b
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+127.0.0.1:51920: GET https://www.amazon.com/rd/uedata?rid=V3XVBCTMBT82WQ7TJ4… HTTP/2.0
+     << HTTP/2.0 200 OK 67b
+[14:57:38.859][127.0.0.1:59657] server connect unagi.amazon.com:443 (44.215.130.62:443)
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:14… HTTP/2.0
+     << HTTP/2.0 200 OK 43b
+[14:57:38.871][127.0.0.1:61746] client connect
+127.0.0.1:64780: POST https://unagi.amazon.com/1/events/com.amazon.eel.Search…
+              << 200 OK 22b
+[14:57:39.086][127.0.0.1:58470] client connect
+[14:57:39.280][127.0.0.1:61746] server connect unagi.amazon.com:443 (44.215.130.62:443)
+127.0.0.1:56702: POST https://unagi-na.amazon.com/1/events/com.amazon.csm.nex…
+              << 200 OK 22b
+[14:57:39.609][127.0.0.1:55039] client connect
+127.0.0.1:55393: POST https://fls-na.amazon.com/1/batch/1/OE/ HTTP/2.0
+     << HTTP/2.0 204 No Content 0b
+[14:57:39.691][127.0.0.1:59613] client connect
+[14:57:39.729][127.0.0.1:58470] server connect unagi.amazon.com:443 (44.215.130.62:443)
+127.0.0.1:57118: POST https://unagi.amazon.com/1/events/com.amazon.csm.csa.pr…
+              << 200 OK 22b
+[14:57:40.277][127.0.0.1:59613] server connect unagi.amazon.com:443 (44.215.130.62:443)
+127.0.0.1:57118: POST https://unagi.amazon.com/1/events/com.amazon.csm.custom…
+              << 200 OK 22b
+[14:57:41.215][127.0.0.1:55039] server connect unagi.amazon.com:443 (44.215.130.62:443)
+127.0.0.1:59613: POST https://unagi.amazon.com/1/events/com.amazon.csm.csa.pr…
+              << 200 OK 22b
+127.0.0.1:52239: POST https://unagi-na.amazon.com/1/events/com.amazon.BotCXPo…
+              << 200 OK 22b
+127.0.0.1:61746: POST https://unagi.amazon.com/1/events/com.amazon.csm.csa.pr…
+              << 200 OK 22b
+127.0.0.1:57118: POST https://unagi.amazon.com/1/events/com.amazon.csm.csa.pr…
+              << 200 OK 22b
+127.0.0.1:58470: POST https://unagi.amazon.com/1/events/com.amazon.csm.csa.pr…
+              << 200 OK 22b
+127.0.0.1:59613: POST https://unagi.amazon.com/1/events/com.amazon.csm.csa.pr…
+              << 200 OK 22b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 153b
+127.0.0.1:56702: POST https://unagi-na.amazon.com/1/events/com.amazon.csm.nex…
+              << 200 OK 22b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 110b
+127.0.0.1:51920: GET https://www.amazon.com/rd/uedata?rid=V3XVBCTMBT82WQ7TJ4… HTTP/2.0
+     << HTTP/2.0 200 OK 67b
+127.0.0.1:59613: POST https://unagi.amazon.com/1/events/com.amazon.csm.csa.pr…
+              << 200 OK 22b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 186b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 187b
+127.0.0.1:55393: GET https://fls-na.amazon.com/1/remote-weblab-triggers/1/OE… HTTP/2.0
+     << HTTP/2.0 204 No Content 0b
+127.0.0.1:55393: POST https://fls-na.amazon.com/1/batch/1/OE/ HTTP/2.0
+     << HTTP/2.0 204 No Content 0b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 212b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 167b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 76b
+127.0.0.1:58470: POST https://unagi.amazon.com/1/events/com.amazon.csm.csa.pr…
+              << 200 OK 22b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 51b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 23b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 24b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 25b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 26b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 28b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 263b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 287b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 52b
+[14:57:49.449][127.0.0.1:51119] client connect
+[14:57:49.450][127.0.0.1:52000] client connect
+[14:57:49.454][127.0.0.1:58083] client connect
+127.0.0.1:65449: POST https://unagi.amazon.com/1/events/com.amazon.csm.csa.pr…
+              << 200 OK 22b
+[14:57:49.781][127.0.0.1:58083] error establishing server connection: [Errno 11001] getaddrinfo failed
+[14:57:49.783][127.0.0.1:58083] client disconnect
+[14:57:49.795][127.0.0.1:51119] error establishing server connection: [Errno 11001] getaddrinfo failed
+127.0.0.1:51119: GET http://www.rnicrosoft.com/
+ << [Errno 11001] getaddrinfo failed
+[14:57:49.797][127.0.0.1:51119] client disconnect
+[14:57:49.849][127.0.0.1:52000] error establishing server connection: [Errno 11001] getaddrinfo failed
+127.0.0.1:52000: GET http://www.rnicrosoft.com/favicon.ico
+ << [Errno 11001] getaddrinfo failed
+[14:57:49.850][127.0.0.1:52000] client disconnect
+127.0.0.1:49517: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
      << HTTP/2.0 301 Moved Permanently 45b
+127.0.0.1:49745: POST https://clients4.google.com/chrome-sync/command/?client… HTTP/2.0
+     << HTTP/2.0 200 OK 326b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 141b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 135b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 160b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 38b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 33b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 34b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 35b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 36b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 210b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 211b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 242b
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+ << stream reset by client (CANCEL)
+127.0.0.1:61365: GET https://in.search.yahoo.com/sugg/gossip/gossip-in-partn… HTTP/2.0
+     << HTTP/2.0 200 OK 276b
+[14:57:57.145][127.0.0.1:63474] client connect
+[14:57:57.145][127.0.0.1:56725] client connect
+127.0.0.1:63474: GET http://rnicrosoft.com/
+              << 403 Forbidden 5.4k
+127.0.0.1:63474: GET http://rnicrosoft.com/favicon.ico
+              << 403 Forbidden 5.4k

@@ -59,6 +59,14 @@ class Addon:
         self.blocked_page_path = os.path.join(self.script_dir, "blocked_page.html")
         self.ml_api_url = "http://127.0.0.1:8000/score"
         
+        # Track domains where popup has been shown (DOMAIN-LEVEL CACHING, not URL-level)
+        # This prevents multiple popups for the same domain (favicon, JS, images, etc)
+        self.popup_shown_domains = set()
+        
+        # Store user decisions per domain (BLOCK/ALLOW)
+        # Allows persistence: if user blocked domain once, auto-block on next visit
+        self.domain_decisions = {}
+        
         # Clear old log on startup
         try:
             if os.path.exists(self.error_log_file):
@@ -104,14 +112,30 @@ class Addon:
     
     def normalize_domain(self, domain: str) -> str:
         """
-        Normalize domain: lowercase, strip www prefix.
-        OPTIMIZATION: Fast path for domain checking.
+        Normalize domain to registrar-level for popup caching.
+        Removes www prefix, extracts registrar+TLD only.
+        
+        All subdomains map to same registrar domain:
+          www.evil.com → evil.com
+          login.evil.com → evil.com
+          api.evil.com → evil.com
+        
+        Ensures ONE popup per organization.
         """
         if not domain:
             return ""
         domain = domain.lower().strip()
         if domain.startswith('www.'):
             domain = domain[4:]
+        
+        # Extract registrar domain (last 2 parts)
+        parts = domain.split('.')
+        if len(parts) > 2:
+            last_two = '.'.join(parts[-2:])
+            # Check for multi-part TLDs
+            if last_two in {'co.uk', 'com.au', 'co.nz', 'co.in', 'com.br', 'co.jp'}:
+                return '.'.join(parts[-3:]) if len(parts) >= 3 else domain
+            return '.'.join(parts[-2:])
         return domain
     
     def is_safe_domain(self, domain: str) -> bool:
@@ -264,30 +288,53 @@ class Addon:
                 
                 # Decision: show popup only if risk == 'high'
                 if risk == 'high':
-                    self.log_error(f"[Decision] HIGH RISK detected, showing popup: {domain}")
-                    try:
-                        if popup_simple and hasattr(popup_simple, 'show_popup'):
-                            result = popup_simple.show_popup(full_url or domain, score, reasons)
-                            show_popup_decision = str(result).lower()
-                        else:
-                            show_popup_decision = self.show_popup_subprocess(domain).lower()
-                    except Exception as e:
-                        self.log_error(f"[Popup Error] {e}")
-                        show_popup_decision = 'block'
+                    # Normalize domain for caching (lowercase, strip www)
+                    normalized = self.normalize_domain(domain)
+                    
+                    # DOMAIN-LEVEL CACHING: Check if popup already shown for this domain
+                    if normalized in self.popup_shown_domains:
+                        # Popup already shown for this domain
+                        self.log_error(f"[Decision] Popup already shown for domain, using cached decision: {domain}")
+                        
+                        # Reuse previous decision from cache
+                        show_popup_decision = self.domain_decisions.get(normalized, 'block')
+                        self.log_error(f"[Decision] Cached decision for {domain}: {show_popup_decision.upper()}")
+                    else:
+                        # First time seeing this domain - show popup
+                        self.log_error(f"[Decision] HIGH RISK - NEW domain, showing popup: {domain}")
+                        
+                        # Mark domain as having popup shown (prevents duplicate popups)
+                        self.popup_shown_domains.add(normalized)
+                        
+                        try:
+                            # Call the popup GUI function - get user decision
+                            show_popup_decision = self.show_popup_subprocess(domain, reasons).lower()
+                            
+                            # Store decision for future requests to same domain
+                            self.domain_decisions[normalized] = show_popup_decision
+                            self.log_error(f"[Decision] User decision for {domain}: {show_popup_decision.upper()}")
+                        
+                        except Exception as e:
+                            self.log_error(f"[Popup Error] {e}")
+                            show_popup_decision = 'block'
+                            self.domain_decisions[normalized] = 'block'
                 else:
                     # Low or medium risk -> allow
                     self.log_error(f"[Decision] {risk.upper()} RISK, allowing: {domain}")
                     show_popup_decision = 'allow'
                 
                 # Apply decision
-                if show_popup_decision == 'block' or show_popup_decision == 'BLOCK':
+                if show_popup_decision == 'block':
                     html_content = self.get_blocked_page_html(domain)
                     flow.response = http.Response.make(
                         403,
                         html_content.encode('utf-8'),
                         {"Content-Type": "text/html; charset=utf-8"}
                     )
-                # else: allow - do nothing
+                    self.log_error(f"[Decision] Blocking domain: {domain}")
+                # else: allow - do nothing (request continues)
+                else:
+                    self.log_error(f"[Decision] Allowing domain: {domain}")
             
             except Exception as e:
                 self.log_error(f"[Critical] Decision path failed: {e}")
@@ -303,55 +350,80 @@ class Addon:
             self.log_error(f"[Critical Error] request() handler failed: {e}\n{traceback.format_exc()}")
             ctx.log.error(f"[PhishGuard] CRITICAL: {e}")
     
-    def show_popup_subprocess(self, domain: str) -> str:
+    def show_popup_subprocess(self, domain: str, reasons: list = None) -> str:
         """
-        Call popup_simple.py as subprocess.
+        Call popup_simple.py as subprocess with domain and reasons.
         OPTIMIZATION: Uses cached absolute path (self.popup_path).
-        Returns: "ALLOW", "BLOCK", or "TIMEOUT"
+        Returns: "allow", "block", or "block" (on error/timeout)
         """
         try:
-            self.log_error(f"[Popup] Calling: {self.popup_path} with domain: {domain}")
-            ctx.log.info(f"[PhishGuard] Calling popup: {domain}")
+            self.log_error(f"[Popup] Calling subprocess: {self.popup_path} {domain}")
             
             if not os.path.exists(self.popup_path):
                 self.log_error(f"[Popup Error] popup_simple.py not found at: {self.popup_path}")
-                ctx.log.error(f"[PhishGuard] popup_simple.py not found")
-                return "TIMEOUT"
+                return "block"
             
-            # Call popup_simple.py with domain as argument
-            # Wait for stdout result with 35-second timeout (includes 8-second popup countdown)
-            proc = subprocess.Popen(
-                [sys.executable, self.popup_path, domain],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                cwd=self.script_dir
-            )
+            # Prepare arguments: python popup_simple.py <domain> [<json_reasons>]
+            PHISHGUARD_PYTHON = r"C:\Users\Karthik Maiya\anaconda3\envs\phishguard_env\python.exe"
+            args = [PHISHGUARD_PYTHON, self.popup_path, domain]
+
+            # Add reasons as JSON if provided
+            if reasons and len(reasons) > 0:
+                try:
+                    reasons_json = json.dumps(reasons)
+                    args.append(reasons_json)
+                    self.log_error(f"[Popup] Passing {len(reasons)} reasons as JSON")
+                except Exception as e:
+                    self.log_error(f"[Popup] Failed to serialize reasons: {e}")
             
-            # Wait for process to complete (with timeout)
+            # Call popup_simple.py subprocess
+            # Timeout: 35 seconds (8s popup + margin)
             try:
-                stdout, stderr = proc.communicate(timeout=35)
-                result = stdout.decode('utf-8', errors='ignore').strip().upper()
+                proc = subprocess.Popen(
+                    args,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    cwd=self.script_dir,
+                    shell=True,
+                    creationflags=subprocess.CREATE_NEW_CONSOLE
+                )
+
+
                 
-                if stderr:
-                    self.log_error(f"[Popup] stderr: {stderr.decode('utf-8', errors='ignore')}")
+                # Wait for process with timeout
+                stdout_raw, stderr_raw = proc.communicate(timeout=35)
                 
+                # Decode output
+                stdout_text = stdout_raw.strip() if stdout_raw else ""
+                stderr_text = stderr_raw.strip() if stderr_raw else ""
+
+                # Log stderr if any
+                if stderr_text:
+                    self.log_error(f"[Popup] stderr: {stderr_text}")
+                
+                # Validate result
+                result = stdout_text.upper() if stdout_text else ""
                 self.log_error(f"[Popup] stdout result: '{result}'")
                 
-                if result in ["ALLOW", "BLOCK"]:
-                    return result
+                if result in ["BLOCK", "ALLOW"]:
+                    # Convert to lowercase for consistency
+                    return result.lower()
                 else:
-                    self.log_error(f"[Popup] Invalid result: '{result}'")
-                    return "TIMEOUT"
+                    self.log_error(f"[Popup] Invalid result: '{result}' - defaulting to block")
+                    return "block"
             
             except subprocess.TimeoutExpired:
-                self.log_error(f"[Popup] Timeout waiting for popup process")
+                self.log_error(f"[Popup] Subprocess timeout (35s) - killing process")
                 proc.kill()
-                return "TIMEOUT"
+                return "block"
+            
+            except Exception as e:
+                self.log_error(f"[Popup] Subprocess error: {e}")
+                return "block"
         
         except Exception as e:
-            self.log_error(f"[Popup Error] Exception: {e}\n{traceback.format_exc()}")
-            ctx.log.error(f"[PhishGuard] Popup exception: {e}")
-            return "TIMEOUT"
+            self.log_error(f"[Popup Error] Critical exception: {e}\n{traceback.format_exc()}")
+            return "block"
 
 
 # Register addon with mitmproxy
