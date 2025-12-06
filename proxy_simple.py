@@ -18,11 +18,8 @@ import urllib.request
 import urllib.error
 from mitmproxy import http, ctx
 
-# Import popup_simple.show_popup (will be implemented in popup_simple.py)
-try:
-    import popup_simple
-except Exception:
-    popup_simple = None
+# Import popup_simple - CRITICAL for popup functionality
+import popup_simple
 
 
 # WHITELIST: Trusted domains that bypass all checks (HIGH PERFORMANCE)
@@ -353,68 +350,66 @@ class Addon:
     def show_popup_subprocess(self, domain: str, reasons: list = None) -> str:
         """
         Call popup_simple.py as subprocess with domain and reasons.
-        OPTIMIZATION: Uses cached absolute path (self.popup_path).
-        Returns: "allow", "block", or "block" (on error/timeout)
+        Returns: "block", "allow", or "block" (on error/timeout)
         """
         try:
-            self.log_error(f"[Popup] Calling subprocess: {self.popup_path} {domain}")
+            self.log_error(f"[Popup] Calling popup subprocess for domain: {domain}")
             
             if not os.path.exists(self.popup_path):
                 self.log_error(f"[Popup Error] popup_simple.py not found at: {self.popup_path}")
                 return "block"
             
-            # Prepare arguments: python popup_simple.py <domain> [<json_reasons>]
-            PHISHGUARD_PYTHON = r"C:\Users\Karthik Maiya\anaconda3\envs\phishguard_env\python.exe"
-            args = [PHISHGUARD_PYTHON, self.popup_path, domain]
-
+            # Build subprocess args: python popup_simple.py <domain> [<json_reasons>]
+            args = [sys.executable, self.popup_path, domain]
+            
             # Add reasons as JSON if provided
             if reasons and len(reasons) > 0:
                 try:
                     reasons_json = json.dumps(reasons)
                     args.append(reasons_json)
-                    self.log_error(f"[Popup] Passing {len(reasons)} reasons as JSON")
+                    self.log_error(f"[Popup] Passing {len(reasons)} reasons to popup")
                 except Exception as e:
-                    self.log_error(f"[Popup] Failed to serialize reasons: {e}")
+                    self.log_error(f"[Popup] Warning: Failed to serialize reasons: {e}")
             
-            # Call popup_simple.py subprocess
-            # Timeout: 35 seconds (8s popup + margin)
+            # Call popup_simple.py subprocess with timeout (35 seconds = 8s popup + margin)
             try:
                 proc = subprocess.Popen(
                     args,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
-                    cwd=self.script_dir,
-                    shell=True,
-                    creationflags=subprocess.CREATE_NEW_CONSOLE
+                    cwd=self.script_dir
                 )
-
-
                 
-                # Wait for process with timeout
+                # Wait for process output with timeout
                 stdout_raw, stderr_raw = proc.communicate(timeout=35)
                 
-                # Decode output
-                stdout_text = stdout_raw.strip() if stdout_raw else ""
-                stderr_text = stderr_raw.strip() if stderr_raw else ""
-
+                # Decode output safely
+                stdout_text = stdout_raw.decode('utf-8', errors='ignore').strip() if stdout_raw else ""
+                stderr_text = stderr_raw.decode('utf-8', errors='ignore').strip() if stderr_raw else ""
+                
                 # Log stderr if any
                 if stderr_text:
-                    self.log_error(f"[Popup] stderr: {stderr_text}")
+                    self.log_error(f"[Popup] Subprocess stderr: {stderr_text}")
+                
+                # Parse result from stdout
+                result = stdout_text.upper().strip() if stdout_text else ""
+                self.log_error(f"[Popup] Subprocess returned: '{result}'")
                 
                 # Validate result
-                result = stdout_text.upper() if stdout_text else ""
-                self.log_error(f"[Popup] stdout result: '{result}'")
-                
-                if result in ["BLOCK", "ALLOW"]:
-                    # Convert to lowercase for consistency
-                    return result.lower()
+                if result == "BLOCK":
+                    return "block"
+                elif result == "ALLOW":
+                    return "allow"
                 else:
-                    self.log_error(f"[Popup] Invalid result: '{result}' - defaulting to block")
+                    self.log_error(f"[Popup] Invalid result '{result}' - defaulting to block")
                     return "block"
             
             except subprocess.TimeoutExpired:
-                self.log_error(f"[Popup] Subprocess timeout (35s) - killing process")
-                proc.kill()
+                self.log_error(f"[Popup] Subprocess timeout (35s) - auto-blocking")
+                try:
+                    proc.kill()
+                except:
+                    pass
                 return "block"
             
             except Exception as e:
@@ -422,7 +417,7 @@ class Addon:
                 return "block"
         
         except Exception as e:
-            self.log_error(f"[Popup Error] Critical exception: {e}\n{traceback.format_exc()}")
+            self.log_error(f"[Popup] Critical error: {e}\n{traceback.format_exc()}")
             return "block"
 
 
