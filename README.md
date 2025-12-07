@@ -9,7 +9,7 @@ PhishGuard is a **real-time, machine-learning-based phishing detection system fo
 
 <p align="center">
   <video width="720" controls>
-    <source src="demo/phishguard_demo.mp4" type="video/mp4">
+    <source src="Phishguard_demo_video.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </p>
